@@ -1,0 +1,178 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+// @import '~bootstrap/scss/bootstrap';
+
+// Variables
+@import 'variables';
+@import './feather/feather.css';
+@import './ti-icons/css/themify-icons.css';
+@import './css/vendor.bundle.base.css';
+@import './vertical-layout-light/style.css';
+
+
+
+// Bootstrap
+@import '~vue-loading-overlay/dist/vue-loading.css';
+@import '~vue-select/dist/vue-select.css';
+
+.login-top-margin {
+    margin-top: 3rem !important;
+}
+
+
+.company {
+    font-size: 24px;
+    float: left;
+    margin-top: 15px;
+    text-transform: uppercase;
+    font-weight: 900;
+    text-align: center !important;
+}
+
+.heading-custom {
+   text-align: center;
+} 
+
+.theme--light.v-app-bar.v-toolbar.v-sheet {
+    background-color: #f6f679 !important;
+}
+
+.logout-custom {
+    color: red !important;
+}
+
+.company-name {
+    color: white !important;
+}
+
+.generate-report {
+    padding-left: 45rem !important;
+}
+
+.custom-badge {
+    padding: 2px !important;
+    font-size: 9px !important;
+}
+
+.td-custom {
+    font-size: 11px !important;
+}
+
+.custom-menu {
+    width: 13rem !important;
+}
+
+.custom-row {
+    margin-left: 1rem !important;
+}
+
+.custom-h4 {
+    color: #0d3576 !important;
+}
+
+.login-btn {
+    margin-left: 17rem !important;
+}
+
+.laravel-error {
+    color: red !important;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-container>div {
+    width: 109rem;
+    margin: 10px;
+    text-align: center;
+    line-height: 75px;
+    font-size: 30px;
+}
+
+
+.custom-loader {
+    animation: loader 1s infinite;
+    display: flex;
+}
+
+@-moz-keyframes loader {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes loader {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@-o-keyframes loader {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes loader {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+.back {
+    background: #e2e2e2;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+.custom-card-body {
+    height: 21rem !important;
+}
+
+.div-center {
+    width: 400px;
+    height: 400px;
+    background-color: #f8fafc;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: auto;
+    padding: 1em 2em;
+    border-bottom: 2px solid #ccc;
+    display: table;
+}
+
+div.content {
+    display: table-cell;
+    vertical-align: middle;
+}

@@ -1,0 +1,79 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use App\Traits\LogActivityTrait;
+use App\Models\User;
+
+class UserAuthenticationController extends Controller
+{
+    use LogActivityTrait;
+
+
+    public function loginUser(Request $request) {
+      try {
+
+         $validator = Validator::make($request->all(), [
+             'email' => 'required|email',
+             'password' => 'required'
+         ]);
+            $credentials = [
+                'email' => $request->email,
+                'password' => $request->password,
+            ];
+        
+            if (Auth::attempt($credentials)) {
+                $user = User::select('id', 'firstname', 'lastname',
+                 'email', 'last_time_login')->where('email', $request->email)->first();
+
+                Auth::login($user);
+                $this->destroyPreviousSession($user);
+
+                $user->last_time_login = date("Y-m-d h:i:s");
+                $user->save();
+                $details = $user->firstname . ' '.$user->lastname. ' has logged in';
+                $this->addToLog($details);
+                return redirect('/accounts/home');
+            }else {
+                return redirect()->to('/')->with('auth_error', 'Invalid Email Or Password');
+            }
+    
+      }catch(\Exception $e) {
+         Log::channel('daily')->error('Log message' , array('message' => $e->getMessage(), 'type' => 'Handling the errors'));
+      }
+    }
+
+    public function destroyPreviousSession(User $user): void
+    {
+        $previous_session = $user->last_session_id;
+        if ($previous_session) {
+            \Session::getHandler()->destroy($previous_session);
+        }
+        $user->last_session_id = \Session::getId();
+        $user->save();
+    }
+
+
+
+    //Funtion to logout users
+    public function logOutUser(Request $request)
+    {
+        try {
+            
+            $loggedInUser = User::findOrFail(Auth::user()->id); 
+            $loggedInUser->save();
+
+            auth()->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+    
+            return response()->json(['success' => true, 'message' => 'Successfully Logged Out A User'], 200);
+        }catch(\Exception $e) {
+            Log::channel('daily')->error('Log message', array('message' => $e->getMessage(), 'type' => 'Handling the errors'));
+        }
+    }
+}
