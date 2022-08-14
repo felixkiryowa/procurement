@@ -9,7 +9,7 @@
             <a class="nav-link" href="kdjdkjdkdjkd">Login</a>
         </li>
         <li class="nav-item dropdown">
-            <a class="nav-link" href="kdjdkjdkdjkd">Register</a>
+            <a class="nav-link" href="/register">Register</a>
         </li>
       </ul>
     </div>
