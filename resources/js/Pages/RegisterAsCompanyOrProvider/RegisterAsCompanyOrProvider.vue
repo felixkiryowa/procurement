@@ -8,8 +8,24 @@
       <div class="content-wrapper">
         <div class="row">
           <div class="col-md-12">
-            <form-wizard>
-              <tab-content title="About You" :selected="true">
+            <div class="row">
+              <div class="col-md-12">
+                <h3 class="font-weight-bold">Welcome Aamir</h3>
+                <h6 class="font-weight-normal">
+                  All systems are running smoothly! You have
+                  <span class="text-primary">3 unread alerts!</span>
+                </h6>
+              </div>
+            </div>
+            <br />
+            <h4 class="font-weight-bold">Register For An Account</h4>
+            <hr />
+            <form-wizard
+              @onComplete="submitRegistration"
+              @onNextStep="nextStep"
+              @onPreviousStep="previousStep"
+            >
+              <tab-content title="Choose Account Type" :selected="true">
                 <div class="form-group">
                   <label for="fullName">Full Name</label>
                   <input
@@ -25,8 +41,25 @@
                     </div>
                   </div>
                 </div>
+                <div class="form-group">
+                  <label for="account_type">Account Type</label>
+                  <select
+                    class="form-control"
+                    v-model="formData.account_type"
+                    :class="hasError('account_type') ? 'is-invalid' : ''"
+                  >
+                    <option value="">Choose Option</option>
+                    <option value="Provider">Service Provider</option>
+                    <option value="Company">Company</option>
+                  </select>
+                  <div v-if="hasError('account_type')" class="invalid-feedback">
+                    <div class="error" v-if="!$v.formData.account_type.required">
+                      Choose An Account Type
+                    </div>
+                  </div>
+                </div>
               </tab-content>
-              <tab-content title="About your Company">
+              <tab-content title="About Your Account">
                 <div class="form-group">
                   <label for="companyName">Your Company Name</label>
                   <input
@@ -43,7 +76,7 @@
                   </div>
                 </div>
               </tab-content>
-              <tab-content title="Finishing Up">
+              <tab-content title="Confirm Contact">
                 <div class="form-group">
                   <label for="referral">From Where did you hear about us</label>
                   <select
@@ -78,24 +111,26 @@ import { mapActions, mapState, mapGetters } from "vuex";
 import { required } from "vuelidate/lib/validators";
 import { email } from "vuelidate/lib/validators";
 import { numeric } from "vuelidate/lib/validators";
-//local registration
 import { FormWizard, TabContent, ValidationHelper } from "vue-step-wizard";
-import "vue-step-wizard/dist/vue-step-wizard.css";
 
 export default {
+  mixins: [ValidationHelper],
   data() {
     return {
-      formData: { fullName: "", companyName: "", referral: "" },
+      formData: {
+        account_type: "",
+        fullName: "",
+        companyName: "",
+        referral: "",
+      },
       validationRules: [
-        { fullName: { required } },
+        { fullName: { required },account_type: { required } },
         { companyName: { required } },
         { referral: { required } },
       ],
     };
   },
-  mixins: [ValidationHelper],
   mounted() {},
-
   computed: {
     user() {
       return this.$page.props.auth.user;
@@ -105,6 +140,18 @@ export default {
     },
     checkIfUserIsIdle() {
       return this.isAppIdle ? true : false;
+    },
+  },
+
+  methods: {
+    submitRegistration() {},
+
+    nextStep() {
+      console.log("Next Step");
+    },
+
+    previousStep() {
+      console.log("Previous Step");
     },
   },
 
