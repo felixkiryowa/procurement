@@ -36491,6 +36491,35 @@ a.text-dark:focus {
   margin-top: 3rem !important;
 }
 
+.custom-border {
+  border: 1px solid #ced4da !important;
+  padding: 1rem !important;
+  height: 41.7rem !important;
+}
+
+.custom-border1 {
+  border: 1px solid #ced4da !important;
+  padding: 1rem !important;
+}
+
+.custom-border2 {
+  border: 1px solid #ced4da !important;
+  padding: 1rem !important;
+  height: 33.7rem !important;
+}
+
+.step-button-previous {
+  background-color: #3c7dc3 !important;
+}
+
+.step-button-next {
+  background-color: #3c7dc3 !important;
+}
+
+body {
+  background-color: #e9ecef !important;
+}
+
 .vue-step-wizard {
   width: 91rem !important;
 }

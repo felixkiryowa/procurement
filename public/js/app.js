@@ -7297,6 +7297,649 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var vue_step_wizard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-step-wizard */ "./node_modules/vue-step-wizard/dist/vue-step-wizard.common.js");
 /* harmony import */ var vue_step_wizard__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_step_wizard__WEBPACK_IMPORTED_MODULE_4__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -7414,32 +8057,44 @@ __webpack_require__.r(__webpack_exports__);
   mixins: [vue_step_wizard__WEBPACK_IMPORTED_MODULE_4__["ValidationHelper"]],
   data: function data() {
     return {
+      challengeNumber1: "",
+      challengeNumber2: "",
       formData: {
         account_type: "",
-        fullName: "",
         companyName: "",
-        referral: ""
+        referral: "",
+        rganisationName: "",
+        businessType: "",
+        procurementCategory: [],
+        briefDescription: "",
+        userName: "",
+        password: "",
+        confirmPassword: "",
+        email: "",
+        companyPhoneNumber: "",
+        secretQuestion: "",
+        secretAnswer: "",
+        challengeAnswer: "",
+        country: "",
+        registrationNumber: "",
+        taxId: "",
+        codeSentToEmail: "",
+        firstName: "",
+        lastName: "",
+        address: "",
+        city: "",
+        originCountry: "",
+        region: "",
+        zipCode: ""
       },
-      validationRules: [{
-        fullName: {
-          required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
-        },
-        account_type: {
-          required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
-        }
-      }, {
-        companyName: {
-          required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
-        }
-      }, {
-        referral: {
-          required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
-        }
-      }]
+      validationRules: [// { account_type: { required } },
+        // { companyName: { required } },
+        // { referral: { required } },
+      ]
     };
   },
   mounted: function mounted() {},
-  computed: {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])("registration", ["isLoading"])), Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])("registration", ["allCountries"])), {}, {
     user: function user() {
       return this.$page.props.auth.user;
     },
@@ -7449,15 +8104,22 @@ __webpack_require__.r(__webpack_exports__);
     checkIfUserIsIdle: function checkIfUserIsIdle() {
       return this.isAppIdle ? true : false;
     }
-  },
-  methods: {
+  }),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])("chartofaccounts", ["showLoader", "hideLoader"])), {}, {
     submitRegistration: function submitRegistration() {},
     nextStep: function nextStep() {
       console.log("Next Step");
     },
     previousStep: function previousStep() {
       console.log("Previous Step");
+    },
+    generateNumbers: function generateNumbers() {
+      this.challengeNumber1 = Math.floor(Math.random() * 101);
+      this.challengeNumber2 = Math.floor(Math.random() * 101);
     }
+  }),
+  created: function created() {
+    this.generateNumbers();
   },
   components: {
     NavBarComponent: _NavBar_NavBarComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -95581,121 +96243,82 @@ var render = function () {
                         attrs: { title: "Choose Account Type", selected: true },
                       },
                       [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("label", { attrs: { for: "fullName" } }, [
-                            _vm._v("Full Name"),
-                          ]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
+                        _c("div", { staticClass: "custom-border1" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "account_type" } }, [
+                              _vm._v("Account Type"),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "select",
                               {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.formData.fullName,
-                                expression: "formData.fullName",
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.formData.account_type,
+                                    expression: "formData.account_type",
+                                  },
+                                ],
+                                staticClass: "form-control",
+                                class: _vm.hasError("account_type")
+                                  ? "is-invalid"
+                                  : "",
+                                on: {
+                                  change: function ($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call(
+                                        $event.target.options,
+                                        function (o) {
+                                          return o.selected
+                                        }
+                                      )
+                                      .map(function (o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.formData,
+                                      "account_type",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  },
+                                },
                               },
-                            ],
-                            staticClass: "form-control",
-                            class: _vm.hasError("fullName") ? "is-invalid" : "",
-                            attrs: {
-                              type: "text",
-                              placeholder: "Enter your name",
-                            },
-                            domProps: { value: _vm.formData.fullName },
-                            on: {
-                              input: function ($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.formData,
-                                  "fullName",
-                                  $event.target.value
-                                )
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _vm.hasError("fullName")
-                            ? _c("div", { staticClass: "invalid-feedback" }, [
-                                !_vm.$v.formData.fullName.required
-                                  ? _c("div", { staticClass: "error" }, [
-                                      _vm._v(
-                                        "\n                    Please provide a valid name.\n                  "
-                                      ),
-                                    ])
-                                  : _vm._e(),
-                              ])
-                            : _vm._e(),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("label", { attrs: { for: "account_type" } }, [
-                            _vm._v("Account Type"),
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "", disabled: "" } },
+                                  [_vm._v("Choose Option")]
+                                ),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "Provider" } }, [
+                                  _vm._v(
+                                    "\n                      Register As Service Provider\n                    "
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "Company" } }, [
+                                  _vm._v("Register As A Company"),
+                                ]),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm.hasError("account_type")
+                              ? _c("div", { staticClass: "invalid-feedback" }, [
+                                  !_vm.$v.formData.account_type.required
+                                    ? _c("div", { staticClass: "error" }, [
+                                        _vm._v(
+                                          "\n                      Choose An Account Type\n                    "
+                                        ),
+                                      ])
+                                    : _vm._e(),
+                                ])
+                              : _vm._e(),
                           ]),
-                          _vm._v(" "),
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.formData.account_type,
-                                  expression: "formData.account_type",
-                                },
-                              ],
-                              staticClass: "form-control",
-                              class: _vm.hasError("account_type")
-                                ? "is-invalid"
-                                : "",
-                              on: {
-                                change: function ($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function (o) {
-                                      return o.selected
-                                    })
-                                    .map(function (o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.$set(
-                                    _vm.formData,
-                                    "account_type",
-                                    $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  )
-                                },
-                              },
-                            },
-                            [
-                              _c("option", { attrs: { value: "" } }, [
-                                _vm._v("Choose Option"),
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "Provider" } }, [
-                                _vm._v("Service Provider"),
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "Company" } }, [
-                                _vm._v("Company"),
-                              ]),
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _vm.hasError("account_type")
-                            ? _c("div", { staticClass: "invalid-feedback" }, [
-                                !_vm.$v.formData.account_type.required
-                                  ? _c("div", { staticClass: "error" }, [
-                                      _vm._v(
-                                        "\n                    Choose An Account Type\n                  "
-                                      ),
-                                    ])
-                                  : _vm._e(),
-                              ])
-                            : _vm._e(),
                         ]),
                       ]
                     ),
@@ -95704,120 +96327,2015 @@ var render = function () {
                       "tab-content",
                       { attrs: { title: "About Your Account" } },
                       [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("label", { attrs: { for: "companyName" } }, [
-                            _vm._v("Your Company Name"),
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-5" }, [
+                            _c("div", { staticClass: "custom-border" }, [
+                              _c("fieldset", [
+                                _c("legend", [
+                                  _vm._v("About Your Organisation"),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c(
+                                    "label",
+                                    { attrs: { for: "organisationName" } },
+                                    [_vm._v("Organization Name")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.formData.fullName,
+                                        expression: "formData.fullName",
+                                      },
+                                    ],
+                                    staticClass: "form-control",
+                                    class: _vm.hasError("organisationName")
+                                      ? "is-invalid"
+                                      : "",
+                                    attrs: {
+                                      type: "text",
+                                      placeholder: "Enter Organisation Name",
+                                    },
+                                    domProps: { value: _vm.formData.fullName },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.formData,
+                                          "fullName",
+                                          $event.target.value
+                                        )
+                                      },
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.hasError("organisationName")
+                                    ? _c(
+                                        "div",
+                                        { staticClass: "invalid-feedback" },
+                                        [
+                                          !_vm.$v.formData.organisationName
+                                            .required
+                                            ? _c(
+                                                "div",
+                                                { staticClass: "error" },
+                                                [
+                                                  _vm._v(
+                                                    "\n                            Organisation Name is required.\n                          "
+                                                  ),
+                                                ]
+                                              )
+                                            : _vm._e(),
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c(
+                                    "label",
+                                    { attrs: { for: "businessType" } },
+                                    [_vm._v("Business Type")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.formData.businessType,
+                                          expression: "formData.businessType",
+                                        },
+                                      ],
+                                      staticClass: "form-control",
+                                      class: _vm.hasError("businessType")
+                                        ? "is-invalid"
+                                        : "",
+                                      on: {
+                                        change: function ($event) {
+                                          var $$selectedVal =
+                                            Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function (o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function (o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                          _vm.$set(
+                                            _vm.formData,
+                                            "businessType",
+                                            $event.target.multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
+                                          )
+                                        },
+                                      },
+                                    },
+                                    [
+                                      _c(
+                                        "option",
+                                        { attrs: { value: "", disabled: "" } },
+                                        [_vm._v("Choose Option")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "option",
+                                        { attrs: { value: "SME" } },
+                                        [_vm._v("SME")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "option",
+                                        { attrs: { value: "None SME" } },
+                                        [_vm._v("None SME")]
+                                      ),
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm.hasError("businessType")
+                                    ? _c(
+                                        "div",
+                                        { staticClass: "invalid-feedback" },
+                                        [
+                                          !_vm.$v.formData.businessType.required
+                                            ? _c(
+                                                "div",
+                                                { staticClass: "error" },
+                                                [
+                                                  _vm._v(
+                                                    "\n                            Business Type is required\n                          "
+                                                  ),
+                                                ]
+                                              )
+                                            : _vm._e(),
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                ]),
+                                _vm._v(" "),
+                                _c("p", [
+                                  _vm._v("Select Procurement Category"),
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-check form-check-inline",
+                                  },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value:
+                                            _vm.formData.procurementCategory,
+                                          expression:
+                                            "formData.procurementCategory",
+                                        },
+                                      ],
+                                      staticClass: "form-check-input",
+                                      attrs: {
+                                        type: "checkbox",
+                                        id: "Goods",
+                                        value: "Goods",
+                                      },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          _vm.formData.procurementCategory
+                                        )
+                                          ? _vm._i(
+                                              _vm.formData.procurementCategory,
+                                              "Goods"
+                                            ) > -1
+                                          : _vm.formData.procurementCategory,
+                                      },
+                                      on: {
+                                        change: function ($event) {
+                                          var $$a =
+                                              _vm.formData.procurementCategory,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = "Goods",
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  _vm.formData,
+                                                  "procurementCategory",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  _vm.formData,
+                                                  "procurementCategory",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(
+                                              _vm.formData,
+                                              "procurementCategory",
+                                              $$c
+                                            )
+                                          }
+                                        },
+                                      },
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "form-check-label",
+                                        attrs: { for: "Goods" },
+                                      },
+                                      [_vm._v("Goods")]
+                                    ),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-check form-check-inline",
+                                  },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value:
+                                            _vm.formData.procurementCategory,
+                                          expression:
+                                            "formData.procurementCategory",
+                                        },
+                                      ],
+                                      staticClass: "form-check-input",
+                                      attrs: {
+                                        type: "checkbox",
+                                        id: "Services",
+                                        value: "Services",
+                                      },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          _vm.formData.procurementCategory
+                                        )
+                                          ? _vm._i(
+                                              _vm.formData.procurementCategory,
+                                              "Services"
+                                            ) > -1
+                                          : _vm.formData.procurementCategory,
+                                      },
+                                      on: {
+                                        change: function ($event) {
+                                          var $$a =
+                                              _vm.formData.procurementCategory,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = "Services",
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  _vm.formData,
+                                                  "procurementCategory",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  _vm.formData,
+                                                  "procurementCategory",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(
+                                              _vm.formData,
+                                              "procurementCategory",
+                                              $$c
+                                            )
+                                          }
+                                        },
+                                      },
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "form-check-label",
+                                        attrs: { for: "Services" },
+                                      },
+                                      [_vm._v("Services")]
+                                    ),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-check form-check-inline",
+                                  },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value:
+                                            _vm.formData.procurementCategory,
+                                          expression:
+                                            "formData.procurementCategory",
+                                        },
+                                      ],
+                                      staticClass: "form-check-input",
+                                      attrs: {
+                                        type: "checkbox",
+                                        id: "Works",
+                                        value: "Works",
+                                      },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          _vm.formData.procurementCategory
+                                        )
+                                          ? _vm._i(
+                                              _vm.formData.procurementCategory,
+                                              "Works"
+                                            ) > -1
+                                          : _vm.formData.procurementCategory,
+                                      },
+                                      on: {
+                                        change: function ($event) {
+                                          var $$a =
+                                              _vm.formData.procurementCategory,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = "Works",
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  _vm.formData,
+                                                  "procurementCategory",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  _vm.formData,
+                                                  "procurementCategory",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(
+                                              _vm.formData,
+                                              "procurementCategory",
+                                              $$c
+                                            )
+                                          }
+                                        },
+                                      },
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "form-check-label",
+                                        attrs: { for: "Works" },
+                                      },
+                                      [_vm._v("Works")]
+                                    ),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c(
+                                    "label",
+                                    { attrs: { for: "briefDescription" } },
+                                    [
+                                      _vm._v(
+                                        "Brief Description about organisations"
+                                      ),
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("textarea", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.formData.briefDescription,
+                                        expression: "formData.briefDescription",
+                                      },
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: { rows: "3" },
+                                    domProps: {
+                                      value: _vm.formData.briefDescription,
+                                    },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.formData,
+                                          "briefDescription",
+                                          $event.target.value
+                                        )
+                                      },
+                                    },
+                                  }),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _c("fieldset", [
+                                    _c("legend", [
+                                      _vm._v("Your Organization Registration"),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "row" }, [
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _c(
+                                          "div",
+                                          { staticClass: "form-group" },
+                                          [
+                                            _c(
+                                              "label",
+                                              { attrs: { for: "taxId" } },
+                                              [_vm._v("Tax ID")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.formData.taxId,
+                                                  expression: "formData.taxId",
+                                                },
+                                              ],
+                                              staticClass: "form-control",
+                                              class: _vm.hasError("taxId")
+                                                ? "is-invalid"
+                                                : "",
+                                              attrs: {
+                                                type: "text",
+                                                placeholder: "Enter Tax Id",
+                                              },
+                                              domProps: {
+                                                value: _vm.formData.taxId,
+                                              },
+                                              on: {
+                                                input: function ($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.$set(
+                                                    _vm.formData,
+                                                    "taxId",
+                                                    $event.target.value
+                                                  )
+                                                },
+                                              },
+                                            }),
+                                            _vm._v(" "),
+                                            _vm.hasError("taxId")
+                                              ? _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "invalid-feedback",
+                                                  },
+                                                  [
+                                                    !_vm.$v.formData.taxId
+                                                      .required
+                                                      ? _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "error",
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                    Tax ID is required\n                                  "
+                                                            ),
+                                                          ]
+                                                        )
+                                                      : _vm._e(),
+                                                  ]
+                                                )
+                                              : _vm._e(),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _c(
+                                          "div",
+                                          { staticClass: "form-group" },
+                                          [
+                                            _c(
+                                              "label",
+                                              {
+                                                attrs: {
+                                                  for: "registrationNumber",
+                                                },
+                                              },
+                                              [_vm._v("Registration Number")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value:
+                                                    _vm.formData
+                                                      .registrationNumber,
+                                                  expression:
+                                                    "formData.registrationNumber",
+                                                },
+                                              ],
+                                              staticClass: "form-control",
+                                              class: _vm.hasError(
+                                                "registrationNumber"
+                                              )
+                                                ? "is-invalid"
+                                                : "",
+                                              attrs: {
+                                                type: "text",
+                                                placeholder:
+                                                  "Enter Registration Number",
+                                              },
+                                              domProps: {
+                                                value:
+                                                  _vm.formData
+                                                    .registrationNumber,
+                                              },
+                                              on: {
+                                                input: function ($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.$set(
+                                                    _vm.formData,
+                                                    "registrationNumber",
+                                                    $event.target.value
+                                                  )
+                                                },
+                                              },
+                                            }),
+                                            _vm._v(" "),
+                                            _vm.hasError("registrationNumber")
+                                              ? _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "invalid-feedback",
+                                                  },
+                                                  [
+                                                    !_vm.$v.formData
+                                                      .registrationNumber
+                                                      .required
+                                                      ? _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "error",
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                    Registration number is required\n                                  "
+                                                            ),
+                                                          ]
+                                                        )
+                                                      : _vm._e(),
+                                                  ]
+                                                )
+                                              : _vm._e(),
+                                          ]
+                                        ),
+                                      ]),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c(
+                                        "label",
+                                        { attrs: { for: "country" } },
+                                        [_vm._v("Country")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "select",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.formData.country,
+                                              expression: "formData.country",
+                                            },
+                                          ],
+                                          staticClass: "form-control",
+                                          class: _vm.hasError("country")
+                                            ? "is-invalid"
+                                            : "",
+                                          on: {
+                                            change: function ($event) {
+                                              var $$selectedVal =
+                                                Array.prototype.filter
+                                                  .call(
+                                                    $event.target.options,
+                                                    function (o) {
+                                                      return o.selected
+                                                    }
+                                                  )
+                                                  .map(function (o) {
+                                                    var val =
+                                                      "_value" in o
+                                                        ? o._value
+                                                        : o.value
+                                                    return val
+                                                  })
+                                              _vm.$set(
+                                                _vm.formData,
+                                                "country",
+                                                $event.target.multiple
+                                                  ? $$selectedVal
+                                                  : $$selectedVal[0]
+                                              )
+                                            },
+                                          },
+                                        },
+                                        [
+                                          _c(
+                                            "option",
+                                            { attrs: { value: "" } },
+                                            [_vm._v("Choose a country")]
+                                          ),
+                                          _vm._v(" "),
+                                          _vm._l(
+                                            _vm.allCountries,
+                                            function (country) {
+                                              return _c(
+                                                "option",
+                                                {
+                                                  key: country.name,
+                                                  domProps: {
+                                                    value: country.name,
+                                                  },
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                " +
+                                                      _vm._s(country.name) +
+                                                      "\n                              "
+                                                  ),
+                                                ]
+                                              )
+                                            }
+                                          ),
+                                        ],
+                                        2
+                                      ),
+                                      _vm._v(" "),
+                                      _vm.hasError("country")
+                                        ? _c(
+                                            "div",
+                                            { staticClass: "invalid-feedback" },
+                                            [
+                                              !_vm.$v.formData.country.required
+                                                ? _c(
+                                                    "div",
+                                                    { staticClass: "error" },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                Country field is required\n                              "
+                                                      ),
+                                                    ]
+                                                  )
+                                                : _vm._e(),
+                                            ]
+                                          )
+                                        : _vm._e(),
+                                    ]),
+                                  ]),
+                                ]),
+                              ]),
+                            ]),
                           ]),
                           _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.formData.companyName,
-                                expression: "formData.companyName",
-                              },
-                            ],
-                            staticClass: "form-control",
-                            class: _vm.hasError("companyName")
-                              ? "is-invalid"
-                              : "",
-                            attrs: {
-                              type: "text",
-                              placeholder:
-                                "Enter your Company / Organization name",
-                            },
-                            domProps: { value: _vm.formData.companyName },
-                            on: {
-                              input: function ($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.formData,
-                                  "companyName",
-                                  $event.target.value
-                                )
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _vm.hasError("companyName")
-                            ? _c("div", { staticClass: "invalid-feedback" }, [
-                                !_vm.$v.formData.companyName.required
-                                  ? _c("div", { staticClass: "error" }, [
-                                      _vm._v(
-                                        "\n                    Please provide a valid company name.\n                  "
+                          _c("div", { staticClass: "col-md-7" }, [
+                            _c("div", { staticClass: "custom-border" }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _c("fieldset", [
+                                    _c("legend", [
+                                      _vm._v("Your Account Details"),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c(
+                                        "label",
+                                        { attrs: { for: "userName" } },
+                                        [_vm._v("Username")]
                                       ),
-                                    ])
-                                  : _vm._e(),
-                              ])
-                            : _vm._e(),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.formData.userName,
+                                            expression: "formData.userName",
+                                          },
+                                        ],
+                                        staticClass: "form-control",
+                                        class: _vm.hasError("userName")
+                                          ? "is-invalid"
+                                          : "",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder:
+                                            "Enter Username(Minimum with 6 characters)",
+                                        },
+                                        domProps: {
+                                          value: _vm.formData.userName,
+                                        },
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.formData,
+                                              "userName",
+                                              $event.target.value
+                                            )
+                                          },
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _vm.hasError("userName")
+                                        ? _c(
+                                            "div",
+                                            { staticClass: "invalid-feedback" },
+                                            [
+                                              !_vm.$v.formData.userName.required
+                                                ? _c(
+                                                    "div",
+                                                    { staticClass: "error" },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                Username is required\n                              "
+                                                      ),
+                                                    ]
+                                                  )
+                                                : _vm._e(),
+                                            ]
+                                          )
+                                        : _vm._e(),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "row" }, [
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _c(
+                                          "div",
+                                          { staticClass: "form-group" },
+                                          [
+                                            _c(
+                                              "label",
+                                              { attrs: { for: "password" } },
+                                              [_vm._v("Password")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.formData.password,
+                                                  expression:
+                                                    "formData.password",
+                                                },
+                                              ],
+                                              staticClass: "form-control",
+                                              class: _vm.hasError("password")
+                                                ? "is-invalid"
+                                                : "",
+                                              attrs: {
+                                                type: "password",
+                                                placeholder:
+                                                  "Enter Pawword(Minimum with 8 characters)",
+                                              },
+                                              domProps: {
+                                                value: _vm.formData.password,
+                                              },
+                                              on: {
+                                                input: function ($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.$set(
+                                                    _vm.formData,
+                                                    "password",
+                                                    $event.target.value
+                                                  )
+                                                },
+                                              },
+                                            }),
+                                            _vm._v(" "),
+                                            _vm.hasError("password")
+                                              ? _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "invalid-feedback",
+                                                  },
+                                                  [
+                                                    !_vm.$v.formData.password
+                                                      .required
+                                                      ? _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "error",
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                    Password is required\n                                  "
+                                                            ),
+                                                          ]
+                                                        )
+                                                      : _vm._e(),
+                                                  ]
+                                                )
+                                              : _vm._e(),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _c(
+                                          "div",
+                                          { staticClass: "form-group" },
+                                          [
+                                            _c(
+                                              "label",
+                                              {
+                                                attrs: {
+                                                  for: "confirmPassword",
+                                                },
+                                              },
+                                              [_vm._v("Confirm Password")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.formData.password,
+                                                  expression:
+                                                    "formData.password",
+                                                },
+                                              ],
+                                              staticClass: "form-control",
+                                              class: _vm.hasError(
+                                                "confirmPassword"
+                                              )
+                                                ? "is-invalid"
+                                                : "",
+                                              attrs: {
+                                                type: "password",
+                                                placeholder:
+                                                  "Enter Pawword(Minimum with 8 characters)",
+                                              },
+                                              domProps: {
+                                                value: _vm.formData.password,
+                                              },
+                                              on: {
+                                                input: function ($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.$set(
+                                                    _vm.formData,
+                                                    "password",
+                                                    $event.target.value
+                                                  )
+                                                },
+                                              },
+                                            }),
+                                            _vm._v(" "),
+                                            _vm.hasError("confirmPassword")
+                                              ? _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "invalid-feedback",
+                                                  },
+                                                  [
+                                                    !_vm.$v.formData
+                                                      .confirmPassword.required
+                                                      ? _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "error",
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                    Confirm Password field is required\n                                  "
+                                                            ),
+                                                          ]
+                                                        )
+                                                      : _vm._e(),
+                                                  ]
+                                                )
+                                              : _vm._e(),
+                                          ]
+                                        ),
+                                      ]),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", { attrs: { for: "email" } }, [
+                                        _vm._v("Email"),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.formData.email,
+                                            expression: "formData.email",
+                                          },
+                                        ],
+                                        staticClass: "form-control",
+                                        class: _vm.hasError("email")
+                                          ? "is-invalid"
+                                          : "",
+                                        attrs: {
+                                          type: "email",
+                                          placeholder: "Enter Email Address",
+                                        },
+                                        domProps: { value: _vm.formData.email },
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.formData,
+                                              "email",
+                                              $event.target.value
+                                            )
+                                          },
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _vm.hasError("email")
+                                        ? _c(
+                                            "div",
+                                            { staticClass: "invalid-feedback" },
+                                            [
+                                              !_vm.$v.formData.email.required
+                                                ? _c(
+                                                    "div",
+                                                    { staticClass: "error" },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                Email Address field is required\n                              "
+                                                      ),
+                                                    ]
+                                                  )
+                                                : _vm._e(),
+                                            ]
+                                          )
+                                        : _vm._e(),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "row" }, [
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _c(
+                                          "div",
+                                          { staticClass: "form-group" },
+                                          [
+                                            _c(
+                                              "label",
+                                              { attrs: { for: "email" } },
+                                              [_vm._v("Company Phone Number")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value:
+                                                    _vm.formData
+                                                      .companyPhoneNumber,
+                                                  expression:
+                                                    "formData.companyPhoneNumber",
+                                                },
+                                              ],
+                                              staticClass: "form-control",
+                                              class: _vm.hasError(
+                                                "companyPhoneNumber"
+                                              )
+                                                ? "is-invalid"
+                                                : "",
+                                              attrs: {
+                                                type: "number",
+                                                placeholder:
+                                                  "Enter Phone Number",
+                                              },
+                                              domProps: {
+                                                value:
+                                                  _vm.formData
+                                                    .companyPhoneNumber,
+                                              },
+                                              on: {
+                                                input: function ($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.$set(
+                                                    _vm.formData,
+                                                    "companyPhoneNumber",
+                                                    $event.target.value
+                                                  )
+                                                },
+                                              },
+                                            }),
+                                            _vm._v(" "),
+                                            _vm.hasError("companyPhoneNumber")
+                                              ? _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "invalid-feedback",
+                                                  },
+                                                  [
+                                                    !_vm.$v.formData
+                                                      .companyPhoneNumber
+                                                      .required
+                                                      ? _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "error",
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                    Phone Number field is required\n                                  "
+                                                            ),
+                                                          ]
+                                                        )
+                                                      : _vm._e(),
+                                                  ]
+                                                )
+                                              : _vm._e(),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _c(
+                                          "div",
+                                          { staticClass: "form-group" },
+                                          [
+                                            _c(
+                                              "label",
+                                              {
+                                                attrs: {
+                                                  for: "alternativeCompanyPhoneNumber",
+                                                },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "Alternative Company Phone\n                                  Number(Optional)"
+                                                ),
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value:
+                                                    _vm.formData
+                                                      .alternativeCompanyPhoneNumber,
+                                                  expression:
+                                                    "\n                                    formData.alternativeCompanyPhoneNumber\n                                  ",
+                                                },
+                                              ],
+                                              staticClass: "form-control",
+                                              class: _vm.hasError(
+                                                "alternativeCompanyPhoneNumber"
+                                              )
+                                                ? "is-invalid"
+                                                : "",
+                                              attrs: {
+                                                type: "number",
+                                                placeholder:
+                                                  "Enter Alternative Phone Number",
+                                              },
+                                              domProps: {
+                                                value:
+                                                  _vm.formData
+                                                    .alternativeCompanyPhoneNumber,
+                                              },
+                                              on: {
+                                                input: function ($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.$set(
+                                                    _vm.formData,
+                                                    "alternativeCompanyPhoneNumber",
+                                                    $event.target.value
+                                                  )
+                                                },
+                                              },
+                                            }),
+                                          ]
+                                        ),
+                                      ]),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "row" }, [
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _c(
+                                          "div",
+                                          { staticClass: "form-group" },
+                                          [
+                                            _c(
+                                              "label",
+                                              {
+                                                attrs: {
+                                                  for: "secretQuestion",
+                                                },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "From Where did you hear about us"
+                                                ),
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "select",
+                                              {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model",
+                                                    value:
+                                                      _vm.formData
+                                                        .secretQuestion,
+                                                    expression:
+                                                      "formData.secretQuestion",
+                                                  },
+                                                ],
+                                                staticClass: "form-control",
+                                                class: _vm.hasError(
+                                                  "secretQuestion"
+                                                )
+                                                  ? "is-invalid"
+                                                  : "",
+                                                on: {
+                                                  change: function ($event) {
+                                                    var $$selectedVal =
+                                                      Array.prototype.filter
+                                                        .call(
+                                                          $event.target.options,
+                                                          function (o) {
+                                                            return o.selected
+                                                          }
+                                                        )
+                                                        .map(function (o) {
+                                                          var val =
+                                                            "_value" in o
+                                                              ? o._value
+                                                              : o.value
+                                                          return val
+                                                        })
+                                                    _vm.$set(
+                                                      _vm.formData,
+                                                      "secretQuestion",
+                                                      $event.target.multiple
+                                                        ? $$selectedVal
+                                                        : $$selectedVal[0]
+                                                    )
+                                                  },
+                                                },
+                                              },
+                                              [
+                                                _c(
+                                                  "option",
+                                                  { attrs: { value: "" } },
+                                                  [_vm._v("Choose an option")]
+                                                ),
+                                                _vm._v(" "),
+                                                _c("option", [
+                                                  _vm._v("Newspaper"),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("option", [
+                                                  _vm._v("Online Ad"),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("option", [
+                                                  _vm._v("Friend"),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("option", [_vm._v("Other")]),
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _vm.hasError("secretQuestion")
+                                              ? _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "invalid-feedback",
+                                                  },
+                                                  [
+                                                    !_vm.$v.formData
+                                                      .secretQuestion.required
+                                                      ? _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "error",
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                    Choose a secret question\n                                  "
+                                                            ),
+                                                          ]
+                                                        )
+                                                      : _vm._e(),
+                                                  ]
+                                                )
+                                              : _vm._e(),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _c(
+                                          "div",
+                                          { staticClass: "form-group" },
+                                          [
+                                            _c(
+                                              "label",
+                                              {
+                                                attrs: { for: "secretAnswer" },
+                                              },
+                                              [_vm._v("Secret Answer")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value:
+                                                    _vm.formData.secretAnswer,
+                                                  expression:
+                                                    "formData.secretAnswer",
+                                                },
+                                              ],
+                                              staticClass: "form-control",
+                                              class: _vm.hasError(
+                                                "secretAnswer"
+                                              )
+                                                ? "is-invalid"
+                                                : "",
+                                              attrs: {
+                                                type: "text",
+                                                placeholder:
+                                                  "Enter Phone Number",
+                                              },
+                                              domProps: {
+                                                value:
+                                                  _vm.formData.secretAnswer,
+                                              },
+                                              on: {
+                                                input: function ($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.$set(
+                                                    _vm.formData,
+                                                    "secretAnswer",
+                                                    $event.target.value
+                                                  )
+                                                },
+                                              },
+                                            }),
+                                            _vm._v(" "),
+                                            _vm.hasError("secretAnswer")
+                                              ? _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "invalid-feedback",
+                                                  },
+                                                  [
+                                                    !_vm.$v.formData
+                                                      .secretAnswer.required
+                                                      ? _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "error",
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                    Secret Answer field is required\n                                  "
+                                                            ),
+                                                          ]
+                                                        )
+                                                      : _vm._e(),
+                                                  ]
+                                                )
+                                              : _vm._e(),
+                                          ]
+                                        ),
+                                      ]),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("hr"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("fieldset", [
+                                    _c("legend", [
+                                      _vm._v("Verify that your not a reboot"),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "row" }, [
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _vm._v(
+                                          "\n                              Answer this problem to prove you are human:\n                              "
+                                        ),
+                                        _c("b", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.challengeNumber1.toString()
+                                            )
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("b", [_vm._v("+")]),
+                                        _vm._v(" "),
+                                        _c("b", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.challengeNumber2.toString()
+                                            )
+                                          ),
+                                        ]),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _c(
+                                          "div",
+                                          { staticClass: "form-group" },
+                                          [
+                                            _c(
+                                              "label",
+                                              {
+                                                attrs: {
+                                                  for: "challengeAnswer",
+                                                },
+                                              },
+                                              [_vm._v("Enter Challenge Answer")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value:
+                                                    _vm.formData
+                                                      .challengeAnswer,
+                                                  expression:
+                                                    "formData.challengeAnswer",
+                                                },
+                                              ],
+                                              staticClass: "form-control",
+                                              class: _vm.hasError(
+                                                "challengeAnswer"
+                                              )
+                                                ? "is-invalid"
+                                                : "",
+                                              attrs: {
+                                                type: "number",
+                                                placeholder:
+                                                  "Enter Phone Number",
+                                              },
+                                              domProps: {
+                                                value:
+                                                  _vm.formData.challengeAnswer,
+                                              },
+                                              on: {
+                                                input: function ($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.$set(
+                                                    _vm.formData,
+                                                    "challengeAnswer",
+                                                    $event.target.value
+                                                  )
+                                                },
+                                              },
+                                            }),
+                                            _vm._v(" "),
+                                            _vm.hasError("challengeAnswer")
+                                              ? _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "invalid-feedback",
+                                                  },
+                                                  [
+                                                    !_vm.$v.formData
+                                                      .challengeAnswer.required
+                                                      ? _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "error",
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                    Challenge Answer field is required\n                                  "
+                                                            ),
+                                                          ]
+                                                        )
+                                                      : _vm._e(),
+                                                  ]
+                                                )
+                                              : _vm._e(),
+                                          ]
+                                        ),
+                                      ]),
+                                    ]),
+                                  ]),
+                                ]),
+                              ]),
+                            ]),
+                          ]),
                         ]),
                       ]
                     ),
                     _vm._v(" "),
                     _c("tab-content", { attrs: { title: "Confirm Contact" } }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "referral" } }, [
-                          _vm._v("From Where did you hear about us"),
+                      _c("div", { staticClass: "custom-border2" }, [
+                        _c("fieldset", [
+                          _c("legend", [_vm._v("Confirm Your Email Address")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "codeSentToEmail" } }, [
+                              _vm._v("Enter Code"),
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.formData.codeSentToEmail,
+                                  expression: "formData.codeSentToEmail",
+                                },
+                              ],
+                              staticClass: "form-control",
+                              class: _vm.hasError("codeSentToEmail")
+                                ? "is-invalid"
+                                : "",
+                              attrs: {
+                                type: "number",
+                                placeholder: "Enter Code Sent To Your Email",
+                              },
+                              domProps: { value: _vm.formData.codeSentToEmail },
+                              on: {
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.formData,
+                                    "codeSentToEmail",
+                                    $event.target.value
+                                  )
+                                },
+                              },
+                            }),
+                            _vm._v(" "),
+                            _vm.hasError("codeSentToEmail")
+                              ? _c("div", { staticClass: "invalid-feedback" }, [
+                                  !_vm.$v.formData.codeSentToEmail.required
+                                    ? _c("div", { staticClass: "error" }, [
+                                        _vm._v(
+                                          "\n                        Code Sent field is required\n                      "
+                                        ),
+                                      ])
+                                    : _vm._e(),
+                                ])
+                              : _vm._e(),
+                          ]),
                         ]),
                         _vm._v(" "),
-                        _c(
-                          "select",
-                          {
-                            directives: [
+                        _c("fieldset", [
+                          _c("legend", [_vm._v("Your Contact Address:")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-md-6" }, [
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("label", { attrs: { for: "firstName" } }, [
+                                  _vm._v("Enter First Name"),
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.formData.firstName,
+                                      expression: "formData.firstName",
+                                    },
+                                  ],
+                                  staticClass: "form-control",
+                                  class: _vm.hasError("firstName")
+                                    ? "is-invalid"
+                                    : "",
+                                  attrs: {
+                                    type: "text",
+                                    placeholder: "Enter First Name",
+                                  },
+                                  domProps: { value: _vm.formData.firstName },
+                                  on: {
+                                    input: function ($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.formData,
+                                        "firstName",
+                                        $event.target.value
+                                      )
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _vm.hasError("firstName")
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "invalid-feedback" },
+                                      [
+                                        !_vm.$v.formData.firstName.required
+                                          ? _c(
+                                              "div",
+                                              { staticClass: "error" },
+                                              [
+                                                _vm._v(
+                                                  "\n                            First Name field is required\n                          "
+                                                ),
+                                              ]
+                                            )
+                                          : _vm._e(),
+                                      ]
+                                    )
+                                  : _vm._e(),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-6" }, [
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("label", { attrs: { for: "lastName" } }, [
+                                  _vm._v("Enter Last Name"),
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.formData.lastName,
+                                      expression: "formData.lastName",
+                                    },
+                                  ],
+                                  staticClass: "form-control",
+                                  class: _vm.hasError("lastName")
+                                    ? "is-invalid"
+                                    : "",
+                                  attrs: {
+                                    type: "text",
+                                    placeholder:
+                                      "Enter Code Sent To Your Email",
+                                  },
+                                  domProps: { value: _vm.formData.lastName },
+                                  on: {
+                                    input: function ($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.formData,
+                                        "lastName",
+                                        $event.target.value
+                                      )
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _vm.hasError("lastName")
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "invalid-feedback" },
+                                      [
+                                        !_vm.$v.formData.lastName.required
+                                          ? _c(
+                                              "div",
+                                              { staticClass: "error" },
+                                              [
+                                                _vm._v(
+                                                  "\n                            Last Name field is required\n                          "
+                                                ),
+                                              ]
+                                            )
+                                          : _vm._e(),
+                                      ]
+                                    )
+                                  : _vm._e(),
+                              ]),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-md-6" }, [
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("label", { attrs: { for: "address" } }, [
+                                  _vm._v("Enter Address"),
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.formData.address,
+                                      expression: "formData.address",
+                                    },
+                                  ],
+                                  staticClass: "form-control",
+                                  class: _vm.hasError("address")
+                                    ? "is-invalid"
+                                    : "",
+                                  attrs: {
+                                    type: "text",
+                                    placeholder: "Enter Your Address",
+                                  },
+                                  domProps: { value: _vm.formData.address },
+                                  on: {
+                                    input: function ($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.formData,
+                                        "address",
+                                        $event.target.value
+                                      )
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _vm.hasError("address")
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "invalid-feedback" },
+                                      [
+                                        !_vm.$v.formData.address.required
+                                          ? _c(
+                                              "div",
+                                              { staticClass: "error" },
+                                              [
+                                                _vm._v(
+                                                  "\n                            Address field is required\n                          "
+                                                ),
+                                              ]
+                                            )
+                                          : _vm._e(),
+                                      ]
+                                    )
+                                  : _vm._e(),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-6" }, [
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("label", { attrs: { for: "city" } }, [
+                                  _vm._v("City"),
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.formData.city,
+                                      expression: "formData.city",
+                                    },
+                                  ],
+                                  staticClass: "form-control",
+                                  class: _vm.hasError("city")
+                                    ? "is-invalid"
+                                    : "",
+                                  attrs: {
+                                    type: "text",
+                                    placeholder:
+                                      "Enter Code Sent To Your Email",
+                                  },
+                                  domProps: { value: _vm.formData.city },
+                                  on: {
+                                    input: function ($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.formData,
+                                        "city",
+                                        $event.target.value
+                                      )
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _vm.hasError("city")
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "invalid-feedback" },
+                                      [
+                                        !_vm.$v.formData.city.required
+                                          ? _c(
+                                              "div",
+                                              { staticClass: "error" },
+                                              [
+                                                _vm._v(
+                                                  "\n                            City field is required\n                          "
+                                                ),
+                                              ]
+                                            )
+                                          : _vm._e(),
+                                      ]
+                                    )
+                                  : _vm._e(),
+                              ]),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-md-6" }, [
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("label", { attrs: { for: "region" } }, [
+                                  _vm._v("Zip Code"),
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.formData.region,
+                                      expression: "formData.region",
+                                    },
+                                  ],
+                                  staticClass: "form-control",
+                                  class: _vm.hasError("region")
+                                    ? "is-invalid"
+                                    : "",
+                                  attrs: {
+                                    type: "text",
+                                    placeholder: "Enter Your Region",
+                                  },
+                                  domProps: { value: _vm.formData.region },
+                                  on: {
+                                    input: function ($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.formData,
+                                        "region",
+                                        $event.target.value
+                                      )
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _vm.hasError("region")
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "invalid-feedback" },
+                                      [
+                                        !_vm.$v.formData.region.required
+                                          ? _c(
+                                              "div",
+                                              { staticClass: "error" },
+                                              [
+                                                _vm._v(
+                                                  "\n                            Region field is required\n                          "
+                                                ),
+                                              ]
+                                            )
+                                          : _vm._e(),
+                                      ]
+                                    )
+                                  : _vm._e(),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-6" }, [
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("label", { attrs: { for: "zipCode" } }, [
+                                  _vm._v("Zip Code"),
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.formData.zipCode,
+                                      expression: "formData.zipCode",
+                                    },
+                                  ],
+                                  staticClass: "form-control",
+                                  class: _vm.hasError("zipCode")
+                                    ? "is-invalid"
+                                    : "",
+                                  attrs: {
+                                    type: "text",
+                                    placeholder: "Enter Zip Code",
+                                  },
+                                  domProps: { value: _vm.formData.zipCode },
+                                  on: {
+                                    input: function ($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.formData,
+                                        "zipCode",
+                                        $event.target.value
+                                      )
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _vm.hasError("zipCode")
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "invalid-feedback" },
+                                      [
+                                        !_vm.$v.formData.zipCode.required
+                                          ? _c(
+                                              "div",
+                                              { staticClass: "error" },
+                                              [
+                                                _vm._v(
+                                                  "\n                            Zip Code field is required\n                          "
+                                                ),
+                                              ]
+                                            )
+                                          : _vm._e(),
+                                      ]
+                                    )
+                                  : _vm._e(),
+                              ]),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "originCountry" } }, [
+                              _vm._v("Country"),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "select",
                               {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.formData.referral,
-                                expression: "formData.referral",
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.formData.originCountry,
+                                    expression: "formData.originCountry",
+                                  },
+                                ],
+                                staticClass: "form-control",
+                                class: _vm.hasError("originCountry")
+                                  ? "is-invalid"
+                                  : "",
+                                on: {
+                                  change: function ($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call(
+                                        $event.target.options,
+                                        function (o) {
+                                          return o.selected
+                                        }
+                                      )
+                                      .map(function (o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.formData,
+                                      "originCountry",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  },
+                                },
                               },
-                            ],
-                            staticClass: "form-control",
-                            class: _vm.hasError("referral") ? "is-invalid" : "",
-                            on: {
-                              change: function ($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function (o) {
-                                    return o.selected
-                                  })
-                                  .map(function (o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.formData,
-                                  "referral",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              },
-                            },
-                          },
-                          [
-                            _c("option", [_vm._v("Newspaper")]),
+                              [
+                                _c("option", { attrs: { value: "" } }, [
+                                  _vm._v("Choose a country"),
+                                ]),
+                                _vm._v(" "),
+                                _vm._l(_vm.allCountries, function (country) {
+                                  return _c(
+                                    "option",
+                                    {
+                                      key: country.name,
+                                      domProps: { value: country.name },
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                        " +
+                                          _vm._s(country.name) +
+                                          "\n                      "
+                                      ),
+                                    ]
+                                  )
+                                }),
+                              ],
+                              2
+                            ),
                             _vm._v(" "),
-                            _c("option", [_vm._v("Online Ad")]),
-                            _vm._v(" "),
-                            _c("option", [_vm._v("Friend")]),
-                            _vm._v(" "),
-                            _c("option", [_vm._v("Other")]),
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _vm.hasError("referral")
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              !_vm.$v.formData.referral.required
-                                ? _c("div", { staticClass: "error" }, [
-                                    _vm._v(
-                                      "\n                    Please where you heard us from.\n                  "
-                                    ),
-                                  ])
-                                : _vm._e(),
-                            ])
-                          : _vm._e(),
+                            _vm.hasError("originCountry")
+                              ? _c("div", { staticClass: "invalid-feedback" }, [
+                                  !_vm.$v.formData.originCountry.required
+                                    ? _c("div", { staticClass: "error" }, [
+                                        _vm._v(
+                                          "\n                        Country field is required\n                      "
+                                        ),
+                                      ])
+                                    : _vm._e(),
+                                ])
+                              : _vm._e(),
+                          ]),
+                        ]),
                       ]),
                     ]),
                   ],
@@ -116742,197 +119260,777 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _modules_beneficieries__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/beneficieries */ "./resources/js/store/modules/beneficieries.js");
-/* harmony import */ var _modules_chartofaccounts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/chartofaccounts */ "./resources/js/store/modules/chartofaccounts.js");
-
+/* harmony import */ var _modules_registration__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/registration */ "./resources/js/store/modules/registration.js");
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
-    beneficiaries: _modules_beneficieries__WEBPACK_IMPORTED_MODULE_2__["default"],
-    chartofaccounts: _modules_chartofaccounts__WEBPACK_IMPORTED_MODULE_3__["default"]
+    registration: _modules_registration__WEBPACK_IMPORTED_MODULE_2__["default"]
   }
 }));
 
 /***/ }),
 
-/***/ "./resources/js/store/modules/beneficieries.js":
-/*!*****************************************************!*\
-  !*** ./resources/js/store/modules/beneficieries.js ***!
-  \*****************************************************/
+/***/ "./resources/js/store/modules/registration.js":
+/*!****************************************************!*\
+  !*** ./resources/js/store/modules/registration.js ***!
+  \****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-
 var state = {
-  orders: {
-    data: []
-  },
+  countries: [{
+    name: 'Afghanistan',
+    code: 'AF'
+  }, {
+    name: 'Åland Islands',
+    code: 'AX'
+  }, {
+    name: 'Albania',
+    code: 'AL'
+  }, {
+    name: 'Algeria',
+    code: 'DZ'
+  }, {
+    name: 'American Samoa',
+    code: 'AS'
+  }, {
+    name: 'AndorrA',
+    code: 'AD'
+  }, {
+    name: 'Angola',
+    code: 'AO'
+  }, {
+    name: 'Anguilla',
+    code: 'AI'
+  }, {
+    name: 'Antarctica',
+    code: 'AQ'
+  }, {
+    name: 'Antigua and Barbuda',
+    code: 'AG'
+  }, {
+    name: 'Argentina',
+    code: 'AR'
+  }, {
+    name: 'Armenia',
+    code: 'AM'
+  }, {
+    name: 'Aruba',
+    code: 'AW'
+  }, {
+    name: 'Australia',
+    code: 'AU'
+  }, {
+    name: 'Austria',
+    code: 'AT'
+  }, {
+    name: 'Azerbaijan',
+    code: 'AZ'
+  }, {
+    name: 'Bahamas',
+    code: 'BS'
+  }, {
+    name: 'Bahrain',
+    code: 'BH'
+  }, {
+    name: 'Bangladesh',
+    code: 'BD'
+  }, {
+    name: 'Barbados',
+    code: 'BB'
+  }, {
+    name: 'Belarus',
+    code: 'BY'
+  }, {
+    name: 'Belgium',
+    code: 'BE'
+  }, {
+    name: 'Belize',
+    code: 'BZ'
+  }, {
+    name: 'Benin',
+    code: 'BJ'
+  }, {
+    name: 'Bermuda',
+    code: 'BM'
+  }, {
+    name: 'Bhutan',
+    code: 'BT'
+  }, {
+    name: 'Bolivia',
+    code: 'BO'
+  }, {
+    name: 'Bosnia and Herzegovina',
+    code: 'BA'
+  }, {
+    name: 'Botswana',
+    code: 'BW'
+  }, {
+    name: 'Bouvet Island',
+    code: 'BV'
+  }, {
+    name: 'Brazil',
+    code: 'BR'
+  }, {
+    name: 'British Indian Ocean Territory',
+    code: 'IO'
+  }, {
+    name: 'Brunei Darussalam',
+    code: 'BN'
+  }, {
+    name: 'Bulgaria',
+    code: 'BG'
+  }, {
+    name: 'Burkina Faso',
+    code: 'BF'
+  }, {
+    name: 'Burundi',
+    code: 'BI'
+  }, {
+    name: 'Cambodia',
+    code: 'KH'
+  }, {
+    name: 'Cameroon',
+    code: 'CM'
+  }, {
+    name: 'Canada',
+    code: 'CA'
+  }, {
+    name: 'Cape Verde',
+    code: 'CV'
+  }, {
+    name: 'Cayman Islands',
+    code: 'KY'
+  }, {
+    name: 'Central African Republic',
+    code: 'CF'
+  }, {
+    name: 'Chad',
+    code: 'TD'
+  }, {
+    name: 'Chile',
+    code: 'CL'
+  }, {
+    name: 'China',
+    code: 'CN'
+  }, {
+    name: 'Christmas Island',
+    code: 'CX'
+  }, {
+    name: 'Cocos (Keeling) Islands',
+    code: 'CC'
+  }, {
+    name: 'Colombia',
+    code: 'CO'
+  }, {
+    name: 'Comoros',
+    code: 'KM'
+  }, {
+    name: 'Congo',
+    code: 'CG'
+  }, {
+    name: 'Congo, The Democratic Republic of the',
+    code: 'CD'
+  }, {
+    name: 'Cook Islands',
+    code: 'CK'
+  }, {
+    name: 'Costa Rica',
+    code: 'CR'
+  }, {
+    name: 'Cote D\'Ivoire',
+    code: 'CI'
+  }, {
+    name: 'Croatia',
+    code: 'HR'
+  }, {
+    name: 'Cuba',
+    code: 'CU'
+  }, {
+    name: 'Cyprus',
+    code: 'CY'
+  }, {
+    name: 'Czech Republic',
+    code: 'CZ'
+  }, {
+    name: 'Denmark',
+    code: 'DK'
+  }, {
+    name: 'Djibouti',
+    code: 'DJ'
+  }, {
+    name: 'Dominica',
+    code: 'DM'
+  }, {
+    name: 'Dominican Republic',
+    code: 'DO'
+  }, {
+    name: 'Ecuador',
+    code: 'EC'
+  }, {
+    name: 'Egypt',
+    code: 'EG'
+  }, {
+    name: 'El Salvador',
+    code: 'SV'
+  }, {
+    name: 'Equatorial Guinea',
+    code: 'GQ'
+  }, {
+    name: 'Eritrea',
+    code: 'ER'
+  }, {
+    name: 'Estonia',
+    code: 'EE'
+  }, {
+    name: 'Ethiopia',
+    code: 'ET'
+  }, {
+    name: 'Falkland Islands (Malvinas)',
+    code: 'FK'
+  }, {
+    name: 'Faroe Islands',
+    code: 'FO'
+  }, {
+    name: 'Fiji',
+    code: 'FJ'
+  }, {
+    name: 'Finland',
+    code: 'FI'
+  }, {
+    name: 'France',
+    code: 'FR'
+  }, {
+    name: 'French Guiana',
+    code: 'GF'
+  }, {
+    name: 'French Polynesia',
+    code: 'PF'
+  }, {
+    name: 'French Southern Territories',
+    code: 'TF'
+  }, {
+    name: 'Gabon',
+    code: 'GA'
+  }, {
+    name: 'Gambia',
+    code: 'GM'
+  }, {
+    name: 'Georgia',
+    code: 'GE'
+  }, {
+    name: 'Germany',
+    code: 'DE'
+  }, {
+    name: 'Ghana',
+    code: 'GH'
+  }, {
+    name: 'Gibraltar',
+    code: 'GI'
+  }, {
+    name: 'Greece',
+    code: 'GR'
+  }, {
+    name: 'Greenland',
+    code: 'GL'
+  }, {
+    name: 'Grenada',
+    code: 'GD'
+  }, {
+    name: 'Guadeloupe',
+    code: 'GP'
+  }, {
+    name: 'Guam',
+    code: 'GU'
+  }, {
+    name: 'Guatemala',
+    code: 'GT'
+  }, {
+    name: 'Guernsey',
+    code: 'GG'
+  }, {
+    name: 'Guinea',
+    code: 'GN'
+  }, {
+    name: 'Guinea-Bissau',
+    code: 'GW'
+  }, {
+    name: 'Guyana',
+    code: 'GY'
+  }, {
+    name: 'Haiti',
+    code: 'HT'
+  }, {
+    name: 'Heard Island and Mcdonald Islands',
+    code: 'HM'
+  }, {
+    name: 'Holy See (Vatican City State)',
+    code: 'VA'
+  }, {
+    name: 'Honduras',
+    code: 'HN'
+  }, {
+    name: 'Hong Kong',
+    code: 'HK'
+  }, {
+    name: 'Hungary',
+    code: 'HU'
+  }, {
+    name: 'Iceland',
+    code: 'IS'
+  }, {
+    name: 'India',
+    code: 'IN'
+  }, {
+    name: 'Indonesia',
+    code: 'ID'
+  }, {
+    name: 'Iran, Islamic Republic Of',
+    code: 'IR'
+  }, {
+    name: 'Iraq',
+    code: 'IQ'
+  }, {
+    name: 'Ireland',
+    code: 'IE'
+  }, {
+    name: 'Isle of Man',
+    code: 'IM'
+  }, {
+    name: 'Israel',
+    code: 'IL'
+  }, {
+    name: 'Italy',
+    code: 'IT'
+  }, {
+    name: 'Jamaica',
+    code: 'JM'
+  }, {
+    name: 'Japan',
+    code: 'JP'
+  }, {
+    name: 'Jersey',
+    code: 'JE'
+  }, {
+    name: 'Jordan',
+    code: 'JO'
+  }, {
+    name: 'Kazakhstan',
+    code: 'KZ'
+  }, {
+    name: 'Kenya',
+    code: 'KE'
+  }, {
+    name: 'Kiribati',
+    code: 'KI'
+  }, {
+    name: 'Korea, Democratic People\'S Republic of',
+    code: 'KP'
+  }, {
+    name: 'Korea, Republic of',
+    code: 'KR'
+  }, {
+    name: 'Kuwait',
+    code: 'KW'
+  }, {
+    name: 'Kyrgyzstan',
+    code: 'KG'
+  }, {
+    name: 'Lao People\'S Democratic Republic',
+    code: 'LA'
+  }, {
+    name: 'Latvia',
+    code: 'LV'
+  }, {
+    name: 'Lebanon',
+    code: 'LB'
+  }, {
+    name: 'Lesotho',
+    code: 'LS'
+  }, {
+    name: 'Liberia',
+    code: 'LR'
+  }, {
+    name: 'Libyan Arab Jamahiriya',
+    code: 'LY'
+  }, {
+    name: 'Liechtenstein',
+    code: 'LI'
+  }, {
+    name: 'Lithuania',
+    code: 'LT'
+  }, {
+    name: 'Luxembourg',
+    code: 'LU'
+  }, {
+    name: 'Macao',
+    code: 'MO'
+  }, {
+    name: 'Macedonia, The Former Yugoslav Republic of',
+    code: 'MK'
+  }, {
+    name: 'Madagascar',
+    code: 'MG'
+  }, {
+    name: 'Malawi',
+    code: 'MW'
+  }, {
+    name: 'Malaysia',
+    code: 'MY'
+  }, {
+    name: 'Maldives',
+    code: 'MV'
+  }, {
+    name: 'Mali',
+    code: 'ML'
+  }, {
+    name: 'Malta',
+    code: 'MT'
+  }, {
+    name: 'Marshall Islands',
+    code: 'MH'
+  }, {
+    name: 'Martinique',
+    code: 'MQ'
+  }, {
+    name: 'Mauritania',
+    code: 'MR'
+  }, {
+    name: 'Mauritius',
+    code: 'MU'
+  }, {
+    name: 'Mayotte',
+    code: 'YT'
+  }, {
+    name: 'Mexico',
+    code: 'MX'
+  }, {
+    name: 'Micronesia, Federated States of',
+    code: 'FM'
+  }, {
+    name: 'Moldova, Republic of',
+    code: 'MD'
+  }, {
+    name: 'Monaco',
+    code: 'MC'
+  }, {
+    name: 'Mongolia',
+    code: 'MN'
+  }, {
+    name: 'Montserrat',
+    code: 'MS'
+  }, {
+    name: 'Morocco',
+    code: 'MA'
+  }, {
+    name: 'Mozambique',
+    code: 'MZ'
+  }, {
+    name: 'Myanmar',
+    code: 'MM'
+  }, {
+    name: 'Namibia',
+    code: 'NA'
+  }, {
+    name: 'Nauru',
+    code: 'NR'
+  }, {
+    name: 'Nepal',
+    code: 'NP'
+  }, {
+    name: 'Netherlands',
+    code: 'NL'
+  }, {
+    name: 'Netherlands Antilles',
+    code: 'AN'
+  }, {
+    name: 'New Caledonia',
+    code: 'NC'
+  }, {
+    name: 'New Zealand',
+    code: 'NZ'
+  }, {
+    name: 'Nicaragua',
+    code: 'NI'
+  }, {
+    name: 'Niger',
+    code: 'NE'
+  }, {
+    name: 'Nigeria',
+    code: 'NG'
+  }, {
+    name: 'Niue',
+    code: 'NU'
+  }, {
+    name: 'Norfolk Island',
+    code: 'NF'
+  }, {
+    name: 'Northern Mariana Islands',
+    code: 'MP'
+  }, {
+    name: 'Norway',
+    code: 'NO'
+  }, {
+    name: 'Oman',
+    code: 'OM'
+  }, {
+    name: 'Pakistan',
+    code: 'PK'
+  }, {
+    name: 'Palau',
+    code: 'PW'
+  }, {
+    name: 'Palestinian Territory, Occupied',
+    code: 'PS'
+  }, {
+    name: 'Panama',
+    code: 'PA'
+  }, {
+    name: 'Papua New Guinea',
+    code: 'PG'
+  }, {
+    name: 'Paraguay',
+    code: 'PY'
+  }, {
+    name: 'Peru',
+    code: 'PE'
+  }, {
+    name: 'Philippines',
+    code: 'PH'
+  }, {
+    name: 'Pitcairn',
+    code: 'PN'
+  }, {
+    name: 'Poland',
+    code: 'PL'
+  }, {
+    name: 'Portugal',
+    code: 'PT'
+  }, {
+    name: 'Puerto Rico',
+    code: 'PR'
+  }, {
+    name: 'Qatar',
+    code: 'QA'
+  }, {
+    name: 'Reunion',
+    code: 'RE'
+  }, {
+    name: 'Romania',
+    code: 'RO'
+  }, {
+    name: 'Russian Federation',
+    code: 'RU'
+  }, {
+    name: 'RWANDA',
+    code: 'RW'
+  }, {
+    name: 'Saint Helena',
+    code: 'SH'
+  }, {
+    name: 'Saint Kitts and Nevis',
+    code: 'KN'
+  }, {
+    name: 'Saint Lucia',
+    code: 'LC'
+  }, {
+    name: 'Saint Pierre and Miquelon',
+    code: 'PM'
+  }, {
+    name: 'Saint Vincent and the Grenadines',
+    code: 'VC'
+  }, {
+    name: 'Samoa',
+    code: 'WS'
+  }, {
+    name: 'San Marino',
+    code: 'SM'
+  }, {
+    name: 'Sao Tome and Principe',
+    code: 'ST'
+  }, {
+    name: 'Saudi Arabia',
+    code: 'SA'
+  }, {
+    name: 'Senegal',
+    code: 'SN'
+  }, {
+    name: 'Serbia and Montenegro',
+    code: 'CS'
+  }, {
+    name: 'Seychelles',
+    code: 'SC'
+  }, {
+    name: 'Sierra Leone',
+    code: 'SL'
+  }, {
+    name: 'Singapore',
+    code: 'SG'
+  }, {
+    name: 'Slovakia',
+    code: 'SK'
+  }, {
+    name: 'Slovenia',
+    code: 'SI'
+  }, {
+    name: 'Solomon Islands',
+    code: 'SB'
+  }, {
+    name: 'Somalia',
+    code: 'SO'
+  }, {
+    name: 'South Africa',
+    code: 'ZA'
+  }, {
+    name: 'South Georgia and the South Sandwich Islands',
+    code: 'GS'
+  }, {
+    name: 'Spain',
+    code: 'ES'
+  }, {
+    name: 'Sri Lanka',
+    code: 'LK'
+  }, {
+    name: 'Sudan',
+    code: 'SD'
+  }, {
+    name: 'Suriname',
+    code: 'SR'
+  }, {
+    name: 'Svalbard and Jan Mayen',
+    code: 'SJ'
+  }, {
+    name: 'Swaziland',
+    code: 'SZ'
+  }, {
+    name: 'Sweden',
+    code: 'SE'
+  }, {
+    name: 'Switzerland',
+    code: 'CH'
+  }, {
+    name: 'Syrian Arab Republic',
+    code: 'SY'
+  }, {
+    name: 'Taiwan, Province of China',
+    code: 'TW'
+  }, {
+    name: 'Tajikistan',
+    code: 'TJ'
+  }, {
+    name: 'Tanzania, United Republic of',
+    code: 'TZ'
+  }, {
+    name: 'Thailand',
+    code: 'TH'
+  }, {
+    name: 'Timor-Leste',
+    code: 'TL'
+  }, {
+    name: 'Togo',
+    code: 'TG'
+  }, {
+    name: 'Tokelau',
+    code: 'TK'
+  }, {
+    name: 'Tonga',
+    code: 'TO'
+  }, {
+    name: 'Trinidad and Tobago',
+    code: 'TT'
+  }, {
+    name: 'Tunisia',
+    code: 'TN'
+  }, {
+    name: 'Turkey',
+    code: 'TR'
+  }, {
+    name: 'Turkmenistan',
+    code: 'TM'
+  }, {
+    name: 'Turks and Caicos Islands',
+    code: 'TC'
+  }, {
+    name: 'Tuvalu',
+    code: 'TV'
+  }, {
+    name: 'Uganda',
+    code: 'UG'
+  }, {
+    name: 'Ukraine',
+    code: 'UA'
+  }, {
+    name: 'United Arab Emirates',
+    code: 'AE'
+  }, {
+    name: 'United Kingdom',
+    code: 'GB'
+  }, {
+    name: 'United States',
+    code: 'US'
+  }, {
+    name: 'United States Minor Outlying Islands',
+    code: 'UM'
+  }, {
+    name: 'Uruguay',
+    code: 'UY'
+  }, {
+    name: 'Uzbekistan',
+    code: 'UZ'
+  }, {
+    name: 'Vanuatu',
+    code: 'VU'
+  }, {
+    name: 'Venezuela',
+    code: 'VE'
+  }, {
+    name: 'Viet Nam',
+    code: 'VN'
+  }, {
+    name: 'Virgin Islands, British',
+    code: 'VG'
+  }, {
+    name: 'Virgin Islands, U.S.',
+    code: 'VI'
+  }, {
+    name: 'Wallis and Futuna',
+    code: 'WF'
+  }, {
+    name: 'Western Sahara',
+    code: 'EH'
+  }, {
+    name: 'Yemen',
+    code: 'YE'
+  }, {
+    name: 'Zambia',
+    code: 'ZM'
+  }, {
+    name: 'Zimbabwe',
+    code: 'ZW'
+  }],
   isLoading: true
 };
 var actions = {
-  fetchMadeOrders: function fetchMadeOrders(_ref) {
+  showLoader: function showLoader(_ref) {
     var commit = _ref.commit;
     commit('startLoader');
-    return new Promise(function (resolve, reject) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/get/all/made/orders').then(function (response) {
-        resolve(response);
-        commit('setAllOrders', response.data);
-        commit('stopLoader');
-      })["catch"](function (error) {
-        reject(error);
-        commit('stopLoader');
-      });
-    });
   },
-  fetchMoreMadeOrders: function fetchMoreMadeOrders(_ref2, data) {
+  hideLoader: function hideLoader(_ref2) {
     var commit = _ref2.commit;
-    commit('startLoader');
-    return new Promise(function (resolve, reject) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(data.linkUrl + data.page).then(function (response) {
-        resolve(response);
-        commit('setAllOrders', response.data);
-        commit('stopLoader');
-      })["catch"](function (error) {
-        reject(error);
-        commit('stopLoader');
-      });
-    });
-  },
-  searchForOrder: function searchForOrder(_ref3, query) {
-    var commit = _ref3.commit;
-    commit('startLoader');
-    return new Promise(function (resolve, reject) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/search/product?q=' + query).then(function (response) {
-        resolve(response);
-        commit('setAllOrders', response.data);
-        commit('stopLoader');
-      })["catch"](function (error) {
-        reject(error);
-        commit('stopLoader');
-      });
-    });
-  },
-  showLoader: function showLoader(_ref4) {
-    var commit = _ref4.commit;
-    commit('startLoader');
-  },
-  hideLoader: function hideLoader(_ref5) {
-    var commit = _ref5.commit;
     commit('stopLoader');
   }
 };
 var getters = {
-  allOrders: function allOrders(state) {
-    return state.orders;
+  allCountries: function allCountries(state) {
+    return state.countries;
   }
 };
 var mutations = {
-  setAllOrders: function setAllOrders(state, responseData) {
-    return state.orders = responseData;
-  },
-  startLoader: function startLoader(state) {
-    state.isLoading = true;
-  },
-  stopLoader: function stopLoader(state) {
-    state.isLoading = false;
-  }
-};
-/* harmony default export */ __webpack_exports__["default"] = ({
-  namespaced: true,
-  state: state,
-  actions: actions,
-  mutations: mutations,
-  getters: getters
-});
-
-/***/ }),
-
-/***/ "./resources/js/store/modules/chartofaccounts.js":
-/*!*******************************************************!*\
-  !*** ./resources/js/store/modules/chartofaccounts.js ***!
-  \*******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-
-var state = {
-  ledger_sub_categories: {
-    data: []
-  },
-  isLoading: true
-};
-var actions = {
-  fetchSubCategories: function fetchSubCategories(_ref) {
-    var commit = _ref.commit;
-    commit('startLoader');
-    return new Promise(function (resolve, reject) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/get/ledger/categories').then(function (response) {
-        resolve(response);
-        commit('setAllLedgerCatagories', response.data);
-        commit('stopLoader');
-      })["catch"](function (error) {
-        reject(error);
-        commit('stopLoader');
-      });
-    });
-  },
-  fetchMoreMadeOrders: function fetchMoreMadeOrders(_ref2, data) {
-    var commit = _ref2.commit;
-    commit('startLoader');
-    return new Promise(function (resolve, reject) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(data.linkUrl + data.page).then(function (response) {
-        resolve(response);
-        commit('setAllOrders', response.data);
-        commit('stopLoader');
-      })["catch"](function (error) {
-        reject(error);
-        commit('stopLoader');
-      });
-    });
-  },
-  searchForOrder: function searchForOrder(_ref3, query) {
-    var commit = _ref3.commit;
-    commit('startLoader');
-    return new Promise(function (resolve, reject) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/search/product?q=' + query).then(function (response) {
-        resolve(response);
-        commit('setAllOrders', response.data);
-        commit('stopLoader');
-      })["catch"](function (error) {
-        reject(error);
-        commit('stopLoader');
-      });
-    });
-  },
-  showLoader: function showLoader(_ref4) {
-    var commit = _ref4.commit;
-    commit('startLoader');
-  },
-  hideLoader: function hideLoader(_ref5) {
-    var commit = _ref5.commit;
-    commit('stopLoader');
-  }
-};
-var getters = {
-  allLedgerCategories: function allLedgerCategories(state) {
-    return state.ledger_sub_categories;
-  }
-};
-var mutations = {
-  setAllLedgerCatagories: function setAllLedgerCatagories(state, responseData) {
-    return state.ledger_sub_categories = responseData;
-  },
   startLoader: function startLoader(state) {
     state.isLoading = true;
   },

@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import beneficiaries from './modules/beneficieries';
-import chartofaccounts  from './modules/chartofaccounts';
+import registration from './modules/registration';
 
 
 Vue.use(Vuex);
@@ -9,8 +8,6 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules: {
-        beneficiaries,
-        chartofaccounts,
-
+        registration
     }
 })

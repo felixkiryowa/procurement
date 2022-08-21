@@ -26,6 +26,7 @@
     "dependencies": {
         "@inertiajs/inertia": "^0.10.1",
         "@inertiajs/inertia-vue": "^0.7.2",
+        "@vue/composition-api": "^1.7.0",
         "datatables.net-dt": "^1.12.1",
         "idle-vue": "^2.0.5",
         "laravel-vue-pagination": "^2.3.1",
@@ -35,6 +36,7 @@
         "vform": "^2.1.2",
         "vue-loading-overlay": "^3.4.2",
         "vue-progressbar": "^0.7.5",
+        "vue-recaptcha": "^2.0.2",
         "vue-router": "^3.5.3",
         "vue-select": "^3.18.3",
         "vue-step-wizard": "^0.1.17",
