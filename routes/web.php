@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserAuthenticationController;
 use App\Http\Controllers\RegisterCompanyOrProviderController;
+use App\Http\Controllers\ManageProviderAndCompaniesController;
 // use App\Http\Controllers\ChartOfAccountsController;
 // use App\Http\Controllers\BankAccountsController;
 // use App\Http\Controllers\SubBankAccountsController;
@@ -45,4 +46,11 @@ Route::post('/logout', function(){
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/register', [RegisterCompanyOrProviderController::class, 'index']);
+Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
+ 'sendSecretCodeToEmail']);
+ Route::post('/create/provider/or/company', [RegisterCompanyOrProviderController::class,
+ 'createProviderOrCompany']);
+ Route::get('/registered/companies', [ManageProviderAndCompaniesController::class, 'index']);
+
+
 

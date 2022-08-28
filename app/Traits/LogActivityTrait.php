@@ -9,12 +9,20 @@ use App\Models\LoggingActivity;
 
 trait LogActivityTrait {
 
-    public static function addToLog($subject, $details=null) {
+    public static function addToLog($user_ip,$subject, $details=null) {
         try {
+
+            if(Auth::check()) {
+                $names = Auth::user()->firstname.' '.Auth::user()->lastname;
+            }else {
+                $names = NULL;
+            }
+
             $log = [];
+            $log['user_ip'] = $user_ip;
             $logp['subject'] = $subject;
             $logp['details'] = $details;
-            $log['performed_by'] = Auth::user()->firstname.' '.Auth::user()->lastname;
+            $log['performed_by'] = $names;
 
             LoggingActivity::create($log);
 

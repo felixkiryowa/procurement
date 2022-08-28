@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -40,7 +41,8 @@ class HandleInertiaRequests extends Middleware
             'appName' => config('app.name'),
             'year' => date('Y'),
             'auth.user' => fn() => $request->user() ?
-             $request->user()->only('id', 'email', 'firstname', 'lastname', 'role') : null
+             DB::table('users')->select('users.id', 'users.email', 'users.firstName', 'users.lastName', 'roles.name')->leftJoin('roles', 'users.account_type_id', '=', 'roles.id')
+             ->where('users.id', $request->user()->id)->first() : null
         ]);
     }
 }

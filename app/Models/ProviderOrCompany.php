@@ -4,12 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
-class LoggingActivity extends Model
+
+class ProviderOrCompany extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
+
 
     protected $fillable = [
-       'subject', 'details', 'performed_by', 'user_ip'
+        'email', 'secret_code_sent'
     ];
 }

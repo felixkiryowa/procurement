@@ -27,7 +27,7 @@ class UserAuthenticationController extends Controller
             ];
         
             if (Auth::attempt($credentials)) {
-                $user = User::select('id', 'firstname', 'lastname',
+                $user = User::select('id', 'firstName', 'lastName',
                  'email', 'last_time_login')->where('email', $request->email)->first();
 
                 Auth::login($user);
@@ -35,9 +35,9 @@ class UserAuthenticationController extends Controller
 
                 $user->last_time_login = date("Y-m-d h:i:s");
                 $user->save();
-                $details = $user->firstname . ' '.$user->lastname. ' has logged in';
-                $this->addToLog($details);
-                return redirect('/accounts/home');
+                $details = $user->firstName . ' '.$user->lastName. ' has logged in';
+                $this->addToLog($request->ip(), $details);
+                return redirect('/registered/companies');
             }else {
                 return redirect()->to('/')->with('auth_error', 'Invalid Email Or Password');
             }
@@ -56,8 +56,6 @@ class UserAuthenticationController extends Controller
         $user->last_session_id = \Session::getId();
         $user->save();
     }
-
-
 
     //Funtion to logout users
     public function logOutUser(Request $request)

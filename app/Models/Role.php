@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LoggingActivity extends Model
+class Role extends Model
 {
     use HasFactory;
 
+
     protected $fillable = [
-       'subject', 'details', 'performed_by', 'user_ip'
+        'name'
     ];
 }

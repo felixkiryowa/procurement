@@ -36,7 +36,6 @@
         "vform": "^2.1.2",
         "vue-loading-overlay": "^3.4.2",
         "vue-progressbar": "^0.7.5",
-        "vue-recaptcha": "^2.0.2",
         "vue-router": "^3.5.3",
         "vue-select": "^3.18.3",
         "vue-step-wizard": "^0.1.17",
