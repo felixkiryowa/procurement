@@ -283,7 +283,7 @@
                   <h3 class="font-weight-bold">Welcome Aamir</h3>
                   <h6 class="font-weight-normal mb-0">
                     All systems are running smoothly! You have
-                    <span class="text-primary">3 unread alerts!</span>
+
                   </h6>
                 </div>
                 <div class="col-12 col-xl-4">
@@ -1309,7 +1309,7 @@
     </div>
   </div>
 </template>
-  
+
   <script>
 import UserLoggedOnNavBarComponent from "../NavBar/UserLoggedOnNavBarComponent.vue";
 import SideBarComponent from "../SideBar/SideBarComponent.vue";
@@ -1363,4 +1363,3 @@ export default {
   },
 };
 </script>
-  

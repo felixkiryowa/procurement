@@ -39,7 +39,8 @@ class User extends Authenticatable
         'city',
         'originCountry',
         'region',
-        'zip_code'
+        'zip_code',
+        'company_id'
     ];
 
     /**

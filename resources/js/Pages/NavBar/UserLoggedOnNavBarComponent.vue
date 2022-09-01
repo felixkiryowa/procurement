@@ -10,7 +10,7 @@
           justify-content-center
         "
       >
-        <a class="navbar-brand brand-logo mr-5" href="index.html"
+        <a class="navbar-brand brand-logo mr-5" href="#"
           ><img src="/img/logo.svg" class="mr-2" alt="logo"
         /></a>
       </div>
@@ -107,14 +107,7 @@
                     <i class="ti-user mx-0"></i>
                   </div>
                 </div>
-                <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">
-                    New user registration
-                  </h6>
-                  <p class="font-weight-light small-text mb-0 text-muted">
-                    2 days ago
-                  </p>
-                </div>
+
               </a>
             </div>
           </li>
@@ -194,4 +187,3 @@ export default {
   },
 };
 </script>
-  
