@@ -126,12 +126,17 @@
             >
               <a class="dropdown-item">
                 <i class="ti-settings text-primary"></i>
-                Settings
+                Organization Settings
               </a>
-              <a class="dropdown-item">
+              <a class="dropdown-item" href="/change/password">
+                <i class="ti-settings text-primary"></i>
+                User Settings
+              </a>
+              <a class="dropdown-item" @click="LogOutUser($event)">
                 <i class="ti-power-off text-primary"></i>
                 Logout
               </a>
+
             </div>
           </li>
           <li class="nav-item nav-settings d-none d-lg-flex">
