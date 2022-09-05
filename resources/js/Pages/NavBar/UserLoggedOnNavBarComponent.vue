@@ -10,7 +10,7 @@
           justify-content-center
         "
       >
-        <a class="navbar-brand brand-logo mr-5" href="index.html"
+        <a class="navbar-brand brand-logo mr-5" href="#"
           ><img src="/img/logo.svg" class="mr-2" alt="logo"
         /></a>
       </div>
@@ -107,14 +107,7 @@
                     <i class="ti-user mx-0"></i>
                   </div>
                 </div>
-                <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">
-                    New user registration
-                  </h6>
-                  <p class="font-weight-light small-text mb-0 text-muted">
-                    2 days ago
-                  </p>
-                </div>
+
               </a>
             </div>
           </li>
@@ -133,12 +126,17 @@
             >
               <a class="dropdown-item">
                 <i class="ti-settings text-primary"></i>
-                Settings
+                Organization Settings
               </a>
-              <a class="dropdown-item">
+              <a class="dropdown-item" href="/change/password">
+                <i class="ti-settings text-primary"></i>
+                User Settings
+              </a>
+              <a class="dropdown-item" @click="LogOutUser($event)">
                 <i class="ti-power-off text-primary"></i>
                 Logout
               </a>
+
             </div>
           </li>
           <li class="nav-item nav-settings d-none d-lg-flex">
@@ -194,4 +192,3 @@ export default {
   },
 };
 </script>
-  

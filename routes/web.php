@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CompanyUsersController;
+use App\Http\Controllers\UserController;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserAuthenticationController;
@@ -51,6 +54,16 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  Route::post('/create/provider/or/company', [RegisterCompanyOrProviderController::class,
  'createProviderOrCompany']);
  Route::get('/registered/companies', [ManageProviderAndCompaniesController::class, 'index']);
+ Route::get('/manage/company/users', [CompanyUsersController::class, 'index']);
+ Route::post('/create/company/user', [CompanyUsersController::class, 'store']);
+ Route::get('/activate/company/user/{id}', [CompanyUsersController::class, 'activate']);
+ Route::get('/deactivate/company/user/{id}', [CompanyUsersController::class, 'deactivate']);
+
+ //Change Password
+
+ Route::get('/change/password', [UserController::class, 'changepasswordview']);
+ Route::post('/store/password', [UserController::class, 'store']);
+
 
 
 

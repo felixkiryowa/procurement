@@ -101,6 +101,12 @@
               <span class="menu-title">Documentation</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/manage/company/users">
+                <i class="icon-head menu-icon"></i>
+              <span class="menu-title">Users</span>
+            </a>
+          </li>
         </ul>
       </nav>
 </template>
