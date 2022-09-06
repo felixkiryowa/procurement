@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\LogActivityTrait;
 use App\Models\User;
+use App\Models\Role;
 
 class UserAuthenticationController extends Controller
 {
@@ -27,8 +28,13 @@ class UserAuthenticationController extends Controller
             ];
         
             if (Auth::attempt($credentials)) {
-                $user = User::select('id', 'firstName', 'lastName',
-                 'email', 'last_time_login')->where('email', $request->email)->first();
+                $user = User::select('id', 'firstName', 'lastName', 'account_type_id',
+                 'email', 'last_time_login')
+                 ->where('email', $request->email)->first();
+
+                $role = Role::select('id', 'name')->where('id', $user->account_type_id)->first();
+
+                
 
                 Auth::login($user);
                 $this->destroyPreviousSession($user);
@@ -37,7 +43,15 @@ class UserAuthenticationController extends Controller
                 $user->save();
                 $details = $user->firstName . ' '.$user->lastName. ' has logged in';
                 $this->addToLog($request->ip(), $details);
-                return redirect('/registered/companies');
+
+                $user_redirects = collect([
+                    'Provider' => '/company/bids',
+                    'Company' => '/registered/companies',
+                    'Procurement Officer' => '/procurement/officer',
+                    'Super Systems Administrator' => '/manage/companies'
+                ]);
+
+                return redirect($user_redirects->get($role->name, '/registered/companies'));
             }else {
                 return redirect()->to('/')->with('auth_error', 'Invalid Email Or Password');
             }

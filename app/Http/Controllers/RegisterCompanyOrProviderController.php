@@ -56,6 +56,9 @@ class RegisterCompanyOrProviderController extends Controller
 
 
      public function createProviderOrCompany(Request $request) {
+
+        $role = Role::select('id', 'name')->where('id', $request->account_type)->first();
+        
         User::create([
           'account_type_id' => $request->account_type,
           'organisationName' => $request->organisationName,
@@ -79,7 +82,8 @@ class RegisterCompanyOrProviderController extends Controller
           'city' => $request->city,
           'originCountry' => $request->originCountry,
           'region' => $request->region,
-          'zip_code' => $request->zipCode
+          'zip_code' => $request->zipCode,
+          'user_role' => $role->name
         ]);
 
         return response()->json(['success' => true,

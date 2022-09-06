@@ -8,12 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserAuthenticationController;
 use App\Http\Controllers\RegisterCompanyOrProviderController;
 use App\Http\Controllers\ManageProviderAndCompaniesController;
-// use App\Http\Controllers\ChartOfAccountsController;
-// use App\Http\Controllers\BankAccountsController;
-// use App\Http\Controllers\SubBankAccountsController;
-// use App\Http\Controllers\SubSubAccountController;
-// use App\Http\Controllers\MoreAccountsBelowController;
-// use App\Http\Controllers\ManageGeneralEntriesController;
+use App\Http\Controllers\HomeController;
+
 
 
 /*
@@ -53,7 +49,13 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  'sendSecretCodeToEmail']);
  Route::post('/create/provider/or/company', [RegisterCompanyOrProviderController::class,
  'createProviderOrCompany']);
- Route::get('/registered/companies', [ManageProviderAndCompaniesController::class, 'index']);
+ Route::get('/registered/companies', [ManageProviderAndCompaniesController::class, 'index'])->middleware(('role:Super Systems Administrator'));
+ Route::get('/company/bids', [HomeController::class, 'viewBids'])->middleware(('role:Provider'));
+ Route::get('/manage/companies', [HomeController::class, 'viewManageCompanies'])->middleware(('role:Super Systems Administrator'));
+ Route::get('/manage/service/providers', [HomeController::class, 'viewManageProvider'])->middleware(('role:Super Systems Administrator'));
+ Route::get('/manage/company/users', [HomeController::class, 'viewManageCompanyUsers'])->middleware(('role:Super Systems Administrator'));
+
+
  Route::get('/manage/company/users', [CompanyUsersController::class, 'index']);
  Route::post('/create/company/user', [CompanyUsersController::class, 'store']);
  Route::get('/activate/company/user/{id}', [CompanyUsersController::class, 'activate']);

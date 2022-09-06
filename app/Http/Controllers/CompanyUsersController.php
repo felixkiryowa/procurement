@@ -56,8 +56,6 @@ class CompanyUsersController extends Controller
             'last_name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required',
-
-
         ]);
 
 
@@ -74,8 +72,8 @@ class CompanyUsersController extends Controller
             'company_id' => Auth::user()->id,
             'firstName' => $request->first_name,
             'lastName' => $request->last_name,
-            'account_type_id'=> 3
-
+            'account_type_id'=> 3,
+            'user_role' => 'Procurement Officer'
           ]);
 
           return response()->json(['success' => true,
