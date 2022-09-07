@@ -40,7 +40,8 @@ class User extends Authenticatable
         'originCountry',
         'region',
         'zip_code',
-        'company_id'
+        'company_id',
+        'user_role'
     ];
 
     /**

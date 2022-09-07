@@ -18,7 +18,7 @@ class CheckAuthorisation
      */
     public function handle(Request $request, Closure $next, ...$roles)
     {
-        abort_unless(in_array(Auth::user()->user_type, $roles, true), 403);
+        abort_unless(in_array(Auth::user()->user_role, $roles, true), 403);
 
         return $next($request);
     }
