@@ -27,8 +27,11 @@ class CompanyUsersController extends Controller
         $userID = Auth::user()->id;
         $users = User::where('company_id',  $userID )->get();
 
+        $user = User::where('id',  $userID )->first();
+
         return Inertia::render('Companies/Users', [
-            'users' => $users
+            'users' => $users,
+            'user' => $user
         ]);
     }
 

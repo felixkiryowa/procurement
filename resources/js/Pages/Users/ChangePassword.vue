@@ -2,9 +2,7 @@
     <div class="container-scroller">
       <UserLoggedOnNavBarComponent :appName="app" :user="user" />
       <div class="container-fluid page-body-wrapper">
-        <!-- partial:partials/_settings-panel.html -->
 
-        <!-- partial -->
         <SideBarComponent />
         <!-- partial -->
         <div class="main-panel">

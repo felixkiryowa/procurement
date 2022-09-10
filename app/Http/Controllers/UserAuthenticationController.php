@@ -26,7 +26,7 @@ class UserAuthenticationController extends Controller
                 'email' => $request->email,
                 'password' => $request->password,
             ];
-        
+
             if (Auth::attempt($credentials)) {
                 $user = User::select('id', 'firstName', 'lastName', 'account_type_id',
                  'email', 'last_time_login')
@@ -34,7 +34,7 @@ class UserAuthenticationController extends Controller
 
                 $role = Role::select('id', 'name')->where('id', $user->account_type_id)->first();
 
-                
+
 
                 Auth::login($user);
                 $this->destroyPreviousSession($user);
@@ -46,7 +46,7 @@ class UserAuthenticationController extends Controller
 
                 $user_redirects = collect([
                     'Provider' => '/company/bids',
-                    'Company' => '/registered/companies',
+                    'Company' => '/manage/procurement/plans',
                     'Procurement Officer' => '/procurement/officer',
                     'Super Systems Administrator' => '/manage/companies'
                 ]);
@@ -55,7 +55,7 @@ class UserAuthenticationController extends Controller
             }else {
                 return redirect()->to('/')->with('auth_error', 'Invalid Email Or Password');
             }
-    
+
       }catch(\Exception $e) {
          Log::channel('daily')->error('Log message' , array('message' => $e->getMessage(), 'type' => 'Handling the errors'));
       }
@@ -75,14 +75,14 @@ class UserAuthenticationController extends Controller
     public function logOutUser(Request $request)
     {
         try {
-            
-            $loggedInUser = User::findOrFail(Auth::user()->id); 
+
+            $loggedInUser = User::findOrFail(Auth::user()->id);
             $loggedInUser->save();
 
             auth()->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
-    
+
             return response()->json(['success' => true, 'message' => 'Successfully Logged Out A User'], 200);
         }catch(\Exception $e) {
             Log::channel('daily')->error('Log message', array('message' => $e->getMessage(), 'type' => 'Handling the errors'));
