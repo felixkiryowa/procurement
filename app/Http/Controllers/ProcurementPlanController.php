@@ -57,7 +57,7 @@ class ProcurementPlanController extends Controller
 
 
         $validator = Validator::make($request->all(), [
-            'financialyr' => 'required',
+            'period' => 'required',
             'status' => 'required',
 
         ]);
@@ -66,8 +66,8 @@ class ProcurementPlanController extends Controller
             return response()->json(['isvalid'=>false,'errors'=>$validator->messages()]);
         }
 
-        $first_year = explode("-", $request->financialyr)[0];
-        $second_year = explode("-", $request->financialyr)[1];
+        $first_year = explode("-", $request->period)[0];
+        $second_year = explode("-", $request->period)[1];
 
         //Check if Organization has already a plan
 
@@ -94,13 +94,13 @@ class ProcurementPlanController extends Controller
                 'status' => $request->status,
                 'created_by' => Auth::user()->id,
                 'organization_id' => $companyID,
-                'period' => $request->financialyr,
-                
+                'period' => $request->period,
+
               ]);
-    
+
               return response()->json(['success' => true,
               'message' => 'Successfully Created A Plan'], 200);
-    
+
                //Log Ledger Creattion
                $subject = 'Creating a Procurement Plan';
                $details = 'Created Plan: ' . $request->financialyr;
@@ -117,7 +117,44 @@ class ProcurementPlanController extends Controller
 
         }
 
-       
+
+
+    }
+
+
+    public function updatePlan(Request $request)
+
+    {
+
+        $validator = Validator::make($request->all(), [
+            'period' => 'required',
+            'status' => 'required',
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['isvalid'=>false,'errors'=>$validator->messages()]);
+        }
+
+        $first_year = explode("-", $request->period)[0];
+        $second_year = explode("-", $request->period)[1];
+
+        //Check if Organization has already a plan
+
+        $first_year_date = $first_year.'-07-01';
+
+        $second_year_date = $second_year.'-06-30';
+
+        $plan = ProcurementPlan::find($request->id);
+
+        $plan->status = $request->status;
+        $plan->updated_by = Auth::user()->id;
+        $plan->save();
+
+        return response()->json(['success' => true,
+              'message' => 'Successfully Created A Plan'], 200);
+
+
 
     }
 
@@ -190,11 +227,65 @@ class ProcurementPlanController extends Controller
             'M' => $request->M,
             'N' => $request->N,
             'created_by' => Auth::user()->id,
-            
+
           ]);
 
           return response()->json(['success' => true,
-          'message' => 'Successfully Plan Details'], 200);
+          'message' => 'Successfully Created Plan Details'], 200);
+
+           //Log Ledger Creattion
+           $subject = 'Creating a Procurement Plan';
+           $details = 'Created Plan: ';
+           $this->addToLog($subject, $details);
+
+
+
+    }
+
+
+    public function updateDetails(Request $request)
+
+    {
+
+        //return $request->plan_id;
+
+
+        $validator = Validator::make($request->all(), [
+            'category_id' => 'required',
+            'method_id' => 'required',
+            'amount' => 'required',
+            'brief' => 'required',
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['isvalid'=>false,'errors'=>$validator->messages()]);
+        }
+
+
+       $detail =  ProcurementPlanDetails::find($request->id);
+
+       $detail->category_id = $request->category_id;
+       $detail->method_id = $request->method_id;
+       $detail->amount = $request->amount;
+       $detail->brief = $request->brief;
+       $detail->C = $request->C;
+       $detail->E = $request->E;
+       $detail->F = $request->F;
+       $detail->G = $request->G;
+       $detail->H = $request->H;
+       $detail->I = $request->I;
+       $detail->J = $request->J;
+       $detail->K = $request->K;
+       $detail->L = $request->L;
+       $detail->M = $request->M;
+       $detail->N = $request->N;
+       $detail->updated_by = Auth::user()->id;
+       $detail->save();
+
+
+          return response()->json(['success' => true,
+          'message' => 'Successfully Updated Plan Details'], 200);
 
            //Log Ledger Creattion
            $subject = 'Creating a Procurement Plan';

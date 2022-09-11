@@ -14,6 +14,6 @@ class ProcurementPlan extends Model
     Protected $table = 'procurement_plans';
 
     protected $fillable = [
-        'organization_id', 'financial_year_start' , 'financial_year_end' , 'title', 'details', 'document_url','period', 'status', 'updated_by', 'created_by'
+        'organization_id','period' ,'financial_year_start' , 'financial_year_end' , 'title', 'details', 'document_url','period', 'status', 'updated_by', 'created_by'
     ];
 }

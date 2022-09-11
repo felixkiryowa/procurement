@@ -6238,7 +6238,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       errors: [],
       plan_to_edit: "",
       form: new Form({
-        financialyr: "",
+        id: "",
+        period: "",
         status: ""
       }),
       submitted: false
@@ -6296,9 +6297,49 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       });
     },
+    updateProcurementPlan: function updateProcurementPlan() {
+      var _this2 = this;
+
+      this.$Progress.fail();
+      this.showLoader();
+      this.form.post("/update/procurement/plan").then(function (response) {
+        if (response.data.isvalid == false) {
+          _this2.errors = response.data.errors;
+          console.log(_this2.errors);
+        } else {
+          Swal.fire({
+            icon: "success",
+            title: "Edited Plan",
+            text: response.data.message
+          });
+
+          _this2.hideLoader();
+
+          $("#createAPlan").modal("hide");
+
+          _this2.form.reset();
+
+          window.location.href = "/manage/procurement/plans";
+          $("#allPlans").DataTable();
+        }
+      })["catch"](function (response) {
+        _this2.errors = response.data.errors;
+        Swal.fire({
+          icon: "success",
+          title: "Added New Plan",
+          text: response.data.errors
+        });
+      });
+    },
     PlanDetails: function PlanDetails(plan) {
       console.log(plan);
       window.location.href = "/manage/procurement_plan/details/" + plan.id;
+    },
+    //Open Modal
+    EditPlan: function EditPlan(plan) {
+      this.editMode = true;
+      this.form.fill(plan);
+      $("#createAPlan").modal("show");
     },
     //Open Modal
     openAddPlanModal: function openAddPlanModal() {
@@ -6308,10 +6349,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   created: function created() {
-    var _this2 = this;
+    var _this3 = this;
 
     setTimeout(function () {
-      _this2.hideLoader();
+      _this3.hideLoader();
     }, 2000);
   },
   components: {
@@ -6355,7 +6396,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
 //
 //
 //
@@ -7014,13 +7054,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           $("#createAPlan").modal("hide");
 
-          _this.form.reset(); //window.location.href = "/manage/procurement_plan/details/";
+          _this.form.reset();
 
-
+          window.location.href = "/manage/procurement_plan/details/" + _this.plan.id;
           $("#allPlans").DataTable();
         }
       })["catch"](function (response) {
         _this.errors = response.data.errors;
+        Swal.fire({
+          icon: "success",
+          title: "Added New Plan",
+          text: response.data.errors
+        });
+      });
+    },
+    updateProcurementPlanDetail: function updateProcurementPlanDetail() {
+      var _this2 = this;
+
+      this.$Progress.fail();
+      this.showLoader();
+      this.form.post("/update/procurement_plan/detail").then(function (response) {
+        if (response.data.isvalid == false) {
+          _this2.errors = response.data.errors;
+          console.log(_this2.errors);
+        } else {
+          Swal.fire({
+            icon: "success",
+            title: "Edited Plan Detail",
+            text: response.data.message
+          });
+
+          _this2.hideLoader();
+
+          $("#createAPlan").modal("hide");
+
+          _this2.form.reset();
+
+          window.location.href = "/manage/procurement_plan/details/" + _this2.plan.id;
+          $("#allPlans").DataTable();
+        }
+      })["catch"](function (response) {
+        _this2.errors = response.data.errors;
         Swal.fire({
           icon: "success",
           title: "Added New Plan",
@@ -7047,10 +7121,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   created: function created() {
-    var _this2 = this;
+    var _this3 = this;
 
     setTimeout(function () {
-      _this2.hideLoader();
+      _this3.hideLoader();
     }, 2000); //this.form.plan_id = this.plan.id;
 
     console.log(this.form.plan_id);
@@ -95085,7 +95159,7 @@ var render = function () {
                                               "btn btn-sm btn-success",
                                             on: {
                                               click: function ($event) {
-                                                return _vm.ActivateUser(plan)
+                                                return _vm.EditPlan(plan)
                                               },
                                             },
                                           },
@@ -95096,7 +95170,7 @@ var render = function () {
                                           ]
                                         ),
                                         _vm._v(
-                                          "\n                          \n                            |\n                        \n                            "
+                                          "\n\n                            |\n\n                            "
                                         ),
                                         _c(
                                           "button",
@@ -95155,7 +95229,7 @@ var render = function () {
                                   "\n                    " +
                                     _vm._s(
                                       _vm.editMode
-                                        ? _vm.bank_account_to_edit
+                                        ? "Edit Plan"
                                         : "Create A New Plan"
                                     ) +
                                     "\n                  "
@@ -95210,14 +95284,13 @@ var render = function () {
                                               {
                                                 name: "model",
                                                 rawName: "v-model",
-                                                value: _vm.form.financialyr,
-                                                expression: "form.financialyr",
+                                                value: _vm.form.period,
+                                                expression: "form.period",
                                               },
                                             ],
                                             staticClass: "form-control",
                                             class: {
-                                              "is-invalid":
-                                                _vm.errors.financialyr,
+                                              "is-invalid": _vm.errors.period,
                                             },
                                             on: {
                                               change: function ($event) {
@@ -95238,7 +95311,7 @@ var render = function () {
                                                     })
                                                 _vm.$set(
                                                   _vm.form,
-                                                  "financialyr",
+                                                  "period",
                                                   $event.target.multiple
                                                     ? $$selectedVal
                                                     : $$selectedVal[0]
@@ -95281,14 +95354,14 @@ var render = function () {
                                           2
                                         ),
                                         _vm._v(" "),
-                                        _vm.errors.financialyr
+                                        _vm.errors.period
                                           ? _c(
                                               "div",
                                               {
                                                 staticClass: "invalid-feedback",
                                               },
                                               [
-                                                _vm.errors.financialyr
+                                                _vm.errors.period
                                                   ? _c(
                                                       "div",
                                                       { staticClass: "error" },
@@ -95296,10 +95369,9 @@ var render = function () {
                                                         _vm._v(
                                                           "\n                                " +
                                                             _vm._s(
-                                                              _vm.errors
-                                                                .financialyr
+                                                              _vm.errors.period
                                                                 ? _vm.errors
-                                                                    .financialyr[0]
+                                                                    .period[0]
                                                                 : ""
                                                             ) +
                                                             "\n                              "
@@ -95564,7 +95636,21 @@ var render = function () {
                       _c("div", { staticClass: "card" }, [
                         _c("div", { staticClass: "card-body" }, [
                           _c("h4", { staticClass: "card-title" }, [
-                            _vm._v("Procurement Plans Details"),
+                            _vm._v(
+                              "Procurement Plans Details [FY " +
+                                _vm._s(
+                                  _vm.getFormattedDate(
+                                    _vm.plan.financial_year_start
+                                  )
+                                ) +
+                                " - " +
+                                _vm._s(
+                                  _vm.getFormattedDate(
+                                    _vm.plan.financial_year_end
+                                  )
+                                ) +
+                                "]"
+                            ),
                           ]),
                           _vm._v(" "),
                           _c(
@@ -95587,8 +95673,6 @@ var render = function () {
                               ),
                             ]
                           ),
-                          _vm._v(" "),
-                          _c("h1", [_vm._v(_vm._s(_vm.plan.id))]),
                           _vm._v(" "),
                           _c("div", { staticClass: "table-responsive pt-3" }, [
                             _c(

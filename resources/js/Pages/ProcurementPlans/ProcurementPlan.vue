@@ -45,31 +45,31 @@
                             <div >
                               <span class="badge badge-warning">{{ plan.status }}</span>
                             </div>
-                            
+
                           </td>
                           <td>
                             {{ new Date(plan.created_at).toLocaleString() }}
                           </td>
 
                           <td>
-                           
-                           
+
+
                               <button
                                 class="btn btn-sm btn-success"
-                                @click="ActivateUser(plan)"
+                                @click="EditPlan(plan)"
                               >
                                 Edit
                               </button>
-                            
+
                               |
-                          
+
                               <button
                                 class="btn btn-sm btn-danger"
                                 @click="PlanDetails(plan)"
                               >
                                 View Plan Details
                               </button>
-                           
+
                           </td>
                         </tr>
                       </tbody>
@@ -93,7 +93,7 @@
                   <div class="modal-header">
                     <h4 class="modal-title">
                       {{
-                        editMode ? bank_account_to_edit : "Create A New Plan"
+                        editMode ? "Edit Plan" : "Create A New Plan"
                       }}
                     </h4>
                     <button
@@ -130,8 +130,8 @@
                               <label for="">Financial Year</label>
                               <select
                                 class="form-control"
-                                :class="{ 'is-invalid': errors.financialyr }"
-                                v-model="form.financialyr"
+                                :class="{ 'is-invalid': errors.period }"
+                                v-model="form.period"
                               >
                                 <option selected value="">Choose Finacial Year</option>
                                 <option
@@ -143,20 +143,20 @@
                                 </option>
                               </select>
                               <div
-                                v-if="errors.financialyr"
+                                v-if="errors.period"
                                 class="invalid-feedback"
                               >
-                                <div v-if="errors.financialyr" class="error">
+                                <div v-if="errors.period" class="error">
                                   {{
-                                    errors.financialyr
-                                      ? errors.financialyr[0]
+                                    errors.period
+                                      ? errors.period[0]
                                       : ""
                                   }}
                                 </div>
-                                
+
                               </div>
                             </div>
-                           
+
                             <div class="form-group">
                               <label for="email">Status</label>
                               <select
@@ -243,7 +243,8 @@ export default {
       errors: [],
       plan_to_edit: "",
       form: new Form({
-        financialyr: "",
+        id: "",
+        period: "",
         status: "",
       }),
       submitted: false,
@@ -311,12 +312,55 @@ export default {
     },
 
 
+    updateProcurementPlan() {
+      this.$Progress.fail();
+      this.showLoader();
+
+      this.form
+        .post("/update/procurement/plan")
+        .then((response) => {
+          if (response.data.isvalid == false) {
+            this.errors = response.data.errors;
+            console.log(this.errors)
+          } else {
+            Swal.fire({
+              icon: "success",
+              title: "Edited Plan",
+              text: response.data.message,
+            });
+
+            this.hideLoader();
+            $("#createAPlan").modal("hide");
+            this.form.reset();
+            window.location.href = "/manage/procurement/plans";
+            $("#allPlans").DataTable();
+          }
+        })
+        .catch((response) => {
+            this.errors = response.data.errors;
+
+            Swal.fire({
+              icon: "success",
+              title: "Added New Plan",
+              text: response.data.errors,
+            });
+        });
+    },
+
+
     PlanDetails(plan){
 
         console.log(plan)
         window.location.href = "/manage/procurement_plan/details/"+plan.id;
 
     },
+
+    //Open Modal
+    EditPlan(plan) {
+    this.editMode = true;
+    this.form.fill(plan);
+    $("#createAPlan").modal("show");
+  },
 
     //Open Modal
     openAddPlanModal() {

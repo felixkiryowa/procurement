@@ -70,8 +70,11 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  //Procurement Plans
  Route::get('/manage/procurement/plans', [ProcurementPlanController::class, 'index']);
  Route::post('/create/procurement/plan', [ProcurementPlanController::class, 'store']);
+ Route::post('/update/procurement/plan', [ProcurementPlanController::class, 'updatePlan']);
+
  Route::get('/manage/procurement_plan/details/{id}', [ProcurementPlanController::class, 'details']);
  Route::post('/create/procurement_plan/detail', [ProcurementPlanController::class, 'detailstore']);
+ Route::post('/update/procurement_plan/detail', [ProcurementPlanController::class, 'updateDetails']);
 
 
 

@@ -13,7 +13,7 @@
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Procurement Plans Details</h4>
+                  <h4 class="card-title">Procurement Plans Details [FY {{ getFormattedDate(plan.financial_year_start) }} - {{ getFormattedDate(plan.financial_year_end) }}]</h4>
                   <p class="card-description float-lg-right">
                     <button
                       type="button"
@@ -23,7 +23,6 @@
                       Add New
                     </button>
                   </p>
-                  <h1>{{ plan.id }}</h1>
                   <div class="table-responsive pt-3">
                     <table
                       id="allPlans"
@@ -46,24 +45,24 @@
                             <div >
                               <span class="badge badge-warning">{{ detail.method }}</span>
                             </div>
-                            
+
                           </td>
                           <td>
                             {{ new Date(detail.created_at).toLocaleString() }}
                           </td>
 
                           <td>
-                           
-                           
+
+
                               <button
                                 class="btn btn-sm btn-success"
                                 @click="EditPlan(detail)"
                               >
                                 Edit
                               </button>
-                            
-                              
-                           
+
+
+
                           </td>
                         </tr>
                       </tbody>
@@ -102,7 +101,7 @@
                   <div class="modal-body">
                     <div class="card card-primary">
                       <div class="card-header">
-                        
+
                       </div>
                       <!-- /.card-header -->
                       <!-- form start -->
@@ -141,13 +140,13 @@
                                       : ""
                                   }}
                                 </div>
-                                
+
                               </div>
                                     </div>
 
                                 </div>
-                              
-                             
+
+
                             </div>
 
                             <div class="form-group">
@@ -177,13 +176,13 @@
                                 </div>
                               </div>
                                     </div>
-                                        
+
 
                                 </div>
-                              
-                              
+
+
                             </div>
-                           
+
                             <div class="form-group">
                               <div class="row">
 
@@ -217,7 +216,7 @@
                                       : ""
                                   }}
                                 </div>
-                                
+
                               </div>
                                 </div>
 
@@ -253,11 +252,11 @@
                                 </div>
                               </div>
                                     </div>
-                                        
+
 
                                 </div>
-                              
-                              
+
+
                             </div>
 
 
@@ -277,12 +276,12 @@
                                             placeholder=""
                                         />
 
-                              
+
                                     </div>
-                                        
+
 
                                 </div>
-            
+
                             </div>
 
 
@@ -302,12 +301,12 @@
                                             placeholder=""
                                         />
 
-                              
+
                                     </div>
-                                        
+
 
                                 </div>
-            
+
                             </div>
 
 
@@ -327,12 +326,12 @@
                                             placeholder=""
                                         />
 
-                              
+
                                     </div>
-                                        
+
 
                                 </div>
-            
+
                             </div>
 
 
@@ -352,12 +351,12 @@
                                             placeholder=""
                                         />
 
-                              
+
                                     </div>
-                                        
+
 
                                 </div>
-            
+
                             </div>
 
                             <div class="form-group">
@@ -376,12 +375,12 @@
                                             placeholder=""
                                         />
 
-                              
+
                                     </div>
-                                        
+
 
                                 </div>
-            
+
                             </div>
 
 
@@ -401,12 +400,12 @@
                                             placeholder=""
                                         />
 
-                              
+
                                     </div>
-                                        
+
 
                                 </div>
-            
+
                             </div>
 
 
@@ -426,12 +425,12 @@
                                             placeholder=""
                                         />
 
-                              
+
                                     </div>
-                                        
+
 
                                 </div>
-            
+
                             </div>
 
                             <div class="form-group">
@@ -450,12 +449,12 @@
                                             placeholder=""
                                         />
 
-                              
+
                                     </div>
-                                        
+
 
                                 </div>
-            
+
                             </div>
 
 
@@ -475,12 +474,12 @@
                                             placeholder=""
                                         />
 
-                              
+
                                     </div>
-                                        
+
 
                                 </div>
-            
+
                             </div>
 
                             <div class="form-group">
@@ -499,12 +498,12 @@
                                             placeholder=""
                                         />
 
-                              
+
                                     </div>
-                                        
+
 
                                 </div>
-            
+
                             </div>
 
 
@@ -524,12 +523,12 @@
                                             placeholder=""
                                         />
 
-                              
+
                                     </div>
-                                        
+
 
                                 </div>
-            
+
                             </div>
 
 
@@ -667,7 +666,42 @@ export default {
             this.hideLoader();
             $("#createAPlan").modal("hide");
             this.form.reset();
-            //window.location.href = "/manage/procurement_plan/details/";
+            window.location.href = "/manage/procurement_plan/details/"+this.plan.id;
+            $("#allPlans").DataTable();
+          }
+        })
+        .catch((response) => {
+            this.errors = response.data.errors;
+
+            Swal.fire({
+              icon: "success",
+              title: "Added New Plan",
+              text: response.data.errors,
+            });
+        });
+    },
+
+    updateProcurementPlanDetail() {
+      this.$Progress.fail();
+      this.showLoader();
+
+      this.form
+        .post("/update/procurement_plan/detail")
+        .then((response) => {
+          if (response.data.isvalid == false) {
+            this.errors = response.data.errors;
+            console.log(this.errors)
+          } else {
+            Swal.fire({
+              icon: "success",
+              title: "Edited Plan Detail",
+              text: response.data.message,
+            });
+
+            this.hideLoader();
+            $("#createAPlan").modal("hide");
+            this.form.reset();
+            window.location.href = "/manage/procurement_plan/details/"+this.plan.id;
             $("#allPlans").DataTable();
           }
         })
@@ -692,7 +726,7 @@ export default {
 
     //Open Modal
     openAddPlanModal() {
-    
+
       this.editMode = false;
       this.form.reset();
       this.form.plan_id = this.plan.id;
