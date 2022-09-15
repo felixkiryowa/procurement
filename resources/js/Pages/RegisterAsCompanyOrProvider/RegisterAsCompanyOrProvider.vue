@@ -310,7 +310,7 @@
                                     :class="
                                       hasError('password') ? 'is-invalid' : ''
                                     "
-                                    placeholder="Enter Pawword(Minimum with 8 characters)"
+                                    placeholder="Enter Password(Minimum with 8 characters)"
                                     v-model="formData.password"
                                   />
                                   <div
@@ -346,7 +346,7 @@
                                         ? 'is-invalid'
                                         : ''
                                     "
-                                    placeholder="Enter Pawword(Minimum with 8 characters)"
+                                    placeholder="Enter Password(Minimum with 8 characters)"
                                     v-model="formData.confirmPassword"
                                   />
                                   <div

@@ -16,8 +16,8 @@
  */
 
 /*!
- * Vue.js v2.6.14
- * (c) 2014-2021 Evan You
+ * Vue.js v2.7.10
+ * (c) 2014-2022 Evan You
  * Released under the MIT License.
  */
 
@@ -39,6 +39,17 @@
  * vuex v3.6.2
  * (c) 2021 Evan You
  * @license MIT
+ */
+
+/*! 
+  * portal-vue © Thorsten Lünborg, 2019 
+  * 
+  * Version: 2.1.7
+  * 
+  * LICENCE: MIT 
+  * 
+  * https://github.com/linusborg/portal-vue
+  * 
  */
 
 /*! DataTables 1.12.1

@@ -57,13 +57,15 @@
                 <i class="ti-briefcase text-primary"></i>
                 {{ user.name }}
               </a>
-              <a class="dropdown-item">
-                <i class="ti-settings text-primary"></i>
-                Organization Settings
-              </a>
-              <a class="dropdown-item" href="/change/password">
+              <a v-if="user.name === 'Procurement Officer'" 
+              class="dropdown-item" href="/change/password">
                 <i class="ti-settings text-primary"></i>
                 User Settings
+              </a>
+              <a v-if="user.name === 'Provider' || user.name === 'Company'" 
+              class="dropdown-item" href="/edit/profile">
+                <i class="ti-settings text-primary"></i>
+                Organization Settings
               </a>
               <a class="dropdown-item" @click="LogOutUser($event)">
                 <i class="ti-power-off text-primary"></i>
