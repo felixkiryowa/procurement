@@ -67,14 +67,17 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  'sendSecretCodeToEmail']);
  Route::post('/create/provider/or/company', [RegisterCompanyOrProviderController::class,
  'createProviderOrCompany']);
+ Route::post('/update/provider/or/company', [RegisterCompanyOrProviderController::class,
+ 'updateProviderOrCompany']);
  Route::get('/registered/companies', [ManageProviderAndCompaniesController::class, 'index'])->middleware(('role:Super Systems Administrator'));
  Route::get('/company/bids', [HomeController::class, 'viewBids'])->middleware(('role:Provider'));
  Route::get('/manage/companies', [HomeController::class, 'viewManageCompanies'])->middleware(('role:Super Systems Administrator'));
  Route::get('/manage/service/providers', [HomeController::class, 'viewManageProvider'])->middleware(('role:Super Systems Administrator'));
  Route::get('/manage/all/company/users/{id}', [HomeController::class, 'viewManageCompanyUsers'])->middleware(('role:Super Systems Administrator'));
- Route::get('/company/or/provider/details/{id}', [HomeController::class, 'providerOrCompanyDetails'])->middleware(('role:Super Systems Administrator'));
-
-
+ Route::get('/company/or/provider/details/{id}', [HomeController::class, 
+ 'providerOrCompanyDetails'])->middleware(('role:Super Systems Administrator'));
+ Route::get('/edit/profile', [HomeController::class, 
+ 'editCompanyProfile'])->middleware(('role:Provider,Company'));
 
  Route::get('/manage/company/users', [CompanyUsersController::class, 'index'])->middleware('role:Company');
  Route::post('/create/company/user', [CompanyUsersController::class, 'store']);
