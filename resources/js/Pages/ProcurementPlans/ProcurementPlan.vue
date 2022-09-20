@@ -5,7 +5,7 @@
       <!-- partial:partials/_settings-panel.html -->
 
       <!-- partial -->
-      <SideBarComponent />
+      <SideBarComponent :user="user" />
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
