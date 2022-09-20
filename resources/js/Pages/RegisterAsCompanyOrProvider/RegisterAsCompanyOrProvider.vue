@@ -928,7 +928,7 @@ export default {
       const requestData = new FormData();
       requestData.append("account_type", this.formData.account_type);
       requestData.append("organisationName", this.formData.organisationName);
-      const categories = JSON.stringify(this.formData.procurementCategory);
+      const categories = this.formData.procurementCategory;
       requestData.append("procurementCategory", categories);
       requestData.append("briefDescription", this.formData.briefDescription);
       requestData.append("userName", this.formData.userName);

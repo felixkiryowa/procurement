@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\CompanyUsersController;
 use App\Http\Controllers\UserController;
-
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserAuthenticationController;
@@ -27,7 +27,21 @@ use App\Http\Controllers\ProcurementPlanController;
 Route::get('/', function () {
     if(Auth::check()) {
       //Login back to the set up route
-      return Redirect::to('/list/beneficiaries');
+
+      $user = User::select('id', 'user_role')->where('id', Auth::user()->id)->first();
+
+      if($user->user_role == 'Provider') {
+        return Redirect::to('/company/bids');
+
+      }else if($user->user_role == 'Company') {
+        return Redirect::to('/manage/company/users');
+
+      }else if($user->user_role == 'Procurement Officer' ) {
+        return Redirect::to('/procurement/officer');
+
+      }else {
+        return Redirect::to('/manage/companies');
+      }
     }else {
        return view('auth.login');
     }
@@ -44,6 +58,10 @@ Route::post('/logout', function(){
     return Redirect::to('/');
  })->name('logout');
 
+Route::get('/activate/user/{id}', [UserAuthenticationController::class, 'activateUser'])->name('activate.user');
+Route::get('/deactivate/user/{id}', [UserAuthenticationController::class, 'deActivateUser'])->name('deactivate.user');
+
+
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/register', [RegisterCompanyOrProviderController::class, 'index']);
 Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
@@ -54,10 +72,12 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  Route::get('/company/bids', [HomeController::class, 'viewBids'])->middleware(('role:Provider'));
  Route::get('/manage/companies', [HomeController::class, 'viewManageCompanies'])->middleware(('role:Super Systems Administrator'));
  Route::get('/manage/service/providers', [HomeController::class, 'viewManageProvider'])->middleware(('role:Super Systems Administrator'));
- Route::get('/manage/company/users', [HomeController::class, 'viewManageCompanyUsers'])->middleware(('role:Super Systems Administrator'));
+ Route::get('/manage/all/company/users/{id}', [HomeController::class, 'viewManageCompanyUsers'])->middleware(('role:Super Systems Administrator'));
+ Route::get('/company/or/provider/details/{id}', [HomeController::class, 'providerOrCompanyDetails'])->middleware(('role:Super Systems Administrator'));
 
 
- Route::get('/manage/company/users', [CompanyUsersController::class, 'index']);
+
+ Route::get('/manage/company/users', [CompanyUsersController::class, 'index'])->middleware('role:Company');
  Route::post('/create/company/user', [CompanyUsersController::class, 'store']);
  Route::get('/activate/company/user/{id}', [CompanyUsersController::class, 'activate']);
  Route::get('/deactivate/company/user/{id}', [CompanyUsersController::class, 'deactivate']);

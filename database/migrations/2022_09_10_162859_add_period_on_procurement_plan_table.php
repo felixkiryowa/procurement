@@ -16,6 +16,7 @@ class AddPeriodOnProcurementPlanTable extends Migration
         Schema::table('procurement_plans', function (Blueprint $table) {
             $table->string('period')->nullable();
         });
+
     }
 
     /**

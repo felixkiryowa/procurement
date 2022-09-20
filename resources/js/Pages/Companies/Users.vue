@@ -1,14 +1,24 @@
 <template>
   <div class="container-scroller">
-    <UserLoggedOnNavBarComponent :appName="app" :user="user" />
+    <UserLoggedOnNavBarComponent :app="app" :user="user" />
     <div class="container-fluid page-body-wrapper">
       <!-- partial:partials/_settings-panel.html -->
 
       <!-- partial -->
-      <SideBarComponent />
+      <SideBarComponent :user="user" />
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
+          <div class="vld-parent">
+          <loading
+            :active.sync="isLoading"
+            :can-cancel="false"
+            color="#074578"
+            loader="spinner"
+            :opacity="0.5"
+            :is-full-page="fullPage"
+          />
+        </div>
           <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
@@ -279,7 +289,7 @@
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
-        <FooterComponent />
+        <FooterComponent :year="year" />
         <!-- partial -->
       </div>
       <!-- main-panel ends -->
@@ -330,6 +340,9 @@ export default {
     app() {
       return this.$page.props.appName;
     },
+    year() {
+      return this.$page.props.year;
+    },
     checkIfUserIsIdle() {
       return this.isAppIdle ? true : false;
     },
@@ -369,9 +382,6 @@ export default {
     },
 
     ActivateUser(user) {
-      //this.form.fill(user);
-      //this.editMode = true;
-      console.log(user);
       this.user_to_edit = "Activate " + user.firstName + " " + user.lastName;
 
       axios
@@ -439,7 +449,7 @@ export default {
   created() {
     setTimeout(() => {
       this.hideLoader();
-    }, 2000);
+    }, 3000);
   },
 
   components: {

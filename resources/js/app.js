@@ -7,6 +7,7 @@ import moment from 'moment';
 import Swal from 'sweetalert2';
 import IdleVue from 'idle-vue';
 import VueProgressBar from 'vue-progressbar';
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import vSelect from 'vue-select';
 import { Form } from 'vform';
 import store from './store';
@@ -37,16 +38,19 @@ Vue.use(VueProgressBar, {
     height: "2px"
 });
 
-Vue.filter('customDate', function (created_at) {
+Vue.filter('customDate', function(created_at) {
     return moment(created_at).format('lll');
 });
 
-Vue.filter('formatNumber', function (value) {
+Vue.filter('formatNumber', function(value) {
     let nf = Intl.NumberFormat();
     return nf.format(value);
 });
 
-
+// Make BootstrapVue available throughout your project
+Vue.use(BootstrapVue)
+    // Optionally install the BootstrapVue icon components plugin
+    // Vue.use(IconsPlugin)
 
 Vue.use(IdleVue, {
     eventEmitter: new Vue,
