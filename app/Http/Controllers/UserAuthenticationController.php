@@ -37,9 +37,6 @@ class UserAuthenticationController extends Controller
                 if (Auth::attempt($credentials)) {
 
                     $role = Role::select('id', 'name')->where('id', $user->account_type_id)->first();
-
-
-
                     Auth::login($user);
                     $this->destroyPreviousSession($user);
 

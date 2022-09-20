@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\User;
+use App\Models\SecretQuestion;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -135,6 +137,38 @@ class HomeController extends Controller
             'user_role',
             'created_at',
             'zip_code')->where('id', base64_decode($id))->first()
+        ]);
+    }
+
+    public function editCompanyProfile() {
+        return Inertia::render('Users/EditProfileAndCompany', [
+            'secret_questions' => SecretQuestion::select('id', 'name')->get(),
+            'selected_user' => User::select(
+                'id',
+                'organisationName',
+                'procurementCategory',
+                'briefDescription',
+                'userName',
+                'password',
+                'email',
+                'companyPhoneNumber',
+                'alternativeCompanyPhoneNumber',
+                'secretQuestion',
+                'secretAnswer',
+                'challengeAnswer',
+                'country',
+                'registrationNumber',
+                'taxId',
+                'codeSentToEmail',
+                'firstName',
+                'lastName',
+                'address',
+                'city',
+                'originCountry',
+                'region',
+                'zip_code',
+                'user_role'
+            )->where('id', Auth::user()->id)->first()
         ]);
     }
 }

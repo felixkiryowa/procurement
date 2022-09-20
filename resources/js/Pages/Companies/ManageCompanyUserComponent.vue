@@ -111,7 +111,7 @@
   </div>
 </template>
 
-  <script>
+<script>
 import UserLoggedOnNavBarComponent from "../NavBar/UserLoggedOnNavBarComponent.vue";
 import SideBarComponent from "../SideBar/SideBarComponent.vue";
 import FooterComponent from "../Footer/FooterComponent.vue";

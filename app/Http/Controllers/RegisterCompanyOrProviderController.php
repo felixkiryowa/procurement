@@ -12,8 +12,7 @@ use App\Models\ProviderOrCompany;
 use App\Models\User;
 use App\Notifications\SendSecretCodeNotification;
 use App\Traits\LogActivityTrait;
-
-
+use Illuminate\Support\Facades\Auth;
 
 class RegisterCompanyOrProviderController extends Controller
 {
@@ -89,4 +88,59 @@ class RegisterCompanyOrProviderController extends Controller
         return response()->json(['success' => true,
         'message' => 'Successfully Created An Account'], 200);
      }
+
+
+     public function updateProviderOrCompany(Request $request) {
+
+      $user = User::select('id',       
+      'account_type_id',
+      'organisationName',
+      'procurementCategory',
+      'briefDescription',
+      'userName',
+      'password',
+      'email',
+      'companyPhoneNumber',
+      'alternativeCompanyPhoneNumber',
+      'secretQuestion',
+      'secretAnswer',
+      'country',
+      'registrationNumber',
+      'taxId',
+      'firstName',
+      'lastName',
+      'address',
+      'city',
+      'originCountry',
+      'region',
+      'zip_code',
+      )->where('id', Auth::user()->id)->first();
+
+      $user->organisationName = $request->organisationName;
+      $user->procurementCategory = json_encode($request->procurementCategory);
+      $user->briefDescription = $request->briefDescription;
+      $user->userName = $request->userName;
+      $user->password = Hash::make($request->password);
+      $user->email = $request->email;
+      $user->companyPhoneNumber = $request->companyPhoneNumber;
+      $user->alternativeCompanyPhoneNumber = $request->alternativeCompanyPhoneNumber;
+      $user->secretQuestion = $request->secretQuestion;
+      $user->secretAnswer = $request->secretAnswer;
+      $user->country = $request->country;
+      $user->registrationNumber = $request->registrationNumber;
+      $user->taxId = $request->taxId;
+      $user->codeSentToEmail = $request->codeSentToEmail;
+      $user->firstName = $request->firstName;
+      $user->lastName = $request->lastName;
+      $user->address = $request->address;
+      $user->city = $request->city;
+      $user->originCountry = $request->originCountry;
+      $user->region = $request->region;
+      $user->zip_code = $request->zipCode;
+
+      $user->save();
+
+      return response()->json(['success' => true,
+      'message' => 'Successfully Updated An Account'], 200);
+   }
 }
