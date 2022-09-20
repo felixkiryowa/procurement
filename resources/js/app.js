@@ -38,19 +38,19 @@ Vue.use(VueProgressBar, {
     height: "2px"
 });
 
-Vue.filter('customDate', function (created_at) {
+Vue.filter('customDate', function(created_at) {
     return moment(created_at).format('lll');
 });
 
-Vue.filter('formatNumber', function (value) {
+Vue.filter('formatNumber', function(value) {
     let nf = Intl.NumberFormat();
     return nf.format(value);
 });
 
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
-// Vue.use(IconsPlugin)
+    // Optionally install the BootstrapVue icon components plugin
+    // Vue.use(IconsPlugin)
 
 Vue.use(IdleVue, {
     eventEmitter: new Vue,

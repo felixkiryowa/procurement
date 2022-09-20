@@ -37,28 +37,27 @@ class UserAuthenticationController extends Controller
                 if (Auth::attempt($credentials)) {
 
                     $role = Role::select('id', 'name')->where('id', $user->account_type_id)->first();
-    
                     Auth::login($user);
                     $this->destroyPreviousSession($user);
-    
+
                     $user->last_time_login = date("Y-m-d h:i:s");
                     $user->save();
                     $details = $user->firstName . ' '.$user->lastName. ' has logged in';
                     $this->addToLog($request->ip(), $details);
-    
+
                     $user_redirects = collect([
                         'Provider' => '/company/bids',
                         'Company' => '/manage/company/users',
                         'Procurement Officer' => '/procurement/officer',
                         'Super Systems Administrator' => '/manage/companies'
                     ]);
-    
+
                     return redirect($user_redirects->get($role->name, '/registered/companies'));
                 }else {
                     return redirect()->to('/')->with('auth_error', 'Invalid Email Or Password');
                 }
             }
-    
+
       }catch(\Exception $e) {
          Log::channel('daily')->error('Log message' , array('message' => $e->getMessage(), 'type' => 'Handling the errors'));
       }
@@ -78,14 +77,14 @@ class UserAuthenticationController extends Controller
     public function logOutUser(Request $request)
     {
         try {
-            
-            $loggedInUser = User::findOrFail(Auth::user()->id); 
+
+            $loggedInUser = User::findOrFail(Auth::user()->id);
             $loggedInUser->save();
 
             auth()->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
-    
+
             return response()->json(['success' => true, 'message' => 'Successfully Logged Out A User'], 200);
         }catch(\Exception $e) {
             Log::channel('daily')->error('Log message', array('message' => $e->getMessage(), 'type' => 'Handling the errors'));

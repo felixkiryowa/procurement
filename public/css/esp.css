@@ -5,3 +5,7 @@
 .shadow-sm.rounded-md {
     display: none;
 }
+
+.invalid-error .error {
+    color: red;
+}

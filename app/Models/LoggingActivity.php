@@ -10,6 +10,6 @@ class LoggingActivity extends Model
     use HasFactory;
 
     protected $fillable = [
-       'subject', 'details', 'performed_by', 'user_ip'
+       'subject', 'details', 'performed_by', 'user_ip','company_id'
     ];
 }

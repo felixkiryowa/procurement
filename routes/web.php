@@ -9,6 +9,7 @@ use App\Http\Controllers\UserAuthenticationController;
 use App\Http\Controllers\RegisterCompanyOrProviderController;
 use App\Http\Controllers\ManageProviderAndCompaniesController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProcurementPlanController;
 
 
 
@@ -88,6 +89,17 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
 
  Route::get('/change/password', [UserController::class, 'changepasswordview']);
  Route::post('/store/password', [UserController::class, 'store']);
+
+ //Procurement Plans
+ Route::get('/manage/procurement/plans', [ProcurementPlanController::class, 'index']);
+ Route::post('/create/procurement/plan', [ProcurementPlanController::class, 'store']);
+ Route::post('/update/procurement/plan', [ProcurementPlanController::class, 'updatePlan']);
+
+ Route::get('/manage/procurement_plan/details/{id}', [ProcurementPlanController::class, 'details']);
+ Route::post('/create/procurement_plan/detail', [ProcurementPlanController::class, 'detailstore']);
+ Route::post('/update/procurement_plan/detail', [ProcurementPlanController::class, 'updateDetails']);
+
+
 
 
 

@@ -23,6 +23,7 @@ trait LogActivityTrait {
             $logp['subject'] = $subject;
             $logp['details'] = $details;
             $log['performed_by'] = $names;
+            $log['company_id'] = Auth::user()->company_id;
 
             LoggingActivity::create($log);
 
