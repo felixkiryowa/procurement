@@ -37,7 +37,7 @@ Route::get('/', function () {
         return Redirect::to('/manage/company/users');
 
       }else if($user->user_role == 'Procurement Officer' ) {
-        return Redirect::to('/procurement/officer');
+        return Redirect::to('/manage/procurement/plans');
 
       }else {
         return Redirect::to('/manage/companies');
@@ -77,7 +77,7 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  Route::get('/manage/all/company/users/{id}', [HomeController::class, 'viewManageCompanyUsers'])->middleware(('role:Super Systems Administrator'));
  Route::get('/company/or/provider/details/{id}', [HomeController::class, 
  'providerOrCompanyDetails'])->middleware(('role:Super Systems Administrator'));
- Route::get('/edit/profile', [HomeController::class, 
+ Route::get('/edit/company/settings', [HomeController::class, 
  'editCompanyProfile'])->middleware(('role:Provider,Company'));
 
  Route::get('/manage/company/users', [CompanyUsersController::class, 'index'])->middleware('role:Company');
@@ -91,11 +91,20 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  Route::post('/store/password', [UserController::class, 'store']);
 
  //Procurement Plans
- Route::get('/manage/procurement/plans', [ProcurementPlanController::class, 'index']);
+ Route::get('/manage/procurement/plans', [ProcurementPlanController::class, 'index'])->middleware('role:Procurement Officer');
  Route::post('/create/procurement/plan', [ProcurementPlanController::class, 'store']);
- Route::post('/update/procurement/plan', [ProcurementPlanController::class, 'updatePlan']);
 
- Route::get('/manage/procurement_plan/details/{id}', [ProcurementPlanController::class, 'details']);
+ Route::post('/approve/procurement/plan/detail', [ProcurementPlanController::class, 'approveProcurementPlanDetail']);
+ Route::post('/reject/procurement/plan/detail', [ProcurementPlanController::class, 'rejectProcurementPlanDetail']);
+
+ Route::post('/update/procurement/plan', [ProcurementPlanController::class, 'updatePlan']);
+// Procurement Plan Details
+ Route::post('/procurement_plan/details/approvers', [ProcurementPlanController::class, 'createProcurementDetailsApprovers']);
+
+ Route::get('/submit/procurement/detail/for/approval/{id}', [ProcurementPlanController::class,
+  'submitProcumentPlanDetailForApproval']);
+ Route::get('/get/who/to/approve/step/{id}', [ProcurementPlanController::class, 'validateIfLoggedInUserIsApprover']);
+ Route::get('/manage/procurement_plan/details/{step_id}', [ProcurementPlanController::class, 'details']);
  Route::post('/create/procurement_plan/detail', [ProcurementPlanController::class, 'detailstore']);
  Route::post('/update/procurement_plan/detail', [ProcurementPlanController::class, 'updateDetails']);
 

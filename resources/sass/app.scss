@@ -41,6 +41,18 @@ h3, .h3 {
     height: 48.7rem !important
 }
 
+.default-approver {
+    margin-top: 41px !important;
+}
+
+.remove-approver {
+    margin-top: 34px !important;
+}
+
+.update-profile {
+    margin-top: -13px !important;
+}
+
 .custom-border1 {
     border: 1px solid #ced4da !important;
     padding: 1rem !important;
@@ -530,4 +542,30 @@ a.text-lightred:hover {
 
 .bg-lightred {
     background-color: #ff5722
+}
+
+body{
+    background:#eee;
+}
+.card {
+    box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: 1rem;
+}
+.text-reset {
+    --bs-text-opacity: 1;
+    color: inherit!important;
+}
+a {
+    color: #5465ff;
+    text-decoration: none;
 }

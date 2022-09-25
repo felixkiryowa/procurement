@@ -1,6 +1,6 @@
 <template>
   <div class="container-scroller">
-    <UserLoggedOnNavBarComponent :appName="app" :user="user" />
+    <UserLoggedOnNavBarComponent :app="app" :user="user" />
     <div class="container-fluid page-body-wrapper">
       <!-- partial:partials/_settings-panel.html -->
 
@@ -210,7 +210,7 @@
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
-        <FooterComponent />
+        <FooterComponent :year="year" />
         <!-- partial -->
       </div>
       <!-- main-panel ends -->
@@ -262,6 +262,9 @@ export default {
     },
     app() {
       return this.$page.props.appName;
+    },
+    year() {
+      return this.$page.props.year;
     },
     checkIfUserIsIdle() {
       return this.isAppIdle ? true : false;
