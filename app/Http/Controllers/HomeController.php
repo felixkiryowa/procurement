@@ -168,7 +168,13 @@ class HomeController extends Controller
                 'region',
                 'zip_code',
                 'user_role'
-            )->where('id', Auth::user()->id)->first()
+            )->where('id', Auth::user()->id)->first(),
+            'procurement_plan_approvers' => User::select('id', 'firstName', 'lastName',
+            'company_id')
+            ->where('company_id', Auth::user()->id)
+            ->orWhere('id', Auth::user()->id)
+            ->orderBy('firstName', 'desc')
+            ->get()
         ]);
     }
 }

@@ -63,7 +63,7 @@
                 User Settings
               </a>
               <a v-if="user.name === 'Provider' || user.name === 'Company'" 
-              class="dropdown-item" href="/edit/profile">
+              class="dropdown-item" href="/edit/company/settings">
                 <i class="ti-settings text-primary"></i>
                 Organization Settings
               </a>
