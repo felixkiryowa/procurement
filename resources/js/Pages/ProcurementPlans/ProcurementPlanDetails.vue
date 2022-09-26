@@ -9,11 +9,25 @@
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
+          <div class="vld-parent">
+            <loading
+              :active.sync="isLoading"
+              :can-cancel="false"
+              color="#074578"
+              loader="spinner"
+              :opacity="0.5"
+              :is-full-page="fullPage"
+            />
+          </div>
           <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Procurement Plans Details [FY {{ getFormattedDate(plan.financial_year_start) }} - {{ getFormattedDate(plan.financial_year_end) }}]</h4>
+                  <h4 class="card-title">
+                    Procurement Plans Details [FY
+                    {{ getFormattedDate(plan.financial_year_start) }} -
+                    {{ getFormattedDate(plan.financial_year_end) }}]
+                  </h4>
                   <p class="card-description float-lg-right">
                     <button
                       type="button"
@@ -40,29 +54,40 @@
                       <tbody>
                         <tr :key="index" v-for="(detail, index) in getDetails">
                           <td>{{ index + 1 }}</td>
-                          <td>{{ detail.brief }}  </td>
+                          <td>{{ detail.brief }}</td>
                           <td>
-                            <div >
-                              <span class="badge badge-warning">{{ detail.method }}</span>
+                            <div>
+                              <span class="badge badge-warning">{{
+                                detail.method_name
+                              }}</span>
                             </div>
-
                           </td>
                           <td>
                             {{ new Date(detail.created_at).toLocaleString() }}
                           </td>
 
                           <td>
+                            <button
+                              class="btn btn-sm btn-success"
+                              @click="EditPlan(detail)"
+                            >
+                              Edit
+                            </button>
 
+                            <button
+                              class="btn btn-sm btn-primary"
+                              @click="ViewProcurementPlanDetails(detail)"
+                            >
+                              View Details
+                            </button>
 
-                              <button
-                                class="btn btn-sm btn-success"
-                                @click="EditPlan(detail)"
-                              >
-                                Edit
-                              </button>
-
-
-
+                            <button
+                              class="btn btn-sm btn-success"
+                              @click="submitForApproval(detail.id)"
+                              v-if="detail.submitted === 'No'"
+                            >
+                              Submit For Approval
+                            </button>
                           </td>
                         </tr>
                       </tbody>
@@ -73,12 +98,214 @@
             </div>
           </div>
 
+          <!-- Procurement Plan Details -->
+          <!-- Modal -->
+          <div
+            class="modal fade bd-example-modal-lg"
+            id="procurementPlanDetailsModal"
+            role="dialog"
+            aria-labelledby="myLargeModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Procurement Plan Details Under Procurement Plan
+                    {{ procurement_plan_details.financial_year_start }} -
+                    {{ procurement_plan_details.financial_year_end }}
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="container-fluid">
+                    <div class="container">
+                      <!-- Main content -->
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <!-- Details -->
+                          <div class="card mb-4">
+                            <div class="card-body">
+                              <div class="mb-3 d-flex justify-content-between">
+                                <div>
+                                  <span class="me-3">Created By : </span>
+                                  <span class="badge badge-success"
+                                    >{{ procurement_plan_details.firstName }}
+                                    {{
+                                      procurement_plan_details.lastName
+                                    }}</span
+                                  >
+                                </div>
+                                <br />
+                                <div>
+                                  <span class="me-3">Created On : </span>
+                                  <span class="badge badge-success">{{
+                                    procurement_plan_details.created_at
+                                      | customDate
+                                  }}</span>
+                                </div>
+                              </div>
+                              <div class="mb-3 d-flex justify-content-between">
+                                <div>
+                                  <span class="me-3">Brief Description : </span>
+                                  <span class="badge badge-success">{{
+                                    procurement_plan_details.brief
+                                  }}</span>
+                                </div>
+                              </div>
+                              <table class="table table-striped">
+                                <tbody>
+                                  <tr>
+                                    <td colspan="2">Amount</td>
+                                    <td class="text-end">
+                                      {{
+                                        procurement_plan_details.amount
+                                          | formatNumber
+                                      }}
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan="2">Category</td>
+                                    <td class="text-end">
+                                      <span class="badge badge-danger">{{
+                                        procurement_plan_details.category_name
+                                      }}</span>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan="2">Method</td>
+                                    <td class="text-danger text-end">
+                                      <span class="badge badge-danger">{{
+                                        procurement_plan_details.method_name
+                                      }}</span>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan="2">Plan Detail Approval Status</td>
+                                    <td class="text-danger text-end">
+                                      <span
+                                        class="badge badge-success"
+                                        v-if="
+                                          procurement_plan_details.status ===
+                                          'approved'
+                                        "
+                                        >{{
+                                          procurement_plan_details.status
+                                        }}</span
+                                      >
+                                      <span
+                                        class="badge badge-warning"
+                                        v-if="
+                                          procurement_plan_details.status !==
+                                          'approved'
+                                        "
+                                        >{{
+                                          procurement_plan_details.status
+                                        }}</span
+                                      >
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              <div
+                                v-if="
+                                  logged_in_user_step ===
+                                    procurement_plan_details.step &&
+                                  isLoggedInUserApprover &&
+                                  procurement_plan_details.status !== 'approved'
+                                "
+                              >
+                                <form
+                                  @submit.prevent="approveProcurementPlanDetail"
+                                >
+                                  <div class="form-group">
+                                    <label for="">Select Option</label>
+                                    <select
+                                      v-model="form2.status"
+                                      class="form-control"
+                                      :class="{
+                                        'is-invalid':
+                                          form2.errors.has('status'),
+                                      }"
+                                    >
+                                      <option value="">Choose Option</option>
+                                      <option value="Approved">Approve</option>
+                                      <option value="Reject">Reject</option>
+                                    </select>
+                                    <span
+                                      class="invalid-feedback"
+                                      v-if="form2.errors.has('status')"
+                                      v-html="form2.errors.get('status')"
+                                    >
+                                    </span>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for=""
+                                      >Enter Reason For Approval Or
+                                      Reject</label
+                                    >
+                                    <textarea
+                                      v-model="form2.reason"
+                                      class="form-control"
+                                      :class="{
+                                        'is-invalid':
+                                          form2.errors.has('reason'),
+                                      }"
+                                      cols="30"
+                                      rows="4"
+                                    ></textarea>
+                                    <span
+                                      class="invalid-feedback"
+                                      v-if="form2.errors.has('reason')"
+                                      v-html="form2.errors.get('reason')"
+                                    >
+                                    </span>
+                                  </div>
+                                  <div class="float-right">
+                                    <button
+                                      type="submit"
+                                      class="btn btn-success btn-sm"
+                                    >
+                                      Submit
+                                    </button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- /.create a User modal -->
           <div class="modal fade" id="createAPlan">
             <div class="modal-dialog">
               <form
                 @submit.prevent="
-                  editMode ? updateProcurementPlanDetail() : saveProcurementPlanDetail()
+                  editMode
+                    ? updateProcurementPlanDetail()
+                    : saveProcurementPlanDetail()
                 "
                 role="form"
               >
@@ -100,438 +327,383 @@
                   </div>
                   <div class="modal-body">
                     <div class="card card-primary">
-                      <div class="card-header">
-
-                      </div>
+                      <div class="card-header"></div>
                       <!-- /.card-header -->
                       <!-- form start -->
                       <div class="card-body">
                         <div class="row">
                           <div class="col-md-12">
                             <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="">Select Category</label>
-                                    </div>
-
-                                    <div class="col-md-8">
-                                        <select
-                                class="form-control"
-                                :class="{ 'is-invalid': errors.category_id  }"
-                                v-model="form.category_id"
-                              >
-                                <option selected value="">Choose Category</option>
-                                <option
-                                  v-for="cat in getCategories"
-                                  :key="cat.id"
-                                  :value="cat.id"
-                                >
-                                  {{ cat.name }}
-                                </option>
-                              </select>
-                              <div
-                                v-if="errors.category_id"
-                                class="invalid-feedback"
-                              >
-                                <div v-if="errors.category_id" class="error">
-                                  {{
-                                    errors.category_id
-                                      ? errors.category_id[0]
-                                      : ""
-                                  }}
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <label for="">Select Category</label>
                                 </div>
 
-                              </div>
+                                <div class="col-md-8">
+                                  <select
+                                    class="form-control"
+                                    :class="{
+                                      'is-invalid': errors.category_id,
+                                    }"
+                                    v-model="form.category_id"
+                                  >
+                                    <option selected value="">
+                                      Choose Category
+                                    </option>
+                                    <option
+                                      v-for="cat in getCategories"
+                                      :key="cat.id"
+                                      :value="cat.id"
+                                    >
+                                      {{ cat.name }}
+                                    </option>
+                                  </select>
+                                  <div
+                                    v-if="errors.category_id"
+                                    class="invalid-feedback"
+                                  >
+                                    <div
+                                      v-if="errors.category_id"
+                                      class="error"
+                                    >
+                                      {{
+                                        errors.category_id
+                                          ? errors.category_id[0]
+                                          : ""
+                                      }}
                                     </div>
-
-                                </div>
-
-
-                            </div>
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="role_name">Brief Description</label>
-                                    </div>
-
-                                    <div class="col-md-8">
-                                        <input
-                                type="text"
-                                class="form-control"
-                                :class="{ 'is-invalid': errors.brief }"
-                                name="brief"
-                                v-model="form.brief"
-                                placeholder="Enter Brief Description"
-                              />
-
-                              <div
-                                v-if="errors.brief"
-                                class="invalid-feedback"
-                              >
-                                <div v-if="errors.brief" class="error">
-                                  {{
-                                    errors.brief ? errors.brief[0] : ""
-                                  }}
+                                  </div>
                                 </div>
                               </div>
-                                    </div>
-
-
-                                </div>
-
-
                             </div>
 
                             <div class="form-group">
                               <div class="row">
-
                                 <div class="col-md-4">
-                                    <label for="">Select Method</label>
+                                  <label for="role_name"
+                                    >Brief Description</label
+                                  >
                                 </div>
 
                                 <div class="col-md-8">
-                                    <select
-                                class="form-control"
-                                :class="{ 'is-invalid': errors.method_id  }"
-                                v-model="form.method_id"
-                              >
-                                <option selected value="">Choose Method</option>
-                                <option
-                                  v-for="mtd in getMethods"
-                                  :key="mtd.id"
-                                  :value="mtd.id"
-                                >
-                                  {{ mtd.name }}
-                                </option>
-                              </select>
-                              <div
-                                v-if="errors.method_id"
-                                class="invalid-feedback"
-                              >
-                                <div v-if="errors.method_id" class="error">
-                                  {{
-                                    errors.method_id
-                                      ? errors.method_id[0]
-                                      : ""
-                                  }}
-                                </div>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': errors.brief }"
+                                    name="brief"
+                                    v-model="form.brief"
+                                    placeholder="Enter Brief Description"
+                                  />
 
-                              </div>
-                                </div>
-
-                              </div>
-
-                            </div>
-
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="role_name">Estimate in UGX</label>
+                                  <div
+                                    v-if="errors.brief"
+                                    class="invalid-feedback"
+                                  >
+                                    <div v-if="errors.brief" class="error">
+                                      {{ errors.brief ? errors.brief[0] : "" }}
                                     </div>
-
-                                    <div class="col-md-8">
-                                        <input
-                                type="number"
-                                class="form-control"
-                                :class="{ 'is-invalid': errors.amount }"
-                                name="amount"
-                                v-model="form.amount"
-                                placeholder="Enter Amount"
-                              />
-
-                              <div
-                                v-if="errors.amount"
-                                class="invalid-feedback"
-                              >
-                                <div v-if="errors.amount" class="error">
-                                  {{
-                                    errors.amount ? errors.amount[0] : ""
-                                  }}
+                                  </div>
                                 </div>
                               </div>
-                                    </div>
-
-
-                                </div>
-
-
-                            </div>
-
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="role_name">Tender Document/RFP</label>
-                                    </div>
-
-                                    <div class="col-md-8">
-                                        <input
-                                            type="date"
-                                            class="form-control"
-                                            :class="{ 'is-invalid': errors.C }"
-                                            name="C"
-                                            v-model="form.C"
-                                            placeholder=""
-                                        />
-
-
-                                    </div>
-
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="role_name">Bid/EOI Invitation & Open	</label>
-                                    </div>
-
-                                    <div class="col-md-8">
-                                        <input
-                                            type="date"
-                                            class="form-control"
-                                            :class="{ 'is-invalid': errors.E }"
-                                            name="E"
-                                            v-model="form.E"
-                                            placeholder=""
-                                        />
-
-
-                                    </div>
-
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="role_name">Bid/EOI Evaluation/Short List</label>
-                                    </div>
-
-                                    <div class="col-md-8">
-                                        <input
-                                            type="date"
-                                            class="form-control"
-                                            :class="{ 'is-invalid': errors.F }"
-                                            name="F"
-                                            v-model="form.F"
-                                            placeholder=""
-                                        />
-
-
-                                    </div>
-
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="role_name">Issuance of RFP (Services)</label>
-                                    </div>
-
-                                    <div class="col-md-8">
-                                        <input
-                                            type="date"
-                                            class="form-control"
-                                            :class="{ 'is-invalid': errors.G }"
-                                            name="G"
-                                            v-model="form.G"
-                                            placeholder=""
-                                        />
-
-
-                                    </div>
-
-
-                                </div>
-
                             </div>
 
                             <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="role_name">Receipt of RFP (Service)</label>
-                                    </div>
-
-                                    <div class="col-md-8">
-                                        <input
-                                            type="date"
-                                            class="form-control"
-                                            :class="{ 'is-invalid': errors.H }"
-                                            name="H"
-                                            v-model="form.H"
-                                            placeholder=""
-                                        />
-
-
-                                    </div>
-
-
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <label for="">Select Method</label>
                                 </div>
 
-                            </div>
-
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="role_name">Evaluation /Negotiate</label>
+                                <div class="col-md-8">
+                                  <select
+                                    class="form-control"
+                                    :class="{ 'is-invalid': errors.method_id }"
+                                    v-model="form.method_id"
+                                  >
+                                    <option selected value="">
+                                      Choose Method
+                                    </option>
+                                    <option
+                                      v-for="mtd in getMethods"
+                                      :key="mtd.id"
+                                      :value="mtd.id"
+                                    >
+                                      {{ mtd.name }}
+                                    </option>
+                                  </select>
+                                  <div
+                                    v-if="errors.method_id"
+                                    class="invalid-feedback"
+                                  >
+                                    <div v-if="errors.method_id" class="error">
+                                      {{
+                                        errors.method_id
+                                          ? errors.method_id[0]
+                                          : ""
+                                      }}
                                     </div>
-
-                                    <div class="col-md-8">
-                                        <input
-                                            type="date"
-                                            class="form-control"
-                                            :class="{ 'is-invalid': errors.I }"
-                                            name="I"
-                                            v-model="form.I"
-                                            placeholder=""
-                                        />
-
-
-                                    </div>
-
-
+                                  </div>
                                 </div>
-
-                            </div>
-
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="role_name">Contract Endorsement</label>
-                                    </div>
-
-                                    <div class="col-md-8">
-                                        <input
-                                            type="date"
-                                            class="form-control"
-                                            :class="{ 'is-invalid': errors.K }"
-                                            name="K"
-                                            v-model="form.K"
-                                            placeholder=""
-                                        />
-
-
-                                    </div>
-
-
-                                </div>
-
+                              </div>
                             </div>
 
                             <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="role_name">Contract Award</label>
-                                    </div>
-
-                                    <div class="col-md-8">
-                                        <input
-                                            type="date"
-                                            class="form-control"
-                                            :class="{ 'is-invalid': errors.L }"
-                                            name="L"
-                                            v-model="form.L"
-                                            placeholder=""
-                                        />
-
-
-                                    </div>
-
-
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <label for="role_name">Estimate in UGX</label>
                                 </div>
 
-                            </div>
+                                <div class="col-md-8">
+                                  <input
+                                    type="number"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': errors.amount }"
+                                    name="amount"
+                                    v-model="form.amount"
+                                    placeholder="Enter Amount"
+                                  />
 
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="role_name">Commencement of Contract	</label>
+                                  <div
+                                    v-if="errors.amount"
+                                    class="invalid-feedback"
+                                  >
+                                    <div v-if="errors.amount" class="error">
+                                      {{
+                                        errors.amount ? errors.amount[0] : ""
+                                      }}
                                     </div>
-
-                                    <div class="col-md-8">
-                                        <input
-                                            type="date"
-                                            class="form-control"
-                                            :class="{ 'is-invalid': errors.M }"
-                                            name="M"
-                                            v-model="form.M"
-                                            placeholder=""
-                                        />
-
-
-                                    </div>
-
-
+                                  </div>
                                 </div>
-
+                              </div>
                             </div>
 
                             <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="role_name">Contract Completion</label>
-                                    </div>
-
-                                    <div class="col-md-8">
-                                        <input
-                                            type="date"
-                                            class="form-control"
-                                            :class="{ 'is-invalid': errors.N }"
-                                            name="N"
-                                            v-model="form.N"
-                                            placeholder=""
-                                        />
-
-
-                                    </div>
-
-
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <label for="role_name"
+                                    >Tender Document/RFP</label
+                                  >
                                 </div>
 
+                                <div class="col-md-8">
+                                  <input
+                                    type="date"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': errors.C }"
+                                    name="C"
+                                    v-model="form.C"
+                                    placeholder=""
+                                  />
+                                </div>
+                              </div>
                             </div>
-
 
                             <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="role_name">Contract Approval MoFEP</label>
-                                    </div>
-
-                                    <div class="col-md-8">
-                                        <input
-                                            type="date"
-                                            class="form-control"
-                                            :class="{ 'is-invalid': errors.J }"
-                                            name="J"
-                                            v-model="form.J"
-                                            placeholder=""
-                                        />
-
-
-                                    </div>
-
-
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <label for="role_name"
+                                    >Bid/EOI Invitation & Open
+                                  </label>
                                 </div>
 
+                                <div class="col-md-8">
+                                  <input
+                                    type="date"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': errors.E }"
+                                    name="E"
+                                    v-model="form.E"
+                                    placeholder=""
+                                  />
+                                </div>
+                              </div>
                             </div>
 
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <label for="role_name"
+                                    >Bid/EOI Evaluation/Short List</label
+                                  >
+                                </div>
 
+                                <div class="col-md-8">
+                                  <input
+                                    type="date"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': errors.F }"
+                                    name="F"
+                                    v-model="form.F"
+                                    placeholder=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <label for="role_name"
+                                    >Issuance of RFP (Services)</label
+                                  >
+                                </div>
+
+                                <div class="col-md-8">
+                                  <input
+                                    type="date"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': errors.G }"
+                                    name="G"
+                                    v-model="form.G"
+                                    placeholder=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <label for="role_name"
+                                    >Receipt of RFP (Service)</label
+                                  >
+                                </div>
+
+                                <div class="col-md-8">
+                                  <input
+                                    type="date"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': errors.H }"
+                                    name="H"
+                                    v-model="form.H"
+                                    placeholder=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <label for="role_name"
+                                    >Evaluation /Negotiate</label
+                                  >
+                                </div>
+
+                                <div class="col-md-8">
+                                  <input
+                                    type="date"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': errors.I }"
+                                    name="I"
+                                    v-model="form.I"
+                                    placeholder=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <label for="role_name"
+                                    >Contract Endorsement</label
+                                  >
+                                </div>
+
+                                <div class="col-md-8">
+                                  <input
+                                    type="date"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': errors.K }"
+                                    name="K"
+                                    v-model="form.K"
+                                    placeholder=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <label for="role_name">Contract Award</label>
+                                </div>
+
+                                <div class="col-md-8">
+                                  <input
+                                    type="date"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': errors.L }"
+                                    name="L"
+                                    v-model="form.L"
+                                    placeholder=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <label for="role_name"
+                                    >Commencement of Contract
+                                  </label>
+                                </div>
+
+                                <div class="col-md-8">
+                                  <input
+                                    type="date"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': errors.M }"
+                                    name="M"
+                                    v-model="form.M"
+                                    placeholder=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <label for="role_name"
+                                    >Contract Completion</label
+                                  >
+                                </div>
+
+                                <div class="col-md-8">
+                                  <input
+                                    type="date"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': errors.N }"
+                                    name="N"
+                                    v-model="form.N"
+                                    placeholder=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <label for="role_name"
+                                    >Contract Approval MoFEP</label
+                                  >
+                                </div>
+
+                                <div class="col-md-8">
+                                  <input
+                                    type="date"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': errors.J }"
+                                    name="J"
+                                    v-model="form.J"
+                                    placeholder=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -559,8 +731,6 @@
 
           <!-- /.Start  User Activation modal-dialog -->
 
-
-
           <!--End User Activation Modal-->
         </div>
         <!-- content-wrapper ends -->
@@ -581,9 +751,7 @@ import Loading from "vue-loading-overlay";
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import { mapActions, mapState, mapGetters } from "vuex";
-import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
-import { validationMixin } from "vuelidate";
-import moment from 'moment';
+import moment from "moment";
 
 export default {
   props: {
@@ -598,8 +766,18 @@ export default {
       editMode: false,
       errors: [],
       plan_to_edit: "",
+      procurement_plan_details: {},
+      logged_in_user_step: "",
+      isLoggedInUserApprover: false,
+      form2: new Form({
+        id: "",
+        reason: "",
+        step: "",
+        user_id: "",
+        status: "",
+      }),
       form: new Form({
-        id:"",
+        id: "",
         brief: "",
         amount: "",
         plan_id: "",
@@ -642,8 +820,102 @@ export default {
   methods: {
     ...mapActions("registration", ["showLoader", "hideLoader"]),
 
+    submitForApproval(id) {
+      this.showLoader();
+      axios
+        .get("/submit/procurement/detail/for/approval/" + id, {
+          headers: {
+            "X-Frame-Options": "sameorigin",
+            "X-Content-Type-Options": "nosniff",
+            "strict-transport-security": "max-age=31536000",
+          },
+        })
+        .then((response) => {
+          Swal.fire({
+            icon: "success",
+            title: "Response",
+            text: response.data.message,
+          });
+          window.location.reload();
+        })
+        .catch((error) => {
+          this.hideLoader();
+        });
+    },
+
+    approveProcurementPlanDetail() {
+      this.showLoader();
+      if (this.form2.status === "Approved") {
+        this.form2
+          .post("/approve/procurement/plan/detail", {
+            headers: {
+              "X-Frame-Options": "sameorigin",
+              "X-Content-Type-Options": "nosniff",
+              "strict-transport-security": "max-age=31536000",
+            },
+          })
+          .then((response) => {
+            Swal.fire({
+              icon: "success",
+              title: "Response",
+              text: response.data.message,
+            });
+            window.location.reload();
+          })
+          .catch((error) => {
+            this.hideLoader();
+          });
+      } else {
+        this.form2
+          .post("/reject/procurement/plan/detail", {
+            headers: {
+              "X-Frame-Options": "sameorigin",
+              "X-Content-Type-Options": "nosniff",
+              "strict-transport-security": "max-age=31536000",
+            },
+          })
+          .then((response) => {
+            Swal.fire({
+              icon: "success",
+              title: "Response",
+              text: response.data.message,
+            });
+            window.location.reload();
+          })
+          .catch((error) => {
+            this.hideLoader();
+          });
+      }
+    },
+
+    ViewProcurementPlanDetails(details) {
+      this.showLoader();
+      this.procurement_plan_details = details;
+      this.form2.step = details.step;
+      this.form2.id = details.id;
+      axios
+        .get("/get/who/to/approve/step/" + details.step, {
+          headers: {
+            "X-Frame-Options": "sameorigin",
+            "X-Content-Type-Options": "nosniff",
+            "strict-transport-security": "max-age=31536000",
+          },
+        })
+        .then((response) => {
+          this.isLoggedInUserApprover = response.data.message;
+          this.form2.user_id = response.data.user_id;
+          this.logged_in_user_step = response.data.user_step;
+
+          this.hideLoader();
+          $("#procurementPlanDetailsModal").modal("show");
+        })
+        .catch((error) => {
+          this.hideLoader();
+        });
+    },
+
     getFormattedDate(date) {
-            return moment(date).format("YYYY")
+      return moment(date).format("YYYY");
     },
 
     saveProcurementPlanDetail() {
@@ -655,7 +927,6 @@ export default {
         .then((response) => {
           if (response.data.isvalid == false) {
             this.errors = response.data.errors;
-            console.log(this.errors)
           } else {
             Swal.fire({
               icon: "success",
@@ -666,18 +937,19 @@ export default {
             this.hideLoader();
             $("#createAPlan").modal("hide");
             this.form.reset();
-            window.location.href = "/manage/procurement_plan/details/"+this.plan.id;
+            window.location.href =
+              "/manage/procurement_plan/details/" + this.plan.id;
             $("#allPlans").DataTable();
           }
         })
         .catch((response) => {
-            this.errors = response.data.errors;
+          this.errors = response.data.errors;
 
-            Swal.fire({
-              icon: "success",
-              title: "Added New Plan",
-              text: response.data.errors,
-            });
+          Swal.fire({
+            icon: "success",
+            title: "Added New Plan",
+            text: response.data.errors,
+          });
         });
     },
 
@@ -690,7 +962,7 @@ export default {
         .then((response) => {
           if (response.data.isvalid == false) {
             this.errors = response.data.errors;
-            console.log(this.errors)
+            console.log(this.errors);
           } else {
             Swal.fire({
               icon: "success",
@@ -701,32 +973,29 @@ export default {
             this.hideLoader();
             $("#createAPlan").modal("hide");
             this.form.reset();
-            window.location.href = "/manage/procurement_plan/details/"+this.plan.id;
+            window.location.href =
+              "/manage/procurement_plan/details/" + this.plan.id;
             $("#allPlans").DataTable();
           }
         })
         .catch((response) => {
-            this.errors = response.data.errors;
+          this.errors = response.data.errors;
 
-            Swal.fire({
-              icon: "success",
-              title: "Added New Plan",
-              text: response.data.errors,
-            });
+          Swal.fire({
+            icon: "success",
+            title: "Added New Plan",
+            text: response.data.errors,
+          });
         });
     },
 
-
-    PlanDetails(plan){
-
-        console.log(plan)
-        window.location.href = "/manage/procurement_plan/details/"+plan.id;
-
+    PlanDetails(plan) {
+      console.log(plan);
+      window.location.href = "/manage/procurement_plan/details/" + plan.id;
     },
 
     //Open Modal
     openAddPlanModal() {
-
       this.editMode = false;
       this.form.reset();
       this.form.plan_id = this.plan.id;
@@ -735,20 +1004,17 @@ export default {
 
     //Open Modal
     EditPlan(detail) {
-    this.editMode = true;
-    this.form.fill(detail);
-    $("#createAPlan").modal("show");
-  },
-
+      this.editMode = true;
+      this.form.fill(detail);
+      $("#createAPlan").modal("show");
+    },
   },
 
   created() {
+    this.showLoader();
     setTimeout(() => {
       this.hideLoader();
-    }, 2000);
-
-    //this.form.plan_id = this.plan.id;
-    console.log(this.form.plan_id);
+    }, 3000);
   },
 
   components: {

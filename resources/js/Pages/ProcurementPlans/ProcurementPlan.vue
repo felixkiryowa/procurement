@@ -1,6 +1,6 @@
 <template>
   <div class="container-scroller">
-    <UserLoggedOnNavBarComponent :appName="app" :user="user" />
+    <UserLoggedOnNavBarComponent :app="app" :user="user" />
     <div class="container-fluid page-body-wrapper">
       <!-- partial:partials/_settings-panel.html -->
 
@@ -9,6 +9,16 @@
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
+          <div class="vld-parent">
+            <loading
+              :active.sync="isLoading"
+              :can-cancel="false"
+              color="#074578"
+              loader="spinner"
+              :opacity="0.5"
+              :is-full-page="fullPage"
+            />
+          </div>
           <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
@@ -40,36 +50,38 @@
                       <tbody>
                         <tr :key="index" v-for="(plan, index) in plans">
                           <td>{{ index + 1 }}</td>
-                          <td>{{ plan.title }}  {{ getFormattedDate(plan.financial_year_start) }} - {{ getFormattedDate(plan.financial_year_end) }}</td>
                           <td>
-                            <div >
-                              <span class="badge badge-warning">{{ plan.status }}</span>
+                            {{ plan.title }}
+                            {{ getFormattedDate(plan.financial_year_start) }} -
+                            {{ getFormattedDate(plan.financial_year_end) }}
+                          </td>
+                          <td>
+                            <div>
+                              <span class="badge badge-warning">{{
+                                plan.status
+                              }}</span>
                             </div>
-
                           </td>
                           <td>
                             {{ new Date(plan.created_at).toLocaleString() }}
                           </td>
 
                           <td>
+                            <button
+                              class="btn btn-sm btn-success"
+                              @click="EditPlan(plan)"
+                            >
+                              Edit
+                            </button>
 
+                            |
 
-                              <button
-                                class="btn btn-sm btn-success"
-                                @click="EditPlan(plan)"
-                              >
-                                Edit
-                              </button>
-
-                              |
-
-                              <button
-                                class="btn btn-sm btn-danger"
-                                @click="PlanDetails(plan)"
-                              >
-                                View Plan Details
-                              </button>
-
+                            <button
+                              class="btn btn-sm btn-danger"
+                              @click="PlanDetails(plan)"
+                            >
+                              View Plan Details
+                            </button>
                           </td>
                         </tr>
                       </tbody>
@@ -92,9 +104,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <h4 class="modal-title">
-                      {{
-                        editMode ? "Edit Plan" : "Create A New Plan"
-                      }}
+                      {{ editMode ? "Edit Plan" : "Create A New Plan" }}
                     </h4>
                     <button
                       type="button"
@@ -108,17 +118,10 @@
                   <div class="modal-body">
                     <div class="card card-primary">
                       <div class="card-header">
-                        <div
-                                v-if="errors.exists"
-                                class="laravel-error"
-                              >
-                        <div v-if="errors.exists" class="error">
-                                  {{
-                                    errors.exists
-                                      ? errors.exists
-                                      : ""
-                                  }}
-                        </div>
+                        <div v-if="errors.exists" class="laravel-error">
+                          <div v-if="errors.exists" class="error">
+                            {{ errors.exists ? errors.exists : "" }}
+                          </div>
                         </div>
                       </div>
                       <!-- /.card-header -->
@@ -133,7 +136,9 @@
                                 :class="{ 'is-invalid': errors.period }"
                                 v-model="form.period"
                               >
-                                <option selected value="">Choose Finacial Year</option>
+                                <option selected value="">
+                                  Choose Finacial Year
+                                </option>
                                 <option
                                   v-for="fy in financialyr"
                                   :key="fy"
@@ -147,13 +152,8 @@
                                 class="invalid-feedback"
                               >
                                 <div v-if="errors.period" class="error">
-                                  {{
-                                    errors.period
-                                      ? errors.period[0]
-                                      : ""
-                                  }}
+                                  {{ errors.period ? errors.period[0] : "" }}
                                 </div>
-
                               </div>
                             </div>
 
@@ -163,20 +163,21 @@
                                 class="form-control"
                                 v-model="form.status"
                                 :class="{ 'is-invalid': errors.status }"
-                                >
+                              >
                                 <option selected value="">Choose Status</option>
                                 <option value="saved">Saved</option>
                                 <option value="published">Published</option>
                                 <option value="archived">Archived</option>
-                                </select>
-                              <div v-if="errors.status" class="invalid-feedback">
+                              </select>
+                              <div
+                                v-if="errors.status"
+                                class="invalid-feedback"
+                              >
                                 <div v-if="errors.status" class="error">
                                   {{ errors.status ? errors.status[0] : "" }}
                                 </div>
                               </div>
                             </div>
-
-
                           </div>
                         </div>
                       </div>
@@ -204,13 +205,11 @@
 
           <!-- /.Start  User Activation modal-dialog -->
 
-
-
           <!--End User Activation Modal-->
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
-        <FooterComponent />
+        <FooterComponent :year="year" />
         <!-- partial -->
       </div>
       <!-- main-panel ends -->
@@ -228,13 +227,13 @@ import "datatables.net-dt/css/jquery.dataTables.min.css";
 import { mapActions, mapState, mapGetters } from "vuex";
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 import { validationMixin } from "vuelidate";
-import moment from 'moment';
+import moment from "moment";
 
 export default {
   props: {
     users: Array,
     financialyr: Array,
-    plans: Array
+    plans: Array,
   },
   data() {
     return {
@@ -263,6 +262,9 @@ export default {
     app() {
       return this.$page.props.appName;
     },
+    year() {
+      return this.$page.props.year;
+    },
     checkIfUserIsIdle() {
       return this.isAppIdle ? true : false;
     },
@@ -273,7 +275,7 @@ export default {
     ...mapActions("registration", ["showLoader", "hideLoader"]),
 
     getFormattedDate(date) {
-            return moment(date).format("YYYY")
+      return moment(date).format("YYYY");
     },
 
     saveProcurementPlan() {
@@ -285,7 +287,7 @@ export default {
         .then((response) => {
           if (response.data.isvalid == false) {
             this.errors = response.data.errors;
-            console.log(this.errors)
+            console.log(this.errors);
           } else {
             Swal.fire({
               icon: "success",
@@ -301,16 +303,15 @@ export default {
           }
         })
         .catch((response) => {
-            this.errors = response.data.errors;
+          this.errors = response.data.errors;
 
-            Swal.fire({
-              icon: "success",
-              title: "Added New Plan",
-              text: response.data.errors,
-            });
+          Swal.fire({
+            icon: "success",
+            title: "Added New Plan",
+            text: response.data.errors,
+          });
         });
     },
-
 
     updateProcurementPlan() {
       this.$Progress.fail();
@@ -321,7 +322,7 @@ export default {
         .then((response) => {
           if (response.data.isvalid == false) {
             this.errors = response.data.errors;
-            console.log(this.errors)
+            console.log(this.errors);
           } else {
             Swal.fire({
               icon: "success",
@@ -337,30 +338,27 @@ export default {
           }
         })
         .catch((response) => {
-            this.errors = response.data.errors;
+          this.errors = response.data.errors;
 
-            Swal.fire({
-              icon: "success",
-              title: "Added New Plan",
-              text: response.data.errors,
-            });
+          Swal.fire({
+            icon: "success",
+            title: "Added New Plan",
+            text: response.data.errors,
+          });
         });
     },
 
-
-    PlanDetails(plan){
-
-        console.log(plan)
-        window.location.href = "/manage/procurement_plan/details/"+plan.id;
-
+    PlanDetails(plan) {
+      console.log(plan);
+      window.location.href = "/manage/procurement_plan/details/" + plan.id;
     },
 
     //Open Modal
     EditPlan(plan) {
-    this.editMode = true;
-    this.form.fill(plan);
-    $("#createAPlan").modal("show");
-  },
+      this.editMode = true;
+      this.form.fill(plan);
+      $("#createAPlan").modal("show");
+    },
 
     //Open Modal
     openAddPlanModal() {
@@ -373,7 +371,7 @@ export default {
   created() {
     setTimeout(() => {
       this.hideLoader();
-    }, 2000);
+    }, 3000);
   },
 
   components: {

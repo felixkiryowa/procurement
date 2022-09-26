@@ -6,7 +6,7 @@
   src:url(/fonts/feather-webfont.eot?0879d6e7beeb88e2c3a9beab419c5a9f?#iefix) format("embedded-opentype"),
     url(/fonts/feather-webfont.woff?254c5832442c4e0340e89a6f0e602c6e) format("woff"),
     url(/fonts/feather-webfont.ttf?09af5c887a081a77e2f50330cb2916f5) format("truetype"),
-    url(/fonts/feather-webfont.svg?e6dc59c85218350720fec6a7d6462821#feather) format("svg");
+    url(/fonts/feather-webfont.svg?de556ca37f103adcbcd485329ca1b909#feather) format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -36506,6 +36506,18 @@ h3,
   height: 48.7rem !important;
 }
 
+.default-approver {
+  margin-top: 41px !important;
+}
+
+.remove-approver {
+  margin-top: 34px !important;
+}
+
+.update-profile {
+  margin-top: -13px !important;
+}
+
 .custom-border1 {
   border: 1px solid #ced4da !important;
   padding: 1rem !important;
@@ -36963,5 +36975,35 @@ a.text-lightred:hover {
 
 .bg-lightred {
   background-color: #ff5722;
+}
+
+body {
+  background: #eee;
+}
+
+.card {
+  box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid rgba(0, 0, 0, 0.125);
+  border-radius: 1rem;
+}
+
+.text-reset {
+  --bs-text-opacity: 1;
+  color: inherit !important;
+}
+
+a {
+  color: #5465ff;
+  text-decoration: none;
 }
 

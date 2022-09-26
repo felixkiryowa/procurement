@@ -9,7 +9,7 @@ use App\Models\LoggingActivity;
 
 trait LogActivityTrait {
 
-    public static function addToLog($user_ip,$subject, $details=null) {
+    public static function addToLog($user_ip, $subject, $details=NULL) {
         try {
 
             if(Auth::check()) {
@@ -20,7 +20,7 @@ trait LogActivityTrait {
 
             $log = [];
             $log['user_ip'] = $user_ip;
-            $logp['subject'] = $subject;
+            $log['subject'] = $subject;
             $logp['details'] = $details;
             $log['performed_by'] = $names;
             $log['company_id'] = Auth::user()->company_id;

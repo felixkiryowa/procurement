@@ -16,7 +16,7 @@ class UserAuthenticationController extends Controller
 
 
     public function loginUser(Request $request) {
-      try {
+    //   try {
 
             $validator = Validator::make($request->all(), [
              'email' => 'required|email',
@@ -42,13 +42,13 @@ class UserAuthenticationController extends Controller
 
                     $user->last_time_login = date("Y-m-d h:i:s");
                     $user->save();
-                    $details = $user->firstName . ' '.$user->lastName. ' has logged in';
-                    $this->addToLog($request->ip(), $details);
+                
+                    $this->addToLog($request->ip(), 'User Login',  $user->firstName . ' '.$user->lastName. ' has logged in');
 
                     $user_redirects = collect([
                         'Provider' => '/company/bids',
                         'Company' => '/manage/company/users',
-                        'Procurement Officer' => '/procurement/officer',
+                        'Procurement Officer' => '/manage/procurement/plans',
                         'Super Systems Administrator' => '/manage/companies'
                     ]);
 
@@ -58,9 +58,9 @@ class UserAuthenticationController extends Controller
                 }
             }
 
-      }catch(\Exception $e) {
-         Log::channel('daily')->error('Log message' , array('message' => $e->getMessage(), 'type' => 'Handling the errors'));
-      }
+    //   }catch(\Exception $e) {
+    //      Log::channel('daily')->error('Log message' , array('message' => $e->getMessage(), 'type' => 'Handling the errors'));
+    //   }
     }
 
     public function destroyPreviousSession(User $user): void
@@ -73,6 +73,10 @@ class UserAuthenticationController extends Controller
         $user->save();
     }
 
+    public function getLoggedInUserNames() {
+        return Auth::user()->firstName.' '.Auth::user()->lastName;
+    }
+
     //Funtion to logout users
     public function logOutUser(Request $request)
     {
@@ -80,6 +84,8 @@ class UserAuthenticationController extends Controller
 
             $loggedInUser = User::findOrFail(Auth::user()->id);
             $loggedInUser->save();
+
+            $this->addToLog($request->ip(), 'User Logging Out', 'Successfully Logged Out '.$this->getLoggedInUserNames());
 
             auth()->logout();
             $request->session()->invalidate();
@@ -92,21 +98,24 @@ class UserAuthenticationController extends Controller
     }
 
 
-    public function activateUser($id) {
+    public function activateUser(Request $request, $id) {
 
-        $user = User::select('id', 'status')->where('id', $id)->first();
+        $user = User::select('id', 'status', 'firstName', 'lastName')->where('id', $id)->first();
         $user->status = 1;
         $user->save();
+        $this->addToLog($request->ip(), 'Activating User', 'Successfully Activated User  '.$user->firstName .' '.$user->lastName);
 
         return response()->json(['success' => true, 'message' => 'Successfully Activated User'], 200);
 
     }
 
 
-    public function deActivateUser($id) {
+    public function deActivateUser(Request $request , $id) {
         $user = User::select('id', 'status')->where('id', $id)->first();
         $user->status = 0;
         $user->save();
+
+        $this->addToLog($request->ip(), 'Deactivating User', 'Successfully Activated User  '.$user->firstName .' '.$user->lastName);
 
         return response()->json(['success' => true, 'message' => 'Successfully DeActivated User'], 200);
 
