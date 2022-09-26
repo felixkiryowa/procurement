@@ -91,7 +91,7 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  Route::post('/store/password', [UserController::class, 'store']);
 
  //Procurement Plans
- Route::get('/manage/procurement/plans', [ProcurementPlanController::class, 'index'])->middleware('role:Procurement Officer');
+ Route::get('/manage/procurement/plans', [ProcurementPlanController::class, 'index'])->middleware('role:Procurement Officer,Company');
  Route::post('/create/procurement/plan', [ProcurementPlanController::class, 'store']);
 
  Route::post('/approve/procurement/plan/detail', [ProcurementPlanController::class, 'approveProcurementPlanDetail']);

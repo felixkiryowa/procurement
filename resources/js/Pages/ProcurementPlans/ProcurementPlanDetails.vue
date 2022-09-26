@@ -103,7 +103,6 @@
           <div
             class="modal fade bd-example-modal-lg"
             id="procurementPlanDetailsModal"
-            tabindex="-1"
             role="dialog"
             aria-labelledby="myLargeModalLabel"
             aria-hidden="true"
@@ -188,16 +187,65 @@
                                       }}</span>
                                     </td>
                                   </tr>
+                                  <tr>
+                                    <td colspan="2">Plan Detail Approval Status</td>
+                                    <td class="text-danger text-end">
+                                      <span
+                                        class="badge badge-success"
+                                        v-if="
+                                          procurement_plan_details.status ===
+                                          'approved'
+                                        "
+                                        >{{
+                                          procurement_plan_details.status
+                                        }}</span
+                                      >
+                                      <span
+                                        class="badge badge-warning"
+                                        v-if="
+                                          procurement_plan_details.status !==
+                                          'approved'
+                                        "
+                                        >{{
+                                          procurement_plan_details.status
+                                        }}</span
+                                      >
+                                    </td>
+                                  </tr>
                                 </tbody>
                               </table>
                               <div
                                 v-if="
                                   logged_in_user_step ===
                                     procurement_plan_details.step &&
-                                  isLoggedInUserApprover
+                                  isLoggedInUserApprover &&
+                                  procurement_plan_details.status !== 'approved'
                                 "
                               >
-                                <form>
+                                <form
+                                  @submit.prevent="approveProcurementPlanDetail"
+                                >
+                                  <div class="form-group">
+                                    <label for="">Select Option</label>
+                                    <select
+                                      v-model="form2.status"
+                                      class="form-control"
+                                      :class="{
+                                        'is-invalid':
+                                          form2.errors.has('status'),
+                                      }"
+                                    >
+                                      <option value="">Choose Option</option>
+                                      <option value="Approved">Approve</option>
+                                      <option value="Reject">Reject</option>
+                                    </select>
+                                    <span
+                                      class="invalid-feedback"
+                                      v-if="form2.errors.has('status')"
+                                      v-html="form2.errors.get('status')"
+                                    >
+                                    </span>
+                                  </div>
                                   <div class="form-group">
                                     <label for=""
                                       >Enter Reason For Approval Or
@@ -206,35 +254,26 @@
                                     <textarea
                                       v-model="form2.reason"
                                       class="form-control"
-                                      :class="{ 'is-invalid': errors.reason }"
+                                      :class="{
+                                        'is-invalid':
+                                          form2.errors.has('reason'),
+                                      }"
                                       cols="30"
                                       rows="4"
                                     ></textarea>
-                                    <div
-                                      v-if="errors.password"
+                                    <span
                                       class="invalid-feedback"
+                                      v-if="form2.errors.has('reason')"
+                                      v-html="form2.errors.get('reason')"
                                     >
-                                      <div v-if="errors.reason" class="error">
-                                        {{
-                                          errors.reason ? errors.reason[0] : ""
-                                        }}
-                                      </div>
-                                    </div>
+                                    </span>
                                   </div>
                                   <div class="float-right">
                                     <button
                                       type="submit"
-                                      class="btn btn-danger btn-sm"
-                                      @click="rejectProcurementPlanDetail"
-                                    >
-                                      Reject
-                                    </button>
-                                    <button
-                                      type="submit"
                                       class="btn btn-success btn-sm"
-                                      @click="approveProcurementPlanDetail"
                                     >
-                                      Approval
+                                      Submit
                                     </button>
                                   </div>
                                 </form>
@@ -735,6 +774,7 @@ export default {
         reason: "",
         step: "",
         user_id: "",
+        status: "",
       }),
       form: new Form({
         id: "",
@@ -803,50 +843,49 @@ export default {
         });
     },
 
-    rejectProcurementPlanDetail() {
-      this.showLoader();
-      axios
-        .get("/reject/procurement/plan/detail", {
-          headers: {
-            "X-Frame-Options": "sameorigin",
-            "X-Content-Type-Options": "nosniff",
-            "strict-transport-security": "max-age=31536000",
-          },
-        })
-        .then((response) => {
-          Swal.fire({
-            icon: "success",
-            title: "Response",
-            text: response.data.message,
-          });
-          // window.location.reload();
-        })
-        .catch((error) => {
-          this.hideLoader();
-        });
-    },
-
     approveProcurementPlanDetail() {
       this.showLoader();
-      this.form2
-        .post("/approve/procurement/plan/detail", {
-          headers: {
-            "X-Frame-Options": "sameorigin",
-            "X-Content-Type-Options": "nosniff",
-            "strict-transport-security": "max-age=31536000",
-          },
-        })
-        .then((response) => {
-          Swal.fire({
-            icon: "success",
-            title: "Response",
-            text: response.data.message,
+      if (this.form2.status === "Approved") {
+        this.form2
+          .post("/approve/procurement/plan/detail", {
+            headers: {
+              "X-Frame-Options": "sameorigin",
+              "X-Content-Type-Options": "nosniff",
+              "strict-transport-security": "max-age=31536000",
+            },
+          })
+          .then((response) => {
+            Swal.fire({
+              icon: "success",
+              title: "Response",
+              text: response.data.message,
+            });
+            window.location.reload();
+          })
+          .catch((error) => {
+            this.hideLoader();
           });
-          // window.location.reload();
-        })
-        .catch((error) => {
-          this.hideLoader();
-        });
+      } else {
+        this.form2
+          .post("/reject/procurement/plan/detail", {
+            headers: {
+              "X-Frame-Options": "sameorigin",
+              "X-Content-Type-Options": "nosniff",
+              "strict-transport-security": "max-age=31536000",
+            },
+          })
+          .then((response) => {
+            Swal.fire({
+              icon: "success",
+              title: "Response",
+              text: response.data.message,
+            });
+            window.location.reload();
+          })
+          .catch((error) => {
+            this.hideLoader();
+          });
+      }
     },
 
     ViewProcurementPlanDetails(details) {

@@ -1,16 +1,10 @@
 <template>
   <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
-      <li class="nav-item" v-if="user.name === 'Procurement Officer'">
+      <li class="nav-item" v-if="user.name === 'Procurement Officer' || user.name === 'Company'">
         <a class="nav-link" href="/manage/procurement/plans">
           <i class="ti-marker menu-icon"></i>
           <span class="menu-title">Procurement Plans</span>
-        </a>
-      </li>
-      <li class="nav-item" v-if="user.name === 'Procurement Officer'">
-        <a class="nav-link" href="/manage/procurement/plans">
-          <i class="ti-marker menu-icon"></i>
-          <span class="menu-title">Manage Approvals</span>
         </a>
       </li>
       <li class="nav-item" v-if="user.name === 'Company'">

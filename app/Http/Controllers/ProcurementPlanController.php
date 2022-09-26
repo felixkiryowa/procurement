@@ -244,6 +244,7 @@ class ProcurementPlanController extends Controller
         'procurement_plan_details.brief',
         'procurement_plan_details.submitted',
         'procurement_plan_details.total_steps',
+        'procurement_plan_details.status',
         'users.firstName',
         'lastName',
         'procurement_plan_details.step')
@@ -356,13 +357,12 @@ class ProcurementPlanController extends Controller
     public function approveProcurementPlanDetail(Request $request) {
 
         $validator = Validator::make($request->all(), [
-            'reason' => 'required'
+            'reason' => 'required',
+            'status' => 'required'
         ]);
 
-
-
         if ($validator->fails()) {
-            return response()->json(['isvalid'=>false,'errors'=> $validator->messages()]);
+            return response()->json($validator->errors(), 400);
         }
             
         //Get Steps for approval
@@ -422,8 +422,6 @@ class ProcurementPlanController extends Controller
                $this->addToLog($request->ip(), 'Approving Procurement Plan Detail', 'Approving Procurement Plan Detail', 'Successfully  Approved  A Procurement Plan Detail  By '.$this->getLoggedInUserNames());
 
             }
-            
-            $this->addToLog($request->ip(), 'Successfully Submitted A Procurement Detail For Approval By '.$this->getLoggedInUserNames());
 
         return response()->json(['success' => true, 'message' => 'Successfully Approved  A Procurement Plan Detail'], 200);
 
@@ -433,13 +431,14 @@ class ProcurementPlanController extends Controller
     public function rejectProcurementPlanDetail(Request $request){
       
         $validator = Validator::make($request->all(), [
-            'reason' => 'required'
+            'reason' => 'required',
+            'status' => 'required'
         ]);
 
 
 
         if ($validator->fails()) {
-            return response()->json(['isvalid'=>false,'errors'=> $validator->messages()]);
+            return response()->json($validator->errors(), 400);
         }
 
       $details =	ProcurementPlanDetails::select('id', 'step', 'status', 'created_by')->where('id', $request->id)->first();
