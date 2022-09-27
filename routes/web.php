@@ -10,6 +10,7 @@ use App\Http\Controllers\RegisterCompanyOrProviderController;
 use App\Http\Controllers\ManageProviderAndCompaniesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProcurementPlanController;
+use App\Http\Controllers\BidsInvitationsController;
 
 
 
@@ -75,13 +76,9 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  Route::get('/manage/companies', [HomeController::class, 'viewManageCompanies'])->middleware(('role:Super Systems Administrator'));
  Route::get('/manage/service/providers', [HomeController::class, 'viewManageProvider'])->middleware(('role:Super Systems Administrator'));
  Route::get('/manage/all/company/users/{id}', [HomeController::class, 'viewManageCompanyUsers'])->middleware(('role:Super Systems Administrator'));
- Route::get('/company/or/provider/details/{id}', [HomeController::class, 
+ Route::get('/company/or/provider/details/{id}', [HomeController::class,
  'providerOrCompanyDetails'])->middleware(('role:Super Systems Administrator'));
- Route::get('/edit/company/settings', [HomeController::class, 
- 'editCompanyProfile'])->middleware(('role:Provider,Company'));
-
  Route::get('/manage/company/users', [CompanyUsersController::class, 'index'])->middleware('role:Company');
- Route::post('/create/company/user', [CompanyUsersController::class, 'store']);
  Route::get('/activate/company/user/{id}', [CompanyUsersController::class, 'activate']);
  Route::get('/deactivate/company/user/{id}', [CompanyUsersController::class, 'deactivate']);
 
@@ -107,6 +104,13 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  Route::get('/manage/procurement_plan/details/{step_id}', [ProcurementPlanController::class, 'details']);
  Route::post('/create/procurement_plan/detail', [ProcurementPlanController::class, 'detailstore']);
  Route::post('/update/procurement_plan/detail', [ProcurementPlanController::class, 'updateDetails']);
+
+
+ //Bids
+
+ Route::get('/manage/bid/invitations', [BidsInvitationsController::class, 'index']);
+ Route::post('/create/bid/invitation', [BidsInvitationsController::class, 'store']);
+ Route::post('/update/bid/invitation', [BidsInvitationsController::class, 'update']);
 
 
 
