@@ -32,7 +32,7 @@ Route::get('/', function () {
       $user = User::select('id', 'user_role')->where('id', Auth::user()->id)->first();
 
       if($user->user_role == 'Provider') {
-        return Redirect::to('/company/bids');
+        return Redirect::to('/company/tender/notices');
 
       }else if($user->user_role == 'Company') {
         return Redirect::to('/manage/company/users');
@@ -72,7 +72,7 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  Route::post('/update/provider/or/company', [RegisterCompanyOrProviderController::class,
  'updateProviderOrCompany']);
  Route::get('/registered/companies', [ManageProviderAndCompaniesController::class, 'index'])->middleware(('role:Super Systems Administrator'));
- Route::get('/company/bids', [HomeController::class, 'viewBids'])->middleware(('role:Provider'));
+ Route::get('/company/tender/notices', [HomeController::class, 'viewBidsInvitationsByProviders'])->middleware(('role:Provider'));
  Route::get('/manage/companies', [HomeController::class, 'viewManageCompanies'])->middleware(('role:Super Systems Administrator'));
  Route::get('/manage/service/providers', [HomeController::class, 'viewManageProvider'])->middleware(('role:Super Systems Administrator'));
  Route::get('/manage/all/company/users/{id}', [HomeController::class, 'viewManageCompanyUsers'])->middleware(('role:Super Systems Administrator'));
@@ -88,7 +88,7 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  Route::post('/store/password', [UserController::class, 'store']);
 
  //Procurement Plans
- Route::get('/manage/procurement/plans', [ProcurementPlanController::class, 'index'])->middleware('role:Procurement Officer,Company');
+ Route::get('/manage/procurement/plans', [ProcurementPlanController::class, 'index'])->middleware('role:Procurement Officer, Company');
  Route::post('/create/procurement/plan', [ProcurementPlanController::class, 'store']);
 
  Route::post('/approve/procurement/plan/detail', [ProcurementPlanController::class, 'approveProcurementPlanDetail']);
@@ -105,15 +105,10 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  Route::post('/create/procurement_plan/detail', [ProcurementPlanController::class, 'detailstore']);
  Route::post('/update/procurement_plan/detail', [ProcurementPlanController::class, 'updateDetails']);
 
-
  //Bids
-
- Route::get('/manage/bid/invitations', [BidsInvitationsController::class, 'index']);
+ Route::get('/manage/bid/invitations', [BidsInvitationsController::class, 'index'])->middleware('role:Company,Procurement Officer');
  Route::post('/create/bid/invitation', [BidsInvitationsController::class, 'store']);
+ Route::post('/submit/provider/bid', [BidsInvitationsController::class, 'submitProviderBid']);
+
  Route::post('/update/bid/invitation', [BidsInvitationsController::class, 'update']);
-
-
-
-
-
-
+ Route::get('/submit/bid/{id}', [HomeController::class, 'submitBid'])->middleware('role:Provider');
