@@ -46,7 +46,7 @@ class UserAuthenticationController extends Controller
                     $this->addToLog($request->ip(), 'User Login',  $user->firstName . ' '.$user->lastName. ' has logged in');
 
                     $user_redirects = collect([
-                        'Provider' => '/company/bids',
+                        'Provider' => '/company/tender/notices',
                         'Company' => '/manage/company/users',
                         'Procurement Officer' => '/manage/procurement/plans',
                         'Super Systems Administrator' => '/manage/companies'

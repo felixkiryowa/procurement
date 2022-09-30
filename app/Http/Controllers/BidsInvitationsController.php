@@ -11,6 +11,7 @@ use Auth;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\ProcurementPlan;
+use App\Models\SubmittedBid;
 use App\Models\ProcurementPlanDetails;
 use App\Traits\LogActivityTrait;
 use DB;
@@ -26,30 +27,48 @@ class BidsInvitationsController extends Controller
         $this->middleware('auth');
     }
 
+    public function getProcurementOfficerCompanyIdOrCompanyAdministrator() {
+        $logged_in_user = User::select('id', 'user_role', 'company_id')
+        ->where('id', Auth::user()->id)->first();
+
+        if($logged_in_user->user_role == 'Procurement Officer') {
+
+            $company_id = $logged_in_user->company_id;
+
+        }else {
+
+            $company_id = $logged_in_user->id;
+        }
+
+        return $company_id;
+    }
+
 
     public function index() {
 
-
-        $userID = Auth::user()->id;
-        $user = User::where('id',  $userID )->first();
+        // $user = User::where('id',  Auth::user()->id)->first();
 
         //Get all Plans
 
-        $plans = ProcurementPlan::where('organization_id', Auth::user()->company_id)->orderBy('financial_year_start', 'desc')->get();
+        $plans = ProcurementPlan::where('organization_id',
+         $this->getProcurementOfficerCompanyIdOrCompanyAdministrator())
+         ->orderBy('financial_year_start', 'desc')->get();
 
         //Get all Plan Details
-        $plan_details = ProcurementPlanDetails::where('plan_id', 2)->get();
-
+        $plan_details = ProcurementPlanDetails::where('plan_id', 1)->get();
 
         //Get all Invitations
 
         $bids = BidsInvitations::join('procurement_plans','procurement_plans.id','tender_notices.plan_id')
-        ->select('tender_notices.*','procurement_plans.financial_year_start','procurement_plans.financial_year_end')
-        ->where('procurement_plans.organization_id', Auth::user()->company_id)->orderBy('tender_notices.created_at', 'desc')->get();
+        ->select('tender_notices.*','procurement_plans.financial_year_start',
+        'procurement_plans.financial_year_end')
+        ->where('procurement_plans.organization_id', 
+        $this->getProcurementOfficerCompanyIdOrCompanyAdministrator())
+        ->orderBy('tender_notices.created_at', 'desc')->get();
 
 
         return Inertia::render('Bids/BidInvitationsComponent', [
-            'user' => $user,
+            // 'user' => $user,
             'bids' => $bids,
             'plans' => $plans,
             'plan_details' => $plan_details,
@@ -179,6 +198,54 @@ class BidsInvitationsController extends Controller
 
     }
 
+    public function submitProviderBid(Request $request) {
+        // SubmittedBid
 
+        $more_attachements_array = array();
+
+        if(count($request->uploaded_files) > 0) {
+            foreach ($request->uploaded_files as $key => $value) {
+
+                // var_dump($value['file']);
+                $file = explode(';', $value['file']);
+                $application_part = $file[0];
+                $extension = explode('/', $application_part);
+    
+                if($extension[1] == "pdf") {
+                   $file_extension = ".pdf";
+                }else {
+                    $file_extension = ".doc";
+                }
+    
+                $base64_file = explode(',', $file[1]);
+                $base64_decode = base64_decode($base64_file[1]);
+                $generatedFile = fopen(public_path('bid_documents/'.time().$key.$file_extension), 'w');
+                fwrite($generatedFile, $base64_decode);
+                fclose($generatedFile);
+                $fileName = time().$key.$file_extension;
+                array_push($more_attachements_array, $fileName);
+            }
+        }
+
+        SubmittedBid::create([
+             'tender_notice_id' => $request->tender_notice_id,
+             'user_id' => Auth::user()->id, 
+             'amount' => $request->amount, 
+             'brief_description' => $request->brief_description, 
+             'start_date' => $request->start_date, 
+             'end_date' => $request->end_date, 
+             'currency' => $request->currency, 
+             'uploaded_files' => count($more_attachements_array) > 0 ? json_encode($more_attachements_array) : 'Not Applicable',
+             'status' => $request->status
+        ]);
+
+        $subject = 'Submit BID';
+        $details = 'Submit Bid for tender notice with ID : '.$request->tender_notice_id;
+        $this->addToLog($request->ip(), $subject, $details);
+
+        return response()->json(['success' => true,
+        'message' => 'Successfully Submitted  A Bid'], 200);
+
+    }
 
 }

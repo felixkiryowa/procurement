@@ -7,7 +7,8 @@
               <span class="menu-title">Procurement Plans</span>
             </a>
           </li>
-          <li class="nav-item" v-if="user.name === 'Company'">
+          <li class="nav-item" v-if="user.name === 'Company' || 
+          user.name === 'Procurement Officer'">
             <a class="nav-link" href="/manage/bid/invitations">
                 <i class="ti-marker menu-icon"></i>
               <span class="menu-title">Bid Invitations</span>
@@ -23,6 +24,12 @@
         <a class="nav-link" href="/manage/procurement/plans">
           <i class="ti-marker menu-icon"></i>
           <span class="menu-title">Procurement Plans</span>
+        </a>
+      </li>
+      <li class="nav-item" v-if="user.name === 'Provider'">
+        <a class="nav-link" href="/manage/company/users">
+          <i class="ti-marker menu-icon"></i>
+          <span class="menu-title">Tender Notices</span>
         </a>
       </li>
       <li class="nav-item" v-if="user.name === 'Company'">

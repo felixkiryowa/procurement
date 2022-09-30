@@ -550,6 +550,11 @@ body{
 .card {
     box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
 }
+
+.form-control-file {
+    padding: 3px !important;
+}
+
 .card {
     position: relative;
     display: flex;
