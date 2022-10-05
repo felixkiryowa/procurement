@@ -12,6 +12,7 @@ use App\Models\User;
 use Inertia\Inertia;
 use App\Models\ProcurementPlan;
 use App\Models\SubmittedBid;
+use App\Models\SubmittedBidDoc;
 use App\Models\ProcurementPlanDetails;
 use App\Traits\LogActivityTrait;
 use DB;
@@ -59,6 +60,8 @@ class BidsInvitationsController extends Controller
 
         //Get all Invitations
 
+        
+
         $bids = BidsInvitations::join('procurement_plans','procurement_plans.id','tender_notices.plan_id')
         ->select('tender_notices.*','procurement_plans.financial_year_start',
         'procurement_plans.financial_year_end')
@@ -91,8 +94,6 @@ class BidsInvitationsController extends Controller
     public function store(Request $request)
 
     {
-
-
         $validator = Validator::make($request->all(), [
             'plan_id' => 'required',
             'subject_id' => 'required',
@@ -199,14 +200,32 @@ class BidsInvitationsController extends Controller
     }
 
     public function submitProviderBid(Request $request) {
-        // SubmittedBid
+        
+        $submitted_bid = SubmittedBid::create([
+            'tender_notice_id' => $request->tender_notice_id,
+            'user_id' => Auth::user()->id, 
+            'amount' => $request->amount, 
+            'brief_description' => $request->brief_description, 
+            'start_date' => $request->start_date, 
+            'end_date' => $request->end_date, 
+            'currency' => $request->currency, 
+            'status' => $request->status
+       ]);
 
-        $more_attachements_array = array();
+       $this->saveUploadedFilesAtSubmittingBid($request, $submitted_bid->id);
 
+        $subject = 'Submit BID';
+        $details = 'Submit Bid for tender notice with ID : '.$request->tender_notice_id;
+        $this->addToLog($request->ip(), $subject, $details);
+
+        return response()->json(['success' => true,
+        'message' => 'Successfully Submitted  A Bid'], 200);
+    }
+
+    public function saveUploadedFilesAtSubmittingBid($request, $submitted_bid_id) {
         if(count($request->uploaded_files) > 0) {
             foreach ($request->uploaded_files as $key => $value) {
 
-                // var_dump($value['file']);
                 $file = explode(';', $value['file']);
                 $application_part = $file[0];
                 $extension = explode('/', $application_part);
@@ -216,35 +235,46 @@ class BidsInvitationsController extends Controller
                 }else {
                     $file_extension = ".doc";
                 }
+
+                $random_number = rand(100, 1000000);
     
                 $base64_file = explode(',', $file[1]);
                 $base64_decode = base64_decode($base64_file[1]);
-                $generatedFile = fopen(public_path('bid_documents/'.time().$key.$file_extension), 'w');
+                $generatedFile = fopen(public_path('bid_documents/'.'bid_doc'.date('Y-m-d').$key.$random_number.$file_extension), 'w');
                 fwrite($generatedFile, $base64_decode);
                 fclose($generatedFile);
-                $fileName = time().$key.$file_extension;
-                array_push($more_attachements_array, $fileName);
+                $fileName = 'bid_doc'.date('Y-m-d').$key.$random_number.$file_extension;
+                SubmittedBidDoc::create([
+                    'submitted_bid_id' => $submitted_bid_id,
+                    'document' => $fileName,
+                    'tracking_number' => time().$key,
+                    'created_by' => Auth::user()->id,
+                ]);
             }
         }
+    }
 
-        SubmittedBid::create([
-             'tender_notice_id' => $request->tender_notice_id,
-             'user_id' => Auth::user()->id, 
-             'amount' => $request->amount, 
-             'brief_description' => $request->brief_description, 
-             'start_date' => $request->start_date, 
-             'end_date' => $request->end_date, 
-             'currency' => $request->currency, 
-             'uploaded_files' => count($more_attachements_array) > 0 ? json_encode($more_attachements_array) : 'Not Applicable',
-             'status' => $request->status
-        ]);
+    public function updateSubmittedBid(Request $request) {
 
-        $subject = 'Submit BID';
-        $details = 'Submit Bid for tender notice with ID : '.$request->tender_notice_id;
+        $submitted_bid = SubmittedBid::select('id', 'amount', 'brief_description', 
+        'start_date', 'end_date', 'currency', 'status')->where('id', $request->id)->first();
+
+        $submitted_bid->amount = $request->amount; 
+        $submitted_bid->brief_description = $request->brief_description; 
+        $submitted_bid->start_date = $request->start_date; 
+        $submitted_bid->end_date = $request->end_date; 
+        $submitted_bid->currency = $request->currency; 
+        $submitted_bid->status = $request->status;
+        $submitted_bid->save();
+
+        $this->saveUploadedFilesAtSubmittingBid($request, $request->id);
+
+        $subject = 'Editing Submitted  BID with ID '.$request->id;
+        $details = 'Editing Submitted Bid  with ID  : '.$request->id;
         $this->addToLog($request->ip(), $subject, $details);
 
         return response()->json(['success' => true,
-        'message' => 'Successfully Submitted  A Bid'], 200);
+        'message' => 'Successfully Edited  A Bid'], 200);
 
     }
 

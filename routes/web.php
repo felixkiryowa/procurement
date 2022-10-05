@@ -71,13 +71,17 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  'createProviderOrCompany']);
  Route::post('/update/provider/or/company', [RegisterCompanyOrProviderController::class,
  'updateProviderOrCompany']);
- Route::get('/registered/companies', [ManageProviderAndCompaniesController::class, 'index'])->middleware(('role:Super Systems Administrator'));
- Route::get('/company/tender/notices', [HomeController::class, 'viewBidsInvitationsByProviders'])->middleware(('role:Provider'));
- Route::get('/manage/companies', [HomeController::class, 'viewManageCompanies'])->middleware(('role:Super Systems Administrator'));
- Route::get('/manage/service/providers', [HomeController::class, 'viewManageProvider'])->middleware(('role:Super Systems Administrator'));
- Route::get('/manage/all/company/users/{id}', [HomeController::class, 'viewManageCompanyUsers'])->middleware(('role:Super Systems Administrator'));
+ Route::get('/registered/companies', [ManageProviderAndCompaniesController::class, 'index'])->middleware('role:Super Systems Administrator');
+ Route::get('/company/tender/notices', [HomeController::class, 'viewBidsInvitationsByProviders'])->middleware('role:Provider');
+ Route::get('/check/user/submitted/bid/already/{id}', [HomeController::class, 'checkIfBidIsAlreadySubmitted']);
+ Route::get('/manage/companies', [HomeController::class, 'viewManageCompanies'])->middleware('role:Super Systems Administrator');
+ Route::get('/manage/service/providers', [HomeController::class, 'viewManageProvider'])->middleware('role:Super Systems Administrator');
+ Route::get('/manage/all/company/users/{id}', [HomeController::class, 'viewManageCompanyUsers'])->middleware('role:Super Systems Administrator');
  Route::get('/company/or/provider/details/{id}', [HomeController::class,
- 'providerOrCompanyDetails'])->middleware(('role:Super Systems Administrator'));
+ 'providerOrCompanyDetails'])->middleware('role:Super Systems Administrator');
+ Route::get('/manage/submitted/bids', [HomeController::class, 'allUserSubmittedBids'])->middleware('role:Provider');
+ Route::get('/edit/submitted/bid/{id}', [HomeController::class, 'viewAndEditSubmittedBid'])->middleware('role:Provider');
+
  Route::get('/manage/company/users', [CompanyUsersController::class, 'index'])->middleware('role:Company');
  Route::get('/activate/company/user/{id}', [CompanyUsersController::class, 'activate']);
  Route::get('/deactivate/company/user/{id}', [CompanyUsersController::class, 'deactivate']);
@@ -109,6 +113,8 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  Route::get('/manage/bid/invitations', [BidsInvitationsController::class, 'index'])->middleware('role:Company,Procurement Officer');
  Route::post('/create/bid/invitation', [BidsInvitationsController::class, 'store']);
  Route::post('/submit/provider/bid', [BidsInvitationsController::class, 'submitProviderBid']);
+ Route::post('/update/provider/bid', [BidsInvitationsController::class, 'updateSubmittedBid']);
+
 
  Route::post('/update/bid/invitation', [BidsInvitationsController::class, 'update']);
  Route::get('/submit/bid/{id}', [HomeController::class, 'submitBid'])->middleware('role:Provider');

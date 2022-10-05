@@ -31,7 +31,8 @@
     color: white !important;
 }
 
-h3, .h3 {
+h3,
+.h3 {
     font-size: 15px !important;
 }
 
@@ -317,6 +318,7 @@ div.content {
 .font-size38 {
     font-size: 38px;
 }
+
 .team-single-text .section-heading h4,
 .section-heading h5 {
     font-size: 36px
@@ -327,26 +329,31 @@ div.content {
 }
 
 @media screen and (max-width: 1199px) {
+
     .team-single-text .section-heading h4,
     .section-heading h5 {
         font-size: 32px
     }
+
     .team-single-text .section-heading.half {
         margin-bottom: 15px
     }
 }
 
 @media screen and (max-width: 991px) {
+
     .team-single-text .section-heading h4,
     .section-heading h5 {
         font-size: 28px
     }
+
     .team-single-text .section-heading.half {
         margin-bottom: 10px
     }
 }
 
 @media screen and (max-width: 767px) {
+
     .team-single-text .section-heading h4,
     .section-heading h5 {
         font-size: 24px
@@ -405,12 +412,15 @@ div.content {
 .padding-30px-all {
     padding: 30px;
 }
+
 .bg-light-gray {
     background-color: #f7f7f7;
 }
+
 .text-center {
-    text-align: center!important;
+    text-align: center !important;
 }
+
 img {
     max-width: 100%;
     height: auto;
@@ -505,6 +515,7 @@ a.text-lightred:hover {
     box-shadow: none;
     margin-bottom: 25px;
 }
+
 .progress {
     display: -ms-flexbox;
     display: flex;
@@ -544,15 +555,25 @@ a.text-lightred:hover {
     background-color: #ff5722
 }
 
-body{
-    background:#eee;
+body {
+    background: #eee;
 }
+
 .card {
     box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
 }
 
 .form-control-file {
     padding: 3px !important;
+}
+
+.amount-input {
+    background-color: #474790;
+    color: white;
+}
+
+.swal2-icon {
+    margin-top: 24px !important;
 }
 
 .card {
@@ -563,13 +584,15 @@ body{
     word-wrap: break-word;
     background-color: #fff;
     background-clip: border-box;
-    border: 0 solid rgba(0,0,0,.125);
+    border: 0 solid rgba(0, 0, 0, .125);
     border-radius: 1rem;
 }
+
 .text-reset {
     --bs-text-opacity: 1;
-    color: inherit!important;
+    color: inherit !important;
 }
+
 a {
     color: #5465ff;
     text-decoration: none;

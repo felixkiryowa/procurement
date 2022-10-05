@@ -97,7 +97,15 @@
                                   View Details
                                 </button>
                                 |
-                                <button @click="submitBid(detail.id)" class="btn btn-sm btn-success">
+                                <button
+                                  @click="
+                                    submitBid(
+                                      detail.id,
+                                      detail.reference_number
+                                    )
+                                  "
+                                  class="btn btn-sm btn-success"
+                                >
                                   Submit Bid
                                 </button>
                               </td>
@@ -138,7 +146,6 @@
               -
               {{ getFormattedDate(bid_details.financial_year_end) }}
 
-
               / Bid Reference {{ bid_details.reference_number }}
             </h5>
             <button
@@ -160,7 +167,7 @@
                     <div class="card mb-4">
                       <div class="card-body">
                         <h4>BID NAME : {{ bid_details.name }}</h4>
-                        <hr>
+                        <hr />
                         <div class="mb-3 d-flex justify-content-between">
                           <div>
                             <span class="me-3">Created By : </span>
@@ -300,10 +307,33 @@ export default {
       this.bid_details = detail;
       $("#tenderNoticeDetailsModal").modal("show");
     },
-    submitBid(id) {
 
-      window.location.href = '/submit/bid/'+btoa(id)
-
+    submitBid(id, reference_number) {
+      this.showLoader();
+      axios
+        .get("/check/user/submitted/bid/already/" + id, {
+          headers: {
+            "X-Frame-Options": "sameorigin",
+            "X-Content-Type-Options": "nosniff",
+            "strict-transport-security": "max-age=31536000",
+          },
+        })
+        .then((response) => {
+          if (response.data.success) {
+            window.location.href = "/submit/bid/" + btoa(id);
+            this.hideLoader();
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Submit Bid Response",
+              text:
+                "Already Submitted Bid For Tender Notice With Reference " +
+                reference_number,
+            });
+            this.hideLoader();
+          }
+        })
+        .catch((error) => {});
     },
   },
 

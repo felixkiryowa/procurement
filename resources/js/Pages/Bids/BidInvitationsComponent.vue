@@ -31,7 +31,7 @@
                       type="button"
                       class="btn btn-info btn-rounded btn-fw"
                       @click="openAddPlanModal"
-                      v-if="user.user_role === 'Procurement Officer'"
+                      v-if="user.name === 'Procurement Officer'"
                     >
                       Add New
                     </button>
