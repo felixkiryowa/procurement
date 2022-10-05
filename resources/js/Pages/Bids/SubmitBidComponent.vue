@@ -159,6 +159,9 @@
                                 class="form-control"
                               />
                             </div>
+                            <b class="amount-input">
+                              Amount : {{ checkInputValue | formatNumber}} {{ form.currency }}
+                            </b>
                           </div>
                         </div>
                         <div class="form-group">
@@ -170,12 +173,9 @@
                           >
                             <option selected value="">Choose Status</option>
                             <option value="saved">Saved</option>
-                            <option value="published">Published</option>
-                            <option value="cancelled">Cancelled</option>
-                            <option value="extended">Extended</option>
+                            <option value="published">Submitted</option>
                           </select>
                         </div>
-
                         <div class="float-right">
                           <button type="submit" class="btn btn-success">
                             Save
@@ -254,6 +254,10 @@ export default {
     checkIfUserIsIdle() {
       return this.isAppIdle ? true : false;
     },
+
+    checkInputValue() {
+      return this.form.amount === "" ? 0 : this.form.amount;
+    }
   },
 
   methods: {
@@ -317,6 +321,7 @@ export default {
             text: response.data.message,
           });
           this.hideLoader();
+          window.location.href = '/manage/submitted/bids';
         })
         .catch((error) => {
           this.hideLoader();

@@ -11,6 +11,6 @@ class SubmittedBid extends Model
 
 
     protected $fillable = [
-       'tender_notice_id', 'user_id', 'amount', 'brief_description', 'start_date', 'end_date', 'currency', 'uploaded_files', 'status'
+       'tender_notice_id', 'user_id', 'amount', 'brief_description', 'start_date', 'end_date', 'currency', 'status'
     ];
 }

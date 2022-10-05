@@ -36989,6 +36989,15 @@ body {
   padding: 3px !important;
 }
 
+.amount-input {
+  background-color: #474790;
+  color: white;
+}
+
+.swal2-icon {
+  margin-top: 24px !important;
+}
+
 .card {
   position: relative;
   display: flex;

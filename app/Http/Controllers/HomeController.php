@@ -7,7 +7,10 @@ use Inertia\Inertia;
 use App\Models\User;
 use App\Models\SecretQuestion;
 use App\Models\BidsInvitations;
+use App\Models\SubmittedBid;
+use App\Models\SubmittedBidDoc;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -46,10 +49,56 @@ class HomeController extends Controller
         ->leftJoin('procurement_methods', 'tender_notices.method_id', '=', 'procurement_methods.id')
         // ->whereDate('tender_notices.display_start_date', '>=', $current_date)
         // ->whereDate('tender_notices.display_end_date', '<=', $current_date)
+        ->where('tender_notices.status', 'published')
         ->orderBy('tender_notices.created_at', 'desc')->get();
         return Inertia::render('Bids/ProviderBidInvitationsComponent', [
             'bids' => $bids
         ]);
+    }
+
+    public function viewAndEditSubmittedBid($id) {
+      
+        $check_submitted_bid = SubmittedBid::select('id', 'tender_notice_id', 'user_id', 'amount',
+         'brief_description', 'start_date', 'end_date', 'currency', 'status')
+        ->where('id', base64_decode($id))
+        ->where('user_id', Auth::user()->id)
+        ->first();
+
+        $submitted_documents = SubmittedBidDoc::select('id', 'submitted_bid_id', 'document', 'tracking_number')
+        ->where('submitted_bid_docs.submitted_bid_id', $check_submitted_bid->id)->get();
+
+        $bid = BidsInvitations::select('tender_notices.*',
+        'procurement_plans.title',
+        'procurement_plans.financial_year_start',
+        'procurement_plans.financial_year_end', 'procurement_categories.name as category_name',
+        'procurement_methods.name as method_name')
+        ->join('procurement_plans','procurement_plans.id','tender_notices.plan_id')
+        ->leftJoin('users', 'procurement_plans.organization_id', '=', 'users.id')
+        ->leftJoin('procurement_categories', 'tender_notices.category_id', '=', 'procurement_categories.id')
+        ->leftJoin('procurement_methods', 'tender_notices.method_id', '=', 'procurement_methods.id')
+        ->where('tender_notices.id', $check_submitted_bid->tender_notice_id)->first();
+
+        return Inertia::render('Bids/EditSubmittedBid', [
+            'bid' => $bid,
+            'submittted_bid' => $check_submitted_bid,
+            'documents' => $submitted_documents
+        ]);
+    }
+
+
+    public function checkIfBidIsAlreadySubmitted($id) {
+
+        $check_submitted_bid = SubmittedBid::select('id', 'tender_notice_id', 'user_id')
+        ->where('tender_notice_id', $id)
+        ->where('user_id', Auth::user()->id)
+        ->first();
+
+        if($check_submitted_bid != NULL) {
+            return response()->json(['success' => false], 200);
+        }else {
+            return response()->json(['success' => true], 200);
+
+        }
     }
 
     public function submitBid($id) {
@@ -67,7 +116,6 @@ class HomeController extends Controller
             'bid' => $bid
         ]);
     }
-
 
     public function viewManageCompanies() {
         return Inertia::render('Companies/ManageCompanies',[
@@ -207,6 +255,21 @@ class HomeController extends Controller
             ->where('company_id', Auth::user()->id)
             ->orWhere('id', Auth::user()->id)
             ->orderBy('firstName', 'desc')
+            ->get()
+        ]);
+    }
+
+    public function allUserSubmittedBids() {
+        return Inertia::render('Bids/ProviderSubmittedBids', [
+            'submitted_bids' => DB::table('submitted_bids')
+            ->select('submitted_bids.id', 'submitted_bids.tender_notice_id', 'submitted_bids.amount', 'submitted_bids.brief_description',
+             'submitted_bids.start_date', 'submitted_bids.end_date', 'submitted_bids.currency', 'submitted_bids.status',
+              'submitted_bids.created_at', 'tender_notices.name', 'tender_notices.reference_number', 'users.organisationName' )
+             ->leftJoin('tender_notices', 'submitted_bids.tender_notice_id', '=', 'tender_notices.id')
+             ->leftJoin('procurement_plans', 'tender_notices.plan_id', '=', 'procurement_plans.id')
+             ->leftJoin('users', 'procurement_plans.organization_id', '=', 'users.id')
+            //  ->leftJoin('submitted_bid_docs', 'submitted_bid_docs.submitted_bid_id', '=', 'submitted_bids.id')
+            ->where('submitted_bids.user_id', Auth::user()->id)
             ->get()
         ]);
     }
