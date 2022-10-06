@@ -7,6 +7,7 @@ use App\Models\ProcurementCategories;
 use App\Models\ProcurementMethods;
 use App\Models\BidsInvitations;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use Auth;
 use App\Models\User;
 use Inertia\Inertia;
@@ -15,7 +16,6 @@ use App\Models\SubmittedBid;
 use App\Models\SubmittedBidDoc;
 use App\Models\ProcurementPlanDetails;
 use App\Traits\LogActivityTrait;
-use DB;
 
 
 class BidsInvitationsController extends Controller
@@ -59,9 +59,6 @@ class BidsInvitationsController extends Controller
         $plan_details = ProcurementPlanDetails::where('plan_id', 1)->get();
 
         //Get all Invitations
-
-        
-
         $bids = BidsInvitations::join('procurement_plans','procurement_plans.id','tender_notices.plan_id')
         ->select('tender_notices.*','procurement_plans.financial_year_start',
         'procurement_plans.financial_year_end')
@@ -76,6 +73,24 @@ class BidsInvitationsController extends Controller
             'plans' => $plans,
             'plan_details' => $plan_details,
         ]);
+    }
+
+    public function getSubmittedBids($tender_notice_id) {
+        return  DB::table('submitted_bids')
+        ->select('submitted_bids.id', 
+        'submitted_bids.tender_notice_id',
+        'submitted_bids.user_id',
+        'submitted_bids.amount',
+        'submitted_bids.brief_description', 
+        'submitted_bids.start_date',
+        'submitted_bids.end_date', 
+        'submitted_bids.currency', 
+        'submitted_bids.status',
+        'submitted_bids.created_at', 
+        'users.firstName', 
+        'users.lastName')
+        ->leftJoin('users', 'submitted_bids.user_id', '=', 'users.id')
+        ->where('submitted_bids.tender_notice_id', $tender_notice_id)->get();
     }
 
 

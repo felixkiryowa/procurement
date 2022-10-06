@@ -110,10 +110,12 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  Route::post('/update/procurement_plan/detail', [ProcurementPlanController::class, 'updateDetails']);
 
  //Bids
- Route::get('/manage/bid/invitations', [BidsInvitationsController::class, 'index'])->middleware('role:Company,Procurement Officer');
+ Route::get('/manage/bid/invitations', [BidsInvitationsController::class, 'index'])
+ ->middleware('role:Company,Procurement Officer');
  Route::post('/create/bid/invitation', [BidsInvitationsController::class, 'store']);
  Route::post('/submit/provider/bid', [BidsInvitationsController::class, 'submitProviderBid']);
  Route::post('/update/provider/bid', [BidsInvitationsController::class, 'updateSubmittedBid']);
+ Route::get('/get/all/submitted/bids/{id}', [BidsInvitationsController::class, 'getSubmittedBids']);
 
 
  Route::post('/update/bid/invitation', [BidsInvitationsController::class, 'update']);
