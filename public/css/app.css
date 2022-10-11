@@ -36977,6 +36977,14 @@ a.text-lightred:hover {
   background-color: #ff5722;
 }
 
+.laravel-error-custom {
+  border: 1px solid red !important;
+}
+
+.hide-span {
+  display: none;
+}
+
 body {
   background: #eee;
 }
