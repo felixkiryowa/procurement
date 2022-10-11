@@ -53,7 +53,9 @@
                           <th>Display End</th>
                           <th>Status</th>
                           <th>Date Created</th>
-                          <th v-if="user.name === 'Procurement Officer'">Actions</th>
+                          <th v-if="user.name === 'Procurement Officer'">
+                            Actions
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -65,7 +67,19 @@
                             {{ getFormattedDate(detail.financial_year_start) }}
                             - {{ getFormattedDate(detail.financial_year_end) }}
                           </td>
-                          <td><a href="#">Bids</a></td>
+                          <td>
+                            <button
+                              class="btn btn-success btn-sm"
+                              @click="
+                                viewAllSubmittedBids(
+                                  detail.id,
+                                  detail.reference_number
+                                )
+                              "
+                            >
+                              View Bids
+                            </button>
+                          </td>
                           <td>{{ detail.type }}</td>
                           <td>
                             {{ new Date(detail.deadline).toLocaleString() }}
@@ -82,7 +96,11 @@
                               new Date(detail.display_end_date).toLocaleString()
                             }}
                           </td>
-                          <td><span class="badge badge-success">{{ detail.status }}</span></td>
+                          <td>
+                            <span class="badge badge-success">{{
+                              detail.status
+                            }}</span>
+                          </td>
                           <td>
                             {{ new Date(detail.created_at).toLocaleString() }}
                           </td>
@@ -99,6 +117,80 @@
                       </tbody>
                     </table>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="loadSubmittedBids"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-xl" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Bid Invitation For Tender Notice Reference
+                    {{ tender_notice_reference }}
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="table-responsive">
+                    <table
+                      class="table table-bordered table-striped"
+                    >
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Amount</th>
+                          <th>brief_description</th>
+                          <th>Bid Validity Period</th>
+                          <th>Submitted By</th>
+                          <th>Status</th>
+                          <th>Date Created</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          :key="index"
+                          v-for="(submitted_bid, index) in submitted_bids"
+                        >
+                          <td>{{ index + 1 }}</td>
+                          <td>
+                            {{ submitted_bid.amount | formatNumber }}
+                            {{ submitted_bid.currency }}
+                          </td>
+                          <td>{{ submitted_bid.brief_description }}</td>
+                          <td>{{ submitted_bid.start_date | customDate }} - {{ submitted_bid.end_date | customDate }}</td>
+                          <td>
+                            <span class="badge badge-success">{{ submitted_bid.firstName }} {{ submitted_bid.lastName  }}</span>
+                          </td>
+                          <td>
+                            <span class="badge badge-primary">{{
+                              submitted_bid.status
+                            }}</span>
+                          </td>
+                          <td>
+                            {{ submitted_bid.created_at | customDate }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="modal-footer">
                 </div>
               </div>
             </div>
@@ -301,7 +393,6 @@
                                 </div>
                               </div>
                             </div>
-
                             <div class="form-group">
                               <div class="row">
                                 <div class="col-md-4">
@@ -526,6 +617,8 @@ export default {
       fullPage: true,
       editMode: false,
       errors: [],
+      submitted_bids: [],
+      tender_notice_reference: "",
       form: new Form({
         id: "",
         plan_id: "",
@@ -568,6 +661,29 @@ export default {
 
     getFormattedDate(date) {
       return moment(date).format("YYYY");
+    },
+
+    viewAllSubmittedBids(tender_notice_id, reference) {
+      this.showLoader();
+      axios
+        .get("/get/all/submitted/bids/" + tender_notice_id, {
+          headers: {
+            "X-Frame-Options": "sameorigin",
+            "X-Content-Type-Options": "nosniff",
+            "strict-transport-security": "max-age=31536000",
+          },
+        })
+        .then((response) => {
+          if (response.data.length > 0) {
+            this.tender_notice_reference = reference;
+            this.submitted_bids = response.data;
+            $("#loadSubmittedBids").modal("show");
+          }
+          this.hideLoader();
+        })
+        .catch((error) => {
+          this.hideLoader();
+        });
     },
 
     saveBidInvitation() {

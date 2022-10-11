@@ -173,7 +173,7 @@
                           >
                             <option selected value="">Choose Status</option>
                             <option value="saved">Saved</option>
-                            <option value="published">Submitted</option>
+                            <option value="submitted">Submitted</option>
                           </select>
                         </div>
                         <div class="float-right">

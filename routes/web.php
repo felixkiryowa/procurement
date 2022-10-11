@@ -92,7 +92,8 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  Route::post('/store/password', [UserController::class, 'store']);
 
  //Procurement Plans
- Route::get('/manage/procurement/plans', [ProcurementPlanController::class, 'index'])->middleware('role:Procurement Officer, Company');
+ Route::get('/manage/procurement/plans', [ProcurementPlanController::class, 'index'])
+ ->middleware('role:Procurement Officer,Company');
  Route::post('/create/procurement/plan', [ProcurementPlanController::class, 'store']);
 
  Route::post('/approve/procurement/plan/detail', [ProcurementPlanController::class, 'approveProcurementPlanDetail']);
@@ -110,11 +111,19 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  Route::post('/update/procurement_plan/detail', [ProcurementPlanController::class, 'updateDetails']);
 
  //Bids
- Route::get('/manage/bid/invitations', [BidsInvitationsController::class, 'index'])->middleware('role:Company,Procurement Officer');
+ Route::get('/manage/bid/invitations', [BidsInvitationsController::class, 'index'])
+ ->middleware('role:Company,Procurement Officer');
+ Route::get('/bids/received', [BidsInvitationsController::class, 'showAllSubmittedBids'])
+ ->middleware('role:Company,Procurement Officer');
+
  Route::post('/create/bid/invitation', [BidsInvitationsController::class, 'store']);
  Route::post('/submit/provider/bid', [BidsInvitationsController::class, 'submitProviderBid']);
  Route::post('/update/provider/bid', [BidsInvitationsController::class, 'updateSubmittedBid']);
-
+ Route::get('/get/all/submitted/bids/{id}', [BidsInvitationsController::class, 'getSubmittedBids']);
+ Route::get('/get/submitted/bids/document/{submitted_bid_id}', [BidsInvitationsController::class, 
+ 'getSubmittedBidDetails']);
+ Route::post('/download/uploaded/file', [BidsInvitationsController::class, 
+ 'dowloadUploadedDocumentFile']);
 
  Route::post('/update/bid/invitation', [BidsInvitationsController::class, 'update']);
  Route::get('/submit/bid/{id}', [HomeController::class, 'submitBid'])->middleware('role:Provider');

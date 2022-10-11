@@ -7,6 +7,7 @@ use App\Models\ProcurementCategories;
 use App\Models\ProcurementMethods;
 use App\Models\BidsInvitations;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use Auth;
 use App\Models\User;
 use Inertia\Inertia;
@@ -15,7 +16,6 @@ use App\Models\SubmittedBid;
 use App\Models\SubmittedBidDoc;
 use App\Models\ProcurementPlanDetails;
 use App\Traits\LogActivityTrait;
-use DB;
 
 
 class BidsInvitationsController extends Controller
@@ -44,13 +44,29 @@ class BidsInvitationsController extends Controller
         return $company_id;
     }
 
+    public function getSubmittedBidDetails($submitted_bid_id) {
+        $submitted_documents = SubmittedBidDoc::select('id', 'submitted_bid_id', 'document')
+        ->where('submitted_bid_docs.submitted_bid_id', $submitted_bid_id)->get();
+
+        return $submitted_documents;
+    }
+
+    public function dowloadUploadedDocumentFile(Request $request) {
+
+        $selected_document = SubmittedBidDoc::select('id', 'document', 'tracking_number')
+        ->where('id', $request->document_id)->first();
+
+        if($request->tracking_number == $selected_document->tracking_number) {
+            return response()->json(['success' => true, 
+            'document_path' => 'bid_documents/'.$selected_document->document]);
+        }else {
+            return response()->json(['success' => false, 
+            'message' => 'Invalid Tracking Number '.$request->tracking_number]);
+        }
+    }
 
     public function index() {
-
-        // $user = User::where('id',  Auth::user()->id)->first();
-
         //Get all Plans
-
         $plans = ProcurementPlan::where('organization_id',
          $this->getProcurementOfficerCompanyIdOrCompanyAdministrator())
          ->orderBy('financial_year_start', 'desc')->get();
@@ -59,9 +75,6 @@ class BidsInvitationsController extends Controller
         $plan_details = ProcurementPlanDetails::where('plan_id', 1)->get();
 
         //Get all Invitations
-
-        
-
         $bids = BidsInvitations::join('procurement_plans','procurement_plans.id','tender_notices.plan_id')
         ->select('tender_notices.*','procurement_plans.financial_year_start',
         'procurement_plans.financial_year_end')
@@ -69,12 +82,59 @@ class BidsInvitationsController extends Controller
         $this->getProcurementOfficerCompanyIdOrCompanyAdministrator())
         ->orderBy('tender_notices.created_at', 'desc')->get();
 
-
         return Inertia::render('Bids/BidInvitationsComponent', [
-            // 'user' => $user,
             'bids' => $bids,
             'plans' => $plans,
             'plan_details' => $plan_details,
+        ]);
+    }
+
+    public function getSubmittedBids($tender_notice_id) {
+        return  DB::table('submitted_bids')
+        ->select('submitted_bids.id', 
+        'submitted_bids.tender_notice_id',
+        'submitted_bids.user_id',
+        'submitted_bids.amount',
+        'submitted_bids.brief_description', 
+        'submitted_bids.start_date',
+        'submitted_bids.end_date', 
+        'submitted_bids.currency', 
+        'submitted_bids.status',
+        'submitted_bids.created_at', 
+        'users.firstName', 
+        'users.lastName')
+        ->leftJoin('users', 'submitted_bids.user_id', '=', 'users.id')
+        ->where('submitted_bids.tender_notice_id', $tender_notice_id)->get();
+    }
+
+    public function showAllSubmittedBids() {
+        $company_id = $this->getProcurementOfficerCompanyIdOrCompanyAdministrator();
+        return Inertia::render('Bids/AllCompanySubmittedBids',[
+           'all_submitted_bids' =>  DB::table('submitted_bids')
+            ->select('submitted_bids.id', 
+            'submitted_bids.tender_notice_id',
+            'submitted_bids.user_id',
+            'submitted_bids.amount',
+            'submitted_bids.brief_description', 
+            'submitted_bids.start_date',
+            'submitted_bids.end_date', 
+            'submitted_bids.currency', 
+            'submitted_bids.status',
+            'submitted_bids.created_at',
+            'submitted_bids.updated_at', 
+            'users.firstName', 
+            'users.lastName',
+            'users.organisationName',
+            'procurement_plans.financial_year_start',
+            'procurement_plans.financial_year_end',
+            'procurement_plans.title',
+            'procurement_plans.period')
+            ->leftJoin('users', 'submitted_bids.user_id', '=', 'users.id')
+            ->leftJoin('tender_notices', 'submitted_bids.tender_notice_id', '=', 'tender_notices.id')
+            ->leftJoin('procurement_plans', 'tender_notices.plan_id', '=', 'procurement_plans.id')
+            ->where('procurement_plans.organization_id', $company_id)
+            ->where('submitted_bids.status', 'submitted')
+            ->get()
         ]);
     }
 
@@ -193,10 +253,8 @@ class BidsInvitationsController extends Controller
         $bid_invitation->budget_amount = $plan_details->amount;
         $bid_invitation->save();
         
-
         return response()->json(['success' => true,
         'message' => 'Successfully Updated A Bid'], 200);
-
     }
 
     public function submitProviderBid(Request $request) {
