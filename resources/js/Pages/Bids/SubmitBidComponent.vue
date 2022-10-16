@@ -160,7 +160,8 @@
                               />
                             </div>
                             <b class="amount-input">
-                              Amount : {{ checkInputValue | formatNumber}} {{ form.currency }}
+                              Amount : {{ checkInputValue | formatNumber }}
+                              {{ form.currency }}
                             </b>
                           </div>
                         </div>
@@ -202,7 +203,7 @@
   </div>
 </template>
     
-      <script>
+<script>
 import UserLoggedOnNavBarComponent from "../NavBar/UserLoggedOnNavBarComponent.vue";
 import SideBarComponent from "../SideBar/SideBarComponent.vue";
 import FooterComponent from "../Footer/FooterComponent.vue";
@@ -257,7 +258,7 @@ export default {
 
     checkInputValue() {
       return this.form.amount === "" ? 0 : this.form.amount;
-    }
+    },
   },
 
   methods: {
@@ -321,7 +322,7 @@ export default {
             text: response.data.message,
           });
           this.hideLoader();
-          window.location.href = '/manage/submitted/bids';
+          window.location.href = "/manage/submitted/bids";
         })
         .catch((error) => {
           this.hideLoader();
