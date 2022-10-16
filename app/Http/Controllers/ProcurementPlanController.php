@@ -80,7 +80,7 @@ class ProcurementPlanController extends Controller
             $this->registerProcurementPlanDetailsApprovers($approvers);
         }
 
-        return response()->json(['success' => true, 'message' => 'Successfully DeActivated User'], 200);
+        return response()->json(['success' => true, 'message' => 'Successfully Added Procurement Plan Approvers'], 200);
     }
 
     public function saveCompanyApprovalProcess($approvers) {
@@ -168,12 +168,7 @@ class ProcurementPlanController extends Controller
             );
 
             return response()->json(['isvalid'=>false, 'errors' => $newerr ]);
-
-
         }
-
-
-
     }
 
 

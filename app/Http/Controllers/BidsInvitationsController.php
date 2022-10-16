@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\ProcurementCategories;
-use App\Models\ProcurementMethods;
 use App\Models\BidsInvitations;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +12,8 @@ use Inertia\Inertia;
 use App\Models\ProcurementPlan;
 use App\Models\SubmittedBid;
 use App\Models\SubmittedBidDoc;
+use App\Models\BestEvaluatedBidder;
+use App\Models\FinalBidAmount;
 use App\Models\ProcurementPlanDetails;
 use App\Traits\LogActivityTrait;
 
@@ -26,6 +26,41 @@ class BidsInvitationsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+
+    public function submitBestEvaluatedBidder(Request $request) {
+
+        $best_bidder_names = "";
+
+        foreach ($request->all_provider_submitted_bids as $key => $value) {
+            $best_evaluated_bidder = BestEvaluatedBidder::create([
+                'tender_notice_id' => $value['tender_notice_id'], 
+                'user_id' => Auth::user()->id, 
+                'company_id' => $this->getProcurementOfficerCompanyIdOrCompanyAdministrator(), 
+                'reason' => $value['reason'],
+                'best_evaluated_bidder' => $value['choosen_bid'], 
+                'provider' => $value['lastName'] .' '.$value['firstName'], 
+                'submitted_bid_id' => $value['submitted_bid_id']
+            ]);
+
+            if($value['choosen_bid'] == 1) {
+               $best_bidder_names = $value['lastName'] .' '.$value['firstName'];
+
+                FinalBidAmount::create([
+                    'best_evaluated_bidder_id' => $best_evaluated_bidder->id, 
+                    'amount' => $request->amount, 
+                    'currency' => $request->currency
+                ]);
+            }
+        }
+
+        $subject = 'Best Evaluated Bidder';
+        $details = 'Selecting Best Evaluated Bidder: '.$best_bidder_names;
+        $this->addToLog($request->ip(), $subject, $details);
+        
+        return response()->json(['success' => true,
+        'message' => 'Successfully Evaluated Best Bidder'], 200);
     }
 
     public function getProcurementOfficerCompanyIdOrCompanyAdministrator() {
@@ -138,6 +173,57 @@ class BidsInvitationsController extends Controller
         ]);
     }
 
+    public function viewBestEvaluatedBiddersList() {
+        return Inertia::render('Bids/BestEvaluatedBidder', [
+            'best_evaluated_bidders' =>  DB::table('best_evaluated_bidders')
+            ->select('best_evaluated_bidders.id', 
+            'best_evaluated_bidders.tender_notice_id', 
+            'best_evaluated_bidders.user_id',
+             'best_evaluated_bidders.company_id', 
+             'best_evaluated_bidders.reason', 
+             'best_evaluated_bidders.best_evaluated_bidder', 
+             'best_evaluated_bidders.provider',
+             'best_evaluated_bidders.created_at', 
+             'best_evaluated_bidders.updated_at',
+             'submitted_bids.amount', 
+             'submitted_bids.currency',
+             'submitted_bids.start_date', 
+             'submitted_bids.end_date', 
+             'tender_notices.name', 
+             'users.firstName', 
+             'users.lastName',
+             'procurement_plans.title',
+             'procurement_plans.period',
+             'procurement_plans.financial_year_start',
+             'procurement_plans.financial_year_end')
+             ->leftJoin('users', 'best_evaluated_bidders.user_id', '=', 'users.id')
+             ->leftJoin('tender_notices', 'best_evaluated_bidders.tender_notice_id', '=', 'tender_notices.id')
+             ->join('procurement_plans','procurement_plans.id', '=', 'tender_notices.plan_id')
+             ->leftJoin('submitted_bids', 'tender_notices.id', '=', 'submitted_bids.tender_notice_id')
+             ->where('best_evaluated_bidders.company_id', $this->getProcurementOfficerCompanyIdOrCompanyAdministrator())
+             ->where('best_evaluated_bidders.best_evaluated_bidder', 1)
+             ->get(),
+            'tender_notices' => BidsInvitations::join('procurement_plans','procurement_plans.id','tender_notices.plan_id')
+            ->select('tender_notices.id', 'tender_notices.name',
+             'procurement_plans.financial_year_start',
+            'procurement_plans.financial_year_end')
+            ->where('procurement_plans.organization_id', 
+            $this->getProcurementOfficerCompanyIdOrCompanyAdministrator())
+            ->orderBy('tender_notices.created_at', 'desc')->get()
+        ]);
+    }
+
+    public function subSubmittedBidsOnTenderNotice($id) {
+        return DB::table('submitted_bids')
+        ->select('submitted_bids.id', 'submitted_bids.tender_notice_id',
+        'submitted_bids.user_id', 'submitted_bids.amount', 'submitted_bids.currency',
+        'submitted_bids.start_date', 'submitted_bids.end_date', 'users.firstName',
+        'users.lastName' )
+        ->leftJoin('users', 'submitted_bids.user_id', '=', 'users.id')
+        ->where('submitted_bids.tender_notice_id', $id)
+        ->get();
+    }
+
 
     public function getProcurementDetails($id) {
 
@@ -195,13 +281,12 @@ class BidsInvitationsController extends Controller
 
             ]);
 
-              return response()->json(['success' => true,
-              'message' => 'Successfully Created Bid Invitation'], 200);
+            $subject = 'Creating a Bid Invitation';
+            $details = 'Created Bid Invitation: ';
+            $this->addToLog($request->ip(), $subject, $details);
 
-               //Log Ledger Creattion
-               $subject = 'Creating a Bid Invitation';
-               $details = 'Created Bid Invitation: ';
-               $this->addToLog($subject, $details);
+            return response()->json(['success' => true,
+            'message' => 'Successfully Created Bid Invitation'], 200);
 
         }else{
             $newerr = array(

@@ -852,7 +852,6 @@ import {
 } from "vuelidate/lib/validators";
 import Form from "vform";
 import Helpers from "../../Helpers/Helpers";
-// const procurementCategoryMustBeSelected = (value) => value.length > 0;
 
 export default {
   props: {

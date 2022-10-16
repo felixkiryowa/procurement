@@ -36,6 +36,16 @@
           <span class="menu-title">Bids Received</span>
         </a>
       </li>
+      <li
+        class="nav-item"
+        v-if="user.name === 'Procurement Officer' || 
+        user.name === 'Company'"
+      >
+        <a class="nav-link" href="/best/evaluated/bids">
+          <i class="ti-marker menu-icon"></i>
+          <span class="menu-title">Best Evaluated Bidders</span>
+        </a>
+      </li>
       <li class="nav-item" v-if="user.name === 'Provider'">
         <a class="nav-link" href="/company/tender/notices">
           <i class="ti-marker menu-icon"></i>
