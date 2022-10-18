@@ -105,6 +105,7 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  Route::post('/update/procurement/plan', [ProcurementPlanController::class, 'updatePlan']);
 // Procurement Plan Details
  Route::post('/procurement_plan/details/approvers', [ProcurementPlanController::class, 'createProcurementDetailsApprovers']);
+ Route::post('/procurement_plan/update/details/approvers', [ProcurementPlanController::class, 'updateCompanyProcurementApprovers']);
 
  Route::get('/submit/procurement/detail/for/approval/{id}', [ProcurementPlanController::class,
   'submitProcumentPlanDetailForApproval']);
