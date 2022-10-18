@@ -9,6 +9,7 @@ use App\Models\SecretQuestion;
 use App\Models\BidsInvitations;
 use App\Models\SubmittedBid;
 use App\Models\SubmittedBidDoc;
+use App\Models\CompanyApprovalOrder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -255,8 +256,28 @@ class HomeController extends Controller
             ->where('company_id', Auth::user()->id)
             ->orWhere('id', Auth::user()->id)
             ->orderBy('firstName', 'desc')
+            ->get(),
+            'company_approval_orders' => CompanyApprovalOrder::select('id', 'company_id', 'module', 'user_step', 'user_id')
+            ->where('company_id', $this->getProcurementOfficerCompanyIdOrCompanyAdministrator())
+            ->orderBy('user_step', 'asc')
             ->get()
         ]);
+    }
+
+    public function getProcurementOfficerCompanyIdOrCompanyAdministrator() {
+        $logged_in_user = User::select('id', 'user_role', 'company_id')
+        ->where('id', Auth::user()->id)->first();
+
+        if($logged_in_user->user_role == 'Procurement Officer') {
+
+            $company_id = $logged_in_user->company_id;
+
+        }else {
+
+            $company_id = $logged_in_user->id;
+        }
+
+        return $company_id;
     }
 
     public function allUserSubmittedBids() {

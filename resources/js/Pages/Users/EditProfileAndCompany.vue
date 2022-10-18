@@ -727,7 +727,7 @@
                             </button>
                           </div>
                           <div class="table-responsive">
-                            <form @submit.prevent="AddProcurementPlanDetails">
+                            <form @submit.prevent="editApproverMode ? EditProcurementPlanApprovers() :  AddProcurementPlanDetails() ">
                               <table
                                 class="table table-striped table-condensed"
                               >
@@ -800,9 +800,11 @@
                                   class="btn btn-primary btn-sm"
                                   type="submit"
                                 >
-                                  <i class="ti-save"></i> Submit Approvers
+                                  <i class="ti-save"></i> {{ editApproverMode ? 'Update Approvers' :  'Submit Approvers'}} 
                                 </button>
                               </div>
+                              <br>
+                              <br>
                             </form>
                           </div>
                         </div>
@@ -858,13 +860,13 @@ export default {
     secret_questions: Array,
     selected_user: Object,
     procurement_plan_approvers: Array,
+    company_approval_orders: Array,
   },
   mixins: [validationMixin],
   data() {
     return {
       fullPage: true,
-      challengeNumber1: "",
-      challengeNumber2: "",
+      editApproverMode:false,
       form2: new Form({
         approvers: [{ approver_user_id: "" }],
       }),
@@ -948,6 +950,23 @@ export default {
 
   methods: {
     ...mapActions("registration", ["showLoader", "hideLoader"]),
+    EditProcurementPlanApprovers() {
+      this.showLoader();
+      this.form2
+        .post("/procurement_plan/update/details/approvers")
+        .then((response) => {
+          Swal.fire({
+            icon: "success",
+            title: "Response",
+            text: response.data.message,
+          });
+          this.hideLoader();
+          window.location.reload();
+        })
+        .catch((error) => {
+          this.hideLoader();
+        });
+    },
 
     AddProcurementPlanDetails() {
       this.showLoader();
@@ -1013,6 +1032,13 @@ export default {
     setTimeout(() => this.hideLoader(), 2000);
     this.form.fill(this.selected_user);
     this.form.zipCode = this.selected_user.zip_code;
+    if (this.company_approval_orders.length > 0) {
+      this.form2.approvers.splice(0,1);
+      this.company_approval_orders.map((approver) => {
+        this.form2.approvers.push({approver_user_id: approver.user_id });
+      });
+      this.editApproverMode = true;
+    }
   },
 
   components: {

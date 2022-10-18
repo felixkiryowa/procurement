@@ -42,7 +42,7 @@
                         <tr>
                           <th>ID</th>
                           <th>Provider</th>
-                          <th>Bid Details</th>
+                          <!-- <th>Bid Details</th> -->
                           <th>Plan Name</th>
                           <th>Invitationfor Bids / Quotations</th>
                           <th>Bid Amount</th>
@@ -59,7 +59,7 @@
                         >
                           <td>{{ index + 1 }}</td>
                           <td>{{ detail.provider }}</td>
-                          <td>
+                          <!-- <td>
                             <button
                               class="btn btn-success"
                               @click="
@@ -68,7 +68,7 @@
                             >
                               Bid Details
                             </button>
-                          </td>
+                          </td> -->
                           <td>Procurement Plan {{ detail.period }}</td>
                           <td>{{ detail.title }}</td>
                           <td>

@@ -53,6 +53,26 @@ class ProcurementPlanController extends Controller
         ]);
     }
 
+    public function updateCompanyProcurementApprovers(Request $request) {
+        CompanyApprovalOrder::select('id', 'company_id' )->where('company_id', $this->getCompanyID())->delete();
+        $approvers  = $request->approvers;
+        $stepid = 1;
+
+        foreach ($approvers as $key => $value) {
+            CompanyApprovalOrder::create([
+                'company_id' => $this->getCompanyID(),
+                'module' => 'ProcurementPlanDetails',
+                'user_step' => $stepid,
+                'user_id' => $value["approver_user_id"],
+                'created_by' =>  $this->getCompanyID()
+            ]);
+
+            $stepid++;
+        }
+
+        return response()->json(['success' => true, 'message' => 'Successfully Updated Procurement Plan Detail Approvers'], 200);
+    }
+
     public function createProcurementDetailsApprovers(Request $request) {
 
         $approvers  = $request->approvers;
@@ -80,7 +100,7 @@ class ProcurementPlanController extends Controller
             $this->registerProcurementPlanDetailsApprovers($approvers);
         }
 
-        return response()->json(['success' => true, 'message' => 'Successfully Added Procurement Plan Approvers'], 200);
+        return response()->json(['success' => true, 'message' => 'Successfully Added Procurement Plan Detail Approvers'], 200);
     }
 
     public function saveCompanyApprovalProcess($approvers) {
