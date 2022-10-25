@@ -244,10 +244,11 @@
                                 </div>
 
                                 <div class="col-md-8">
-                                  <select
+                                    <select
                                     class="form-control"
                                     :class="{ 'is-invalid': errors.plan_id }"
                                     v-model="form.plan_id"
+                                    @change="getProcurementDetails($event)"
                                   >
                                     <option selected value="">
                                       Select Plan
@@ -292,7 +293,7 @@
                                 </div>
 
                                 <div class="col-md-8">
-                                  <select
+                                    <select
                                     class="form-control"
                                     :class="{ 'is-invalid': errors.subject_id }"
                                     v-model="form.subject_id"
@@ -301,7 +302,7 @@
                                       Select Subject
                                     </option>
                                     <option
-                                      v-for="ds in plan_details"
+                                      v-for="ds in plan_data"
                                       :key="ds.id"
                                       :value="ds.id"
                                     >
@@ -411,6 +412,161 @@
                                 </div>
                               </div>
                             </div>
+
+
+                            <table v-if="editMode === true" class="table table-striped table-condensed">
+                          <thead>
+                            <tr>
+                              <th>Document</th>
+                              <th>Type</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr
+                            v-for="docid in tender_docs"
+                                      :key="docid.id"
+                                      :value="docid.id"
+                                    >
+
+                              <td>
+                                {{ docid.document_url }}
+                              </td>
+                              <td >
+                                <span
+                                  class="badge badge-danger"
+                                  >{{ docid.document_type }}</span
+                                >
+                              </td>
+
+                            </tr>
+                          </tbody>
+                        </table>
+                            <br />
+
+                        <div v-if="editMode" class="float-right">
+                          <button
+                            class="btn btn-success btn-sm"
+                            @click="addNewAttachmentupdate($event)"
+                          >
+                            <i class="ti-plus"></i>
+                            Add Attachment
+                          </button>
+                        </div>
+                        <table v-if="editMode" class="table table-striped table-condensed">
+                          <thead>
+                            <tr>
+                              <th>Add Attachment</th>
+                              <th>Type</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr
+                              v-for="(
+                                uploaded_file, index
+                              ) in form.updated_uploaded_files"
+                              :key="index"
+                            >
+                              <td>
+                                <div class="form-group">
+                                  <label for="">Document {{ index + 1 }}</label>
+                                  <input
+                                    type="file"
+                                    required
+                                    @change="handleFileUploadupdate($event, index)"
+                                    class="form-control form-control-file"
+                                  />
+                                </div>
+                              </td>
+                              <td>
+                                <div class="form-group">
+                                  <label for="">Select Type </label>
+                                  <select
+                                    class="form-control"
+                                    v-model="uploaded_file.doctype"
+                                    :class="{ 'is-invalid': errors.doctype }"
+                                  >
+                                    <option selected value="">
+                                      Choose Type
+                                    </option>
+                                    <option value="Clarification">Clarification</option>
+                                    <option value="Amendment">Amendment</option>
+                                    <option value="Pre-bid Opening Minutes">Pre-bid Opening Minutes</option>
+                                    <option value="Bid Opening">Bid Opening</option>
+                                  </select>
+                                </div>
+                              </td>
+                              <td v-if="index === 0">
+                                <span
+                                  class="badge badge-primary default-approver"
+                                  >Default Attachment</span
+                                >
+                              </td>
+                              <td v-if="index != 0">
+                                <button
+                                  class="btn btn-danger remove-approver btn-sm"
+                                  @click="deleteRowupdate(index)"
+                                >
+                                  <i class="ti-trash"></i>
+                                  Remove Attachment {{ index }}
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                        <div v-if="!editMode" class="float-right">
+                          <button
+                            class="btn btn-success btn-sm"
+                            @click="addNewAttachment($event)"
+                          >
+                            <i class="ti-plus"></i>
+                            Add Attachment
+                          </button>
+                        </div>
+                        <table v-if="!editMode" class="table table-striped table-condensed">
+                          <thead>
+                            <tr>
+                              <th>Add Attachment</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr
+                              v-for="(
+                                uploaded_file, index
+                              ) in form.uploaded_files"
+                              :key="index"
+                            >
+                              <td>
+                                <div class="form-group">
+                                  <label for="">Document {{ index + 1 }}</label>
+                                  <input
+                                    type="file"
+                                    required
+                                    @change="handleFileUpload($event, index)"
+                                    class="form-control form-control-file"
+                                  />
+                                </div>
+                              </td>
+                              <td v-if="index === 0">
+                                <span
+                                  class="badge badge-primary default-approver"
+                                  >Default Attachment</span
+                                >
+                              </td>
+                              <td v-if="index != 0">
+                                <button
+                                  class="btn btn-danger remove-approver btn-sm"
+                                  @click="deleteRow(index)"
+                                >
+                                  <i class="ti-trash"></i>
+                                  Remove Attachment {{ index }}
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
 
                             <div class="form-group">
                               <div class="row">
@@ -616,6 +772,10 @@ export default {
     return {
       fullPage: true,
       editMode: false,
+      file_count: 0,
+      file_type_count: 0,
+      plan_data:[],
+      tender_docs:[],
       errors: [],
       submitted_bids: [],
       tender_notice_reference: "",
@@ -630,6 +790,19 @@ export default {
         status: "",
         display_end_date: "",
         display_start_date: "",
+        updated_uploaded_files: [
+          {
+            id: 0,
+            file: "",
+            doctype: ""
+          },
+        ],
+        uploaded_files: [
+          {
+            id: 0,
+            file: "",
+          },
+        ],
       }),
       submitted: false,
     };
@@ -685,6 +858,28 @@ export default {
           this.hideLoader();
         });
     },
+
+    getProcurementDetails(event){
+        let procurement_id = event.target.value;
+        axios.get('/get/procurement/detail/'+procurement_id).then((response) => {
+            this.plan_data = response.data.details;
+        })
+        .catch((response) => {
+          this.errors = response.data;
+        });
+        //console.log(procurement_id)
+    },
+
+    getTenderDocuments(tender){
+        axios.get('/get/tender/documents/'+tender).then((response) => {
+            this.tender_docs = response.data.docs;
+            console.log(this.tender_docs)
+        })
+        .catch((response) => {
+        this.errors = response.data;
+        });
+        //console.log(procurement_id)
+        },
 
     saveBidInvitation() {
       this.$Progress.fail();
@@ -756,6 +951,71 @@ export default {
         });
     },
 
+    addNewAttachment(event) {
+      event.preventDefault();
+      this.file_count = this.file_count + 1;
+      this.form.uploaded_files.push({ id: this.file_count, file: "" });
+    },
+    deleteRow(index) {
+      if (index != 0) {
+        this.form.uploaded_files.splice(index, 1);
+      }
+    },
+    handleFileUpload(event, passed_index) {
+      let selected_file = event.target.files[0];
+      let fileName = selected_file.name;
+      let extension = fileName.substring(fileName.lastIndexOf(".") + 1);
+      if (extension === "pdf" || extension === "doc") {
+        let objIndex = this.form.uploaded_files.findIndex(
+          (obj) => obj.id == passed_index
+        );
+        let reader = new FileReader();
+        reader.onloadend = () => {
+          this.form.uploaded_files[objIndex].file = reader.result;
+        };
+        reader.readAsDataURL(selected_file);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Inavlid Uploaded File Format",
+          text: "Uploaded Attachment Should Be A PDF Or Word File",
+        });
+      }
+    },
+    addNewAttachmentupdate(event) {
+      event.preventDefault();
+      this.file_type_count = this.file_type_count + 1;
+      this.form.updated_uploaded_files.push({ id: this.file_type_count, file: "" , doctype: ""});
+    },
+    deleteRowupdate(index) {
+      if (index != 0) {
+        this.form.updated_uploaded_files.splice(index, 1);
+      }
+    },
+
+
+    handleFileUploadupdate(event, passed_index) {
+      let selected_file = event.target.files[0];
+      let fileName = selected_file.name;
+      let extension = fileName.substring(fileName.lastIndexOf(".") + 1);
+      if (extension === "pdf" || extension === "doc") {
+        let objIndex = this.form.updated_uploaded_files.findIndex(
+          (obj) => obj.id == passed_index
+        );
+        let reader = new FileReader();
+        reader.onloadend = () => {
+          this.form.updated_uploaded_files[objIndex].file = reader.result;
+        };
+        reader.readAsDataURL(selected_file);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Inavlid Uploaded File Format",
+          text: "Uploaded Attachment Should Be A PDF Or Word File",
+        });
+      }
+    },
+
     //Open Modal
     openAddPlanModal() {
       this.editMode = false;
@@ -768,6 +1028,16 @@ export default {
       this.editMode = true;
       console.log(detail.id);
       this.form.fill(detail);
+      this.getTenderDocuments(detail.id);
+      this.form.fill(detail);
+      this.file_type_count = 0;
+      this.form.updated_uploaded_files = [
+          {
+            id: 0,
+            file: "",
+            doctype: ""
+          },
+        ];
       $("#createAPlan").modal("show");
     },
   },

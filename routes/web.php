@@ -123,17 +123,19 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  Route::post('/create/bid/invitation', [BidsInvitationsController::class, 'store']);
  Route::post('/submit/provider/bid', [BidsInvitationsController::class, 'submitProviderBid']);
  Route::post('/update/provider/bid', [BidsInvitationsController::class, 'updateSubmittedBid']);
- Route::post('/submit/best/evaluated/bidder', [BidsInvitationsController::class, 
+ Route::post('/submit/best/evaluated/bidder', [BidsInvitationsController::class,
  'submitBestEvaluatedBidder']);
 
  Route::get('/get/all/submitted/bids/{id}', [BidsInvitationsController::class, 'getSubmittedBids']);
- Route::get('/get/submitted/bids/document/{submitted_bid_id}', [BidsInvitationsController::class, 
+ Route::get('/get/submitted/bids/document/{submitted_bid_id}', [BidsInvitationsController::class,
  'getSubmittedBidDetails']);
- Route::post('/download/uploaded/file', [BidsInvitationsController::class, 
+ Route::post('/download/uploaded/file', [BidsInvitationsController::class,
  'dowloadUploadedDocumentFile']);
  Route::get('/best/evaluated/bids', [BidsInvitationsController::class, 'viewBestEvaluatedBiddersList']);
- Route::get('/get/tender/notice/submitted/bids/{id}', [BidsInvitationsController::class, 
+ Route::get('/get/tender/notice/submitted/bids/{id}', [BidsInvitationsController::class,
  'subSubmittedBidsOnTenderNotice']);
 
  Route::post('/update/bid/invitation', [BidsInvitationsController::class, 'update']);
  Route::get('/submit/bid/{id}', [HomeController::class, 'submitBid'])->middleware('role:Provider');
+ Route::get('/get/procurement/detail/{id}', [BidsInvitationsController::class, 'getProcurementDetails']);
+ Route::get('/get/tender/documents/{id}', [BidsInvitationsController::class, 'getTenderDocs']);
