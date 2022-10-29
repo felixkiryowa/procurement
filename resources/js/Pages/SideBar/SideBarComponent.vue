@@ -10,15 +10,9 @@
           <span class="menu-title">Bid Invitations</span>
         </a>
       </li>
-      <li class="nav-item" v-if="user.name === 'Company'">
-        <a class="nav-link" href="/manage/company/users">
-          <i class="icon-head menu-icon"></i>
-          <span class="menu-title">Users</span>
-        </a>
-      </li>
       <li
         class="nav-item"
-        v-if="user.name === 'Procurement Officer' || 
+        v-if="user.name === 'Procurement Officer' ||
         user.name === 'Company'"
       >
         <a class="nav-link" href="/manage/procurement/plans">
@@ -28,7 +22,7 @@
       </li>
       <li
         class="nav-item"
-        v-if="user.name === 'Procurement Officer' || 
+        v-if="user.name === 'Procurement Officer' ||
         user.name === 'Company'"
       >
         <a class="nav-link" href="/bids/received">
@@ -38,7 +32,7 @@
       </li>
       <li
         class="nav-item"
-        v-if="user.name === 'Procurement Officer' || 
+        v-if="user.name === 'Procurement Officer' ||
         user.name === 'Company'"
       >
         <a class="nav-link" href="/best/evaluated/bids">

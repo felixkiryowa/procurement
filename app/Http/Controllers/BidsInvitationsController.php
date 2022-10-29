@@ -15,6 +15,8 @@ use App\Models\SubmittedBidDoc;
 use App\Models\BestEvaluatedBidder;
 use App\Models\FinalBidAmount;
 use App\Models\ProcurementPlanDetails;
+use App\Models\TenderDocuments;
+
 use App\Traits\LogActivityTrait;
 
 
@@ -35,12 +37,12 @@ class BidsInvitationsController extends Controller
 
         foreach ($request->all_provider_submitted_bids as $key => $value) {
             $best_evaluated_bidder = BestEvaluatedBidder::create([
-                'tender_notice_id' => $value['tender_notice_id'], 
-                'user_id' => Auth::user()->id, 
-                'company_id' => $this->getProcurementOfficerCompanyIdOrCompanyAdministrator(), 
+                'tender_notice_id' => $value['tender_notice_id'],
+                'user_id' => Auth::user()->id,
+                'company_id' => $this->getProcurementOfficerCompanyIdOrCompanyAdministrator(),
                 'reason' => $value['reason'],
-                'best_evaluated_bidder' => $value['choosen_bid'], 
-                'provider' => $value['lastName'] .' '.$value['firstName'], 
+                'best_evaluated_bidder' => $value['choosen_bid'],
+                'provider' => $value['lastName'] .' '.$value['firstName'],
                 'submitted_bid_id' => $value['submitted_bid_id']
             ]);
 
@@ -48,8 +50,8 @@ class BidsInvitationsController extends Controller
                $best_bidder_names = $value['lastName'] .' '.$value['firstName'];
 
                 FinalBidAmount::create([
-                    'best_evaluated_bidder_id' => $best_evaluated_bidder->id, 
-                    'amount' => $request->amount, 
+                    'best_evaluated_bidder_id' => $best_evaluated_bidder->id,
+                    'amount' => $request->amount,
                     'currency' => $request->currency
                 ]);
             }
@@ -58,7 +60,7 @@ class BidsInvitationsController extends Controller
         $subject = 'Best Evaluated Bidder';
         $details = 'Selecting Best Evaluated Bidder: '.$best_bidder_names;
         $this->addToLog($request->ip(), $subject, $details);
-        
+
         return response()->json(['success' => true,
         'message' => 'Successfully Evaluated Best Bidder'], 200);
     }
@@ -92,10 +94,10 @@ class BidsInvitationsController extends Controller
         ->where('id', $request->document_id)->first();
 
         if($request->tracking_number == $selected_document->tracking_number) {
-            return response()->json(['success' => true, 
+            return response()->json(['success' => true,
             'document_path' => 'bid_documents/'.$selected_document->document]);
         }else {
-            return response()->json(['success' => false, 
+            return response()->json(['success' => false,
             'message' => 'Invalid Tracking Number '.$request->tracking_number]);
         }
     }
@@ -113,7 +115,7 @@ class BidsInvitationsController extends Controller
         $bids = BidsInvitations::join('procurement_plans','procurement_plans.id','tender_notices.plan_id')
         ->select('tender_notices.*','procurement_plans.financial_year_start',
         'procurement_plans.financial_year_end')
-        ->where('procurement_plans.organization_id', 
+        ->where('procurement_plans.organization_id',
         $this->getProcurementOfficerCompanyIdOrCompanyAdministrator())
         ->orderBy('tender_notices.created_at', 'desc')->get();
 
@@ -126,17 +128,17 @@ class BidsInvitationsController extends Controller
 
     public function getSubmittedBids($tender_notice_id) {
         return  DB::table('submitted_bids')
-        ->select('submitted_bids.id', 
+        ->select('submitted_bids.id',
         'submitted_bids.tender_notice_id',
         'submitted_bids.user_id',
         'submitted_bids.amount',
-        'submitted_bids.brief_description', 
+        'submitted_bids.brief_description',
         'submitted_bids.start_date',
-        'submitted_bids.end_date', 
-        'submitted_bids.currency', 
+        'submitted_bids.end_date',
+        'submitted_bids.currency',
         'submitted_bids.status',
-        'submitted_bids.created_at', 
-        'users.firstName', 
+        'submitted_bids.created_at',
+        'users.firstName',
         'users.lastName')
         ->leftJoin('users', 'submitted_bids.user_id', '=', 'users.id')
         ->where('submitted_bids.tender_notice_id', $tender_notice_id)->get();
@@ -146,18 +148,18 @@ class BidsInvitationsController extends Controller
         $company_id = $this->getProcurementOfficerCompanyIdOrCompanyAdministrator();
         return Inertia::render('Bids/AllCompanySubmittedBids',[
            'all_submitted_bids' =>  DB::table('submitted_bids')
-            ->select('submitted_bids.id', 
+            ->select('submitted_bids.id',
             'submitted_bids.tender_notice_id',
             'submitted_bids.user_id',
             'submitted_bids.amount',
-            'submitted_bids.brief_description', 
+            'submitted_bids.brief_description',
             'submitted_bids.start_date',
-            'submitted_bids.end_date', 
-            'submitted_bids.currency', 
+            'submitted_bids.end_date',
+            'submitted_bids.currency',
             'submitted_bids.status',
             'submitted_bids.created_at',
-            'submitted_bids.updated_at', 
-            'users.firstName', 
+            'submitted_bids.updated_at',
+            'users.firstName',
             'users.lastName',
             'users.organisationName',
             'procurement_plans.financial_year_start',
@@ -176,21 +178,21 @@ class BidsInvitationsController extends Controller
     public function viewBestEvaluatedBiddersList() {
         return Inertia::render('Bids/BestEvaluatedBidder', [
             'best_evaluated_bidders' =>  DB::table('best_evaluated_bidders')
-            ->select('best_evaluated_bidders.id', 
-            'best_evaluated_bidders.tender_notice_id', 
+            ->select('best_evaluated_bidders.id',
+            'best_evaluated_bidders.tender_notice_id',
             'best_evaluated_bidders.user_id',
-             'best_evaluated_bidders.company_id', 
-             'best_evaluated_bidders.reason', 
-             'best_evaluated_bidders.best_evaluated_bidder', 
+             'best_evaluated_bidders.company_id',
+             'best_evaluated_bidders.reason',
+             'best_evaluated_bidders.best_evaluated_bidder',
              'best_evaluated_bidders.provider',
-             'best_evaluated_bidders.created_at', 
+             'best_evaluated_bidders.created_at',
              'best_evaluated_bidders.updated_at',
-             'submitted_bids.amount', 
+             'submitted_bids.amount',
              'submitted_bids.currency',
-             'submitted_bids.start_date', 
-             'submitted_bids.end_date', 
-             'tender_notices.name', 
-             'users.firstName', 
+             'submitted_bids.start_date',
+             'submitted_bids.end_date',
+             'tender_notices.name',
+             'users.firstName',
              'users.lastName',
              'procurement_plans.title',
              'procurement_plans.period',
@@ -207,7 +209,7 @@ class BidsInvitationsController extends Controller
             ->select('tender_notices.id', 'tender_notices.name',
              'procurement_plans.financial_year_start',
             'procurement_plans.financial_year_end')
-            ->where('procurement_plans.organization_id', 
+            ->where('procurement_plans.organization_id',
             $this->getProcurementOfficerCompanyIdOrCompanyAdministrator())
             ->orderBy('tender_notices.created_at', 'desc')->get()
         ]);
@@ -262,24 +264,58 @@ class BidsInvitationsController extends Controller
 
         if(!empty($plan_details)){
 
-            BidsInvitations::create([
+            $bid_invitation =  new BidsInvitations;
 
-            'plan_id' => $request->plan_id,
-            'name' => $plan_details->brief,
-            'subject_id' => $request->subject_id,
-            'category_id' => $plan_details->category_id,
-            'method_id' => $plan_details->method_id,
-            'reference_number' => $request->reference_number,
-            'details' => $request->details,
-            'type' => $request->type,
-            'deadline' => $request->deadline,
-            'display_start_date' => $request->display_start_date,
-            'display_end_date' => $request->display_end_date,
-            'status' => $request->status,
-            'created_by' => Auth::user()->id,
-            'budget_amount' => $plan_details->amount,
+           $bid_invitation->plan_id = $request->plan_id;
+           $bid_invitation->name = $plan_details->brief;
+           $bid_invitation->subject_id = $request->subject_id;
+           $bid_invitation->category_id = $plan_details->category_id;
+           $bid_invitation->method_id = $plan_details->method_id;
+           $bid_invitation->reference_number = $request->reference_number;
+           $bid_invitation->details = $request->details;
+           $bid_invitation->type = $request->type;
+           $bid_invitation->deadline = $request->deadline;
+           $bid_invitation->display_start_date = $request->display_start_date;
+           $bid_invitation->display_end_date = $request->display_end_date;
+           $bid_invitation->status = $request->status;
+           $bid_invitation->created_by = Auth::user()->id;
+           $bid_invitation->budget_amount = $plan_details->amount;
+           $bid_invitation->save();
 
-            ]);
+
+            if(count($request->uploaded_files) > 0) {
+                foreach ($request->uploaded_files as $key => $value) {
+
+                     //var_dump($value['file']);
+                    $file = explode(';', $value['file']);
+                    $application_part = $file[0];
+                    $extension = explode('/', $application_part);
+
+                    if($extension[1] == "pdf") {
+                       $file_extension = ".pdf";
+                    }else {
+                        $file_extension = ".doc";
+                    }
+
+                    $base64_file = explode(',', $file[1]);
+                    $base64_decode = base64_decode($base64_file[1]);
+                    $generatedFile = fopen(public_path('bid_documents/'.time().$key.$file_extension), 'w');
+                    fwrite($generatedFile, $base64_decode);
+                    fclose($generatedFile);
+                    $fileName = time().$key.$file_extension;
+
+                    $bids =  TenderDocuments::create([
+
+                        'tender_id' => $bid_invitation->id,
+                        'document_url'=> $fileName,
+                        'created_by' => Auth::user()->id,
+                        'document_type' => 'Original',
+                        'tracking_number' => "134",
+
+
+                    ]);
+                }
+            }
 
             $subject = 'Creating a Bid Invitation';
             $details = 'Created Bid Invitation: ';
@@ -337,21 +373,56 @@ class BidsInvitationsController extends Controller
         $bid_invitation->updated_by = Auth::user()->id;
         $bid_invitation->budget_amount = $plan_details->amount;
         $bid_invitation->save();
-        
+
+        if(count($request->updated_uploaded_files) > 0) {
+            foreach ($request->updated_uploaded_files as $key => $value) {
+
+                 //var_dump($value['file']);
+                $type = $value['doctype'];
+                $file = explode(';', $value['file']);
+                $application_part = $file[0];
+                $extension = explode('/', $application_part);
+
+                if($extension[1] == "pdf") {
+                   $file_extension = ".pdf";
+                }else {
+                    $file_extension = ".doc";
+                }
+
+                $base64_file = explode(',', $file[1]);
+                $base64_decode = base64_decode($base64_file[1]);
+                $generatedFile = fopen(public_path('bid_documents/'.time().$key.$file_extension), 'w');
+                fwrite($generatedFile, $base64_decode);
+                fclose($generatedFile);
+                $fileName = time().$key.$file_extension;
+
+                $bids =  TenderDocuments::create([
+
+                    'tender_id' => $bid_invitation->id,
+                    'document_url'=> $fileName,
+                    'created_by' => Auth::user()->id,
+                    'document_type' => $type,
+                    'tracking_number' => "134",
+
+
+                ]);
+            }
+        }
+
         return response()->json(['success' => true,
         'message' => 'Successfully Updated A Bid'], 200);
     }
 
     public function submitProviderBid(Request $request) {
-        
+
         $submitted_bid = SubmittedBid::create([
             'tender_notice_id' => $request->tender_notice_id,
-            'user_id' => Auth::user()->id, 
-            'amount' => $request->amount, 
-            'brief_description' => $request->brief_description, 
-            'start_date' => $request->start_date, 
-            'end_date' => $request->end_date, 
-            'currency' => $request->currency, 
+            'user_id' => Auth::user()->id,
+            'amount' => $request->amount,
+            'brief_description' => $request->brief_description,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'currency' => $request->currency,
             'status' => $request->status
        ]);
 
@@ -372,7 +443,7 @@ class BidsInvitationsController extends Controller
                 $file = explode(';', $value['file']);
                 $application_part = $file[0];
                 $extension = explode('/', $application_part);
-    
+
                 if($extension[1] == "pdf") {
                    $file_extension = ".pdf";
                 }else {
@@ -380,7 +451,7 @@ class BidsInvitationsController extends Controller
                 }
 
                 $random_number = rand(100, 1000000);
-    
+
                 $base64_file = explode(',', $file[1]);
                 $base64_decode = base64_decode($base64_file[1]);
                 $generatedFile = fopen(public_path('bid_documents/'.'bid_doc'.date('Y-m-d').$key.$random_number.$file_extension), 'w');
@@ -399,14 +470,14 @@ class BidsInvitationsController extends Controller
 
     public function updateSubmittedBid(Request $request) {
 
-        $submitted_bid = SubmittedBid::select('id', 'amount', 'brief_description', 
+        $submitted_bid = SubmittedBid::select('id', 'amount', 'brief_description',
         'start_date', 'end_date', 'currency', 'status')->where('id', $request->id)->first();
 
-        $submitted_bid->amount = $request->amount; 
-        $submitted_bid->brief_description = $request->brief_description; 
-        $submitted_bid->start_date = $request->start_date; 
-        $submitted_bid->end_date = $request->end_date; 
-        $submitted_bid->currency = $request->currency; 
+        $submitted_bid->amount = $request->amount;
+        $submitted_bid->brief_description = $request->brief_description;
+        $submitted_bid->start_date = $request->start_date;
+        $submitted_bid->end_date = $request->end_date;
+        $submitted_bid->currency = $request->currency;
         $submitted_bid->status = $request->status;
         $submitted_bid->save();
 
@@ -418,6 +489,18 @@ class BidsInvitationsController extends Controller
 
         return response()->json(['success' => true,
         'message' => 'Successfully Edited  A Bid'], 200);
+
+    }
+
+    public function getTenderDocs($id) {
+
+        $docs = TenderDocuments::where('tender_id', $id)->get();
+
+        return response()->json([
+            'success' => true,
+            'docs' => $docs,
+        ], 200);
+
 
     }
 
