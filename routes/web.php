@@ -139,3 +139,7 @@ Route::post('/send/secret/code', [RegisterCompanyOrProviderController::class,
  Route::get('/submit/bid/{id}', [HomeController::class, 'submitBid'])->middleware('role:Provider');
  Route::get('/get/procurement/detail/{id}', [BidsInvitationsController::class, 'getProcurementDetails']);
  Route::get('/get/tender/documents/{id}', [BidsInvitationsController::class, 'getTenderDocs']);
+
+
+ Route::get('/manage/procurement/plans/add', [ProcurementPlanController::class, 'add'])
+ ->middleware('role:Procurement Officer,Company');
