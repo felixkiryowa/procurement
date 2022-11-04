@@ -147,48 +147,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <div class="table-responsive">
-                    <table
-                      class="table table-bordered table-striped"
-                    >
-                      <thead>
-                        <tr>
-                          <th>ID</th>
-                          <th>Amount</th>
-                          <th>brief_description</th>
-                          <th>Bid Validity Period</th>
-                          <th>Submitted By</th>
-                          <th>Status</th>
-                          <th>Date Created</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr
-                          :key="index"
-                          v-for="(submitted_bid, index) in submitted_bids"
-                        >
-                          <td>{{ index + 1 }}</td>
-                          <td>
-                            {{ submitted_bid.amount | formatNumber }}
-                            {{ submitted_bid.currency }}
-                          </td>
-                          <td>{{ submitted_bid.brief_description }}</td>
-                          <td>{{ submitted_bid.start_date | customDate }} - {{ submitted_bid.end_date | customDate }}</td>
-                          <td>
-                            <span class="badge badge-success">{{ submitted_bid.firstName }} {{ submitted_bid.lastName  }}</span>
-                          </td>
-                          <td>
-                            <span class="badge badge-primary">{{
-                              submitted_bid.status
-                            }}</span>
-                          </td>
-                          <td>
-                            {{ submitted_bid.created_at | customDate }}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+
                 </div>
                 <div class="modal-footer">
                 </div>
@@ -837,26 +796,7 @@ export default {
     },
 
     viewAllSubmittedBids(tender_notice_id, reference) {
-      this.showLoader();
-      axios
-        .get("/get/all/submitted/bids/" + tender_notice_id, {
-          headers: {
-            "X-Frame-Options": "sameorigin",
-            "X-Content-Type-Options": "nosniff",
-            "strict-transport-security": "max-age=31536000",
-          },
-        })
-        .then((response) => {
-          if (response.data.length > 0) {
-            this.tender_notice_reference = reference;
-            this.submitted_bids = response.data;
-            $("#loadSubmittedBids").modal("show");
-          }
-          this.hideLoader();
-        })
-        .catch((error) => {
-          this.hideLoader();
-        });
+      window.location.href = '/get/all/submitted/bids/'+btoa(tender_notice_id);
     },
 
     getProcurementDetails(event){

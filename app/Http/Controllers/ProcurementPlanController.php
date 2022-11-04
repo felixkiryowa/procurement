@@ -267,7 +267,7 @@ class ProcurementPlanController extends Controller
         ->leftJoin('procurement_plans', 'procurement_plan_details.plan_id', '=', 'procurement_plans.id')
         ->leftJoin('procurement_categories', 'procurement_plan_details.category_id', '=', 'procurement_categories.id')
         ->leftJoin('procurement_methods', 'procurement_plan_details.method_id', '=', 'procurement_methods.id')
-        ->where('procurement_plan_details.plan_id', $id)
+        ->where('procurement_plan_details.plan_id', base64_decode($id))
         ->orderBy('procurement_plan_details.created_at','desc')->get();
 
         //Get Categories
@@ -285,6 +285,54 @@ class ProcurementPlanController extends Controller
             'plan' => $plan,
             'getDetails' => $getDetails
         ]);
+    }
+
+
+    public function viewProcurementPlanDetails($id) {
+
+        $getDetails = DB::table('procurement_plan_details')
+        ->select('procurement_plan_details.id',
+        'procurement_plan_details.',
+        'procurement_plans.financial_year_start',
+        'procurement_plans.financial_year_end',
+        'procurement_plans.title',
+        'procurement_plan_details.category_id',
+        'procurement_plan_details.method_id',
+        'procurement_plan_details.amount',
+        'procurement_categories.name as category_name',
+        'procurement_methods.name as method_name',
+        'procurement_plan_details.C',
+        'procurement_plan_details.E',
+        'procurement_plan_details.F',
+        'procurement_plan_details.G',
+        'procurement_plan_details.H',
+        'procurement_plan_details.I',
+        'procurement_plan_details.J',
+        'procurement_plan_details.K',
+        'procurement_plan_details.L',
+        'procurement_plan_details.M',
+        'procurement_plan_details.N', 
+        'procurement_plan_details.created_by', 
+        'procurement_plan_details.created_at',
+        'procurement_plan_details.brief',
+        'procurement_plan_details.submitted',
+        'procurement_plan_details.total_steps',
+        'procurement_plan_details.status',
+        'users.firstName',
+        'lastName',
+        'procurement_plan_details.step')
+        ->join('users','procurement_plan_details.created_by',  '=', 'users.id')
+        ->leftJoin('procurement_plans', 'procurement_plan_details.plan_id', '=', 'procurement_plans.id')
+        ->leftJoin('procurement_categories', 'procurement_plan_details.category_id', '=', 'procurement_categories.id')
+        ->leftJoin('procurement_methods', 'procurement_plan_details.method_id', '=', 'procurement_methods.id')
+        ->where('procurement_plan_details.id', base64_decode($id))
+        ->first();
+
+        return Inertia::render('ProcurementPlans/ViewProcurementPlanDetails', [
+            'getDetails' => $getDetails
+        ]);
+
+
     }
 
     public function getProcurementOfficerCompanyIdOrCompanyAdministrator() {

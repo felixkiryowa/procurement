@@ -57,7 +57,7 @@
                           </td>
                           <td>
                             <div>
-                              <span class="badge badge-warning">{{
+                              <span class="badge badge-success">{{
                                 plan.status
                               }}</span>
                             </div>
@@ -349,8 +349,7 @@ export default {
     },
 
     PlanDetails(plan) {
-      console.log(plan);
-      window.location.href = "/manage/procurement_plan/details/" + plan.id;
+      window.location.href = "/manage/procurement_plan/details/" + btoa(plan.id);
     },
 
     //Open Modal

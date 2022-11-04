@@ -89,130 +89,7 @@
         </div>
         <!-- main-panel ends -->
       </div>
-  
-      <!-- Modal -->
-      <div
-        class="modal fade bd-example-modal-lg"
-        id="tenderNoticeDetailsModal"
-        role="dialog"
-        aria-labelledby="myLargeModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">
-                Procurement Plan
-                {{ getFormattedDate(bid_details.financial_year_start) }}
-                -
-                {{ getFormattedDate(bid_details.financial_year_end) }}
-  
-  
-                / Bid Reference {{ bid_details.reference_number }}
-              </h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="container-fluid">
-                <div class="container">
-                  <!-- Main content -->
-                  <div class="row">
-                    <div class="col-lg-12">
-                      <!-- Details -->
-                      <div class="card mb-4">
-                        <div class="card-body">
-                          <h4>BID NAME : {{ bid_details.name }}</h4>
-                          <hr>
-                          <div class="mb-3 d-flex justify-content-between">
-                            <div>
-                              <span class="me-3">Created By : </span>
-                              <span class="badge badge-success">{{
-                                bid_details.organisationName
-                              }}</span>
-                            </div>
-                            <br />
-                            <div>
-                              <span class="me-3">Created On : </span>
-                              <span class="badge badge-success">{{
-                                bid_details.created_at | customDate
-                              }}</span>
-                            </div>
-                          </div>
-                          <div class="mb-3 d-flex justify-content-between">
-                            <div>
-                              <span class="me-3">Display Start Date : </span>
-                              <span class="badge badge-success">{{
-                                bid_details.display_start_date | customDate
-                              }}</span>
-                            </div>
-                            <br />
-                            <div>
-                              <span class="me-3">Display End Date : </span>
-                              <span class="badge badge-success">{{
-                                bid_details.display_end_date | customDate
-                              }}</span>
-                            </div>
-                          </div>
-                          <div class="mb-3 d-flex justify-content-between">
-                            <div>
-                              <span class="me-3">Brief Description : </span>
-                              <span class="badge badge-success">{{
-                                bid_details.details
-                              }}</span>
-                            </div>
-                          </div>
-                          <table class="table table-striped">
-                            <tbody>
-                              <tr>
-                                <td colspan="2">Amount</td>
-                                <td class="text-end">
-                                  {{ bid_details.budget_amount | formatNumber }}
-                                </td>
-                              </tr>
-                              <tr>
-                                <td colspan="2">Bid Category</td>
-                                <td class="text-end">
-                                  <span class="badge badge-danger">{{
-                                    bid_details.category_name
-                                  }}</span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td colspan="2">Method</td>
-                                <td class="text-danger text-end">
-                                  <span class="badge badge-danger">{{
-                                    bid_details.method_name
-                                  }}</span>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-danger btn-sm"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      
     </div>
   </template>
     
@@ -266,8 +143,10 @@
       },
   
       previewBidDetails(detail) {
-        this.bid_details = detail;
-        $("#tenderNoticeDetailsModal").modal("show");
+        // this.bid_details = detail;
+        // $("#tenderNoticeDetailsModal").modal("show");
+        window.location.href = "/submitted/bid/details/" + btoa(detail.id);
+
       },
 
       editSubmittedBid(id) {

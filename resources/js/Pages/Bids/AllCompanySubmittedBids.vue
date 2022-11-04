@@ -24,7 +24,7 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Bidders List</h4>
-                  <p class="card-description float-lg-right">
+                  <!-- <p class="card-description float-lg-right">
                     <button
                       type="button"
                       class="btn btn-info btn-rounded btn-fw"
@@ -33,7 +33,7 @@
                     >
                       Add New
                     </button>
-                  </p>
+                  </p> -->
                   <div class="table-responsive pt-3">
                     <table
                       id="allPlans"
@@ -382,36 +382,9 @@ export default {
     },
 
     previewSubmittedBidDetails(detail) {
-      this.choosen_detail = detail;
-      this.showLoader();
-      axios
-        .get("/get/submitted/bids/document/" + detail.id, {
-          headers: {
-            "X-Frame-Options": "sameorigin",
-            "X-Content-Type-Options": "nosniff",
-            "strict-transport-security": "max-age=31536000",
-          },
-        })
-        .then((response) => {
-          if (response.data.length > 0) {
-            let documents = response.data;
-            this.file_count = this.file_count + 1;
 
-            for (let index = 0; index < documents.length; index++) {
-              this.form.submitted_docs_array.push({
-                id: index,
-                file_name: documents[index].document,
-                tracking_number: "",
-                document_id: documents[index].id,
-              });
-            }
-          }
-          this.hideLoader();
-          $("#submittedBidDetails").modal("show");
-        })
-        .catch((error) => {
-          this.hideLoader();
-        });
+      window.location.href = '/view/submitted.bid/details/'+btoa(detail.id);
+
     },
 
     getFormattedDate(date) {
@@ -518,13 +491,6 @@ export default {
       $("#createAPlan").modal("show");
     },
 
-    //Open Modal
-    EditPlan(detail) {
-      this.editMode = true;
-      console.log(detail.id);
-      this.form.fill(detail);
-      $("#createAPlan").modal("show");
-    },
   },
 
   created() {

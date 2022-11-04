@@ -58,7 +58,7 @@
                           </td>
                           <td>
                             <div v-if="user.status === 1">
-                              <span class="btn btn-sm btn-warning">Active</span>
+                              <span class="btn btn-sm btn-success">Active</span>
                             </div>
                             <div v-else-if="user.status === 0">
                               <span class="btn btn-sm btn-danger"

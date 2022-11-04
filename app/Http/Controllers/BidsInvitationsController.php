@@ -126,8 +126,8 @@ class BidsInvitationsController extends Controller
         ]);
     }
 
-    public function getSubmittedBids($tender_notice_id) {
-        return  DB::table('submitted_bids')
+    public function getSubmittedBids($id) {
+        $submitted_bids =  DB::table('submitted_bids')
         ->select('submitted_bids.id',
         'submitted_bids.tender_notice_id',
         'submitted_bids.user_id',
@@ -141,7 +141,14 @@ class BidsInvitationsController extends Controller
         'users.firstName',
         'users.lastName')
         ->leftJoin('users', 'submitted_bids.user_id', '=', 'users.id')
-        ->where('submitted_bids.tender_notice_id', $tender_notice_id)->get();
+        ->where('submitted_bids.tender_notice_id', base64_decode($id))->get();
+
+        $tender_notice = DB::table('tender_notices')->select('id', 'name', 'reference_number')->where('id', base64_decode($id))->first();
+
+        return Inertia::render('Bids/ViewAllSubmittedBidsOnBidInvitation', [
+            'submitted_bids' => $submitted_bids,
+            'tender_notice_reference' => $tender_notice->reference_number
+        ]);
     }
 
     public function showAllSubmittedBids() {
@@ -175,6 +182,37 @@ class BidsInvitationsController extends Controller
         ]);
     }
 
+    public function viewSubmittedBidDetails($id) {
+        return Inertia::render('Bids/SubmittedBidDetails',[
+           'choosen_detail' =>  DB::table('submitted_bids')
+            ->select('submitted_bids.id',
+            'submitted_bids.tender_notice_id',
+            'submitted_bids.user_id',
+            'submitted_bids.amount',
+            'submitted_bids.brief_description',
+            'submitted_bids.start_date',
+            'submitted_bids.end_date',
+            'submitted_bids.currency',
+            'submitted_bids.status',
+            'submitted_bids.created_at',
+            'submitted_bids.updated_at',
+            'users.firstName',
+            'users.lastName',
+            'users.organisationName',
+            'procurement_plans.financial_year_start',
+            'procurement_plans.financial_year_end',
+            'procurement_plans.title',
+            'procurement_plans.period')
+            ->leftJoin('users', 'submitted_bids.user_id', '=', 'users.id')
+            ->leftJoin('tender_notices', 'submitted_bids.tender_notice_id', '=', 'tender_notices.id')
+            ->leftJoin('procurement_plans', 'tender_notices.plan_id', '=', 'procurement_plans.id')
+            ->where('submitted_bids.id', base64_decode($id))
+            ->first(),
+            'submitted_documents' => SubmittedBidDoc::select('id', 'submitted_bid_id', 'document')
+            ->where('submitted_bid_docs.submitted_bid_id', base64_decode($id))->get()
+        ]);
+    }
+
     public function viewBestEvaluatedBiddersList() {
         return Inertia::render('Bids/BestEvaluatedBidder', [
             'best_evaluated_bidders' =>  DB::table('best_evaluated_bidders')
@@ -204,7 +242,13 @@ class BidsInvitationsController extends Controller
              ->leftJoin('submitted_bids', 'tender_notices.id', '=', 'submitted_bids.tender_notice_id')
              ->where('best_evaluated_bidders.company_id', $this->getProcurementOfficerCompanyIdOrCompanyAdministrator())
              ->where('best_evaluated_bidders.best_evaluated_bidder', 1)
-             ->get(),
+             ->get()
+        ]);
+    }
+
+
+    public function formToAddBestEvaluatedBidder() {
+        return Inertia::render('Bids/AddBestEvaluatedBidder', [
             'tender_notices' => BidsInvitations::join('procurement_plans','procurement_plans.id','tender_notices.plan_id')
             ->select('tender_notices.id', 'tender_notices.name',
              'procurement_plans.financial_year_start',

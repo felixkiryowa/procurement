@@ -28,7 +28,7 @@
                     <button
                       class="btn btn-info btn-rounded btn-fw"
                       @click="openModalToAddBidderEvaluation"
-                      v-if="user.name === 'Procurement Officer'"
+                      v-if="user.name === 'Procurement Officer' || user.name === 'Company'"
                     >
                       Evaluate Bidders
                     </button>
@@ -42,7 +42,6 @@
                         <tr>
                           <th>ID</th>
                           <th>Provider</th>
-                          <!-- <th>Bid Details</th> -->
                           <th>Plan Name</th>
                           <th>Invitationfor Bids / Quotations</th>
                           <th>Bid Amount</th>
@@ -59,16 +58,6 @@
                         >
                           <td>{{ index + 1 }}</td>
                           <td>{{ detail.provider }}</td>
-                          <!-- <td>
-                            <button
-                              class="btn btn-success"
-                              @click="
-                                previewevaluateBiddersWhoSubmittedBids(detail)
-                              "
-                            >
-                              Bid Details
-                            </button>
-                          </td> -->
                           <td>Procurement Plan {{ detail.period }}</td>
                           <td>{{ detail.title }}</td>
                           <td>
@@ -103,181 +92,6 @@
       </div>
       <!-- main-panel ends -->
     </div>
-    <div
-      class="modal fade bd-example-modal-lg"
-      id="evaluateBiddersWhoSubmittedBids"
-      role="dialog"
-      aria-labelledby="myLargeModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg">
-        <form @submit.prevent="submitSelectedBidder">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">
-                Best Evaluated Bidder
-              </h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="card">
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="">Subject Of Procurement</label>
-                    <select
-                      class="form-control"
-                      @change="getTenderNoticeSubmittedBids($event)"
-                      :class="{ 'is-invalid': errors.plan_id }"
-                      v-model="form.plan_id"
-                      required
-                    >
-                      <option disabled value="">Select Tender Notice</option>
-                      <option
-                        v-for="notice in tender_notices"
-                        :key="notice.id"
-                        :value="notice.id"
-                      >
-                        {{ notice.name }}
-                      </option>
-                    </select>
-                  </div>
-                  <b-alert
-                    v-if="no_submitted_bids_found"
-                    show
-                    variant="danger"
-                    >{{ message }}</b-alert
-                  >
-                  <div class="text-center" v-if="show_spinner">
-                    <b-spinner
-                      variant="primary"
-                      type="grow"
-                      label="Spinning"
-                    ></b-spinner>
-                  </div>
-                  <div v-if="form.all_provider_submitted_bids.length > 0">
-                    <b>Uploaded Documents</b>
-                    <hr />
-                    <br />
-                    <div class="table-responsive">
-                      <table class="table table-bordered table-striped">
-                        <thead>
-                          <tr>
-                            <th>Select As Best Bidder</th>
-                            <th>Provider</th>
-                            <th>Enter Reason</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr
-                            v-for="(
-                              provider_submitted_bid, index
-                            ) in form.all_provider_submitted_bids"
-                            :key="index"
-                          >
-                            <td>
-                              <div class="form-check">
-                                <input
-                                  class="form-check-input"
-                                  type="radio"
-                                  value="1"
-                                  v-model="form.selected_bidder"
-                                  @change="selectAsBestBidder($event, index)"
-                                />
-                              </div>
-                            </td>
-                            <td>
-                              <span class="badge badge-primary"
-                                >{{ provider_submitted_bid.firstName }}
-                                {{ provider_submitted_bid.lastName }}</span
-                              >
-                            </td>
-                            <td>
-                              <div class="form-group">
-                                <textarea
-                                  :id="'input_' + index"
-                                  class="form-control"
-                                  v-model="provider_submitted_bid.reason"
-                                  cols="30"
-                                  rows="2"
-                                  required
-                                ></textarea>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <br />
-                  <h4>Final Bid Price</h4>
-                  <hr />
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="">Bid Currency</label>
-                        <select
-                          v-model="form.currency"
-                          class="form-control"
-                          required
-                        >
-                          <option value="">Choose Currency</option>
-                          <option
-                            v-for="(currency, index) in allCurrencies"
-                            :key="index"
-                            :value="currency.cc"
-                          >
-                            {{ currency.cc }} / {{ currency.name }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="">Amount</label>
-                        <input
-                          type="number"
-                          placeholder="Enter Amount"
-                          v-model="form.amount"
-                          required
-                          class="form-control"
-                        />
-                      </div>
-                      <b class="amount-input">
-                        Amount : {{ checkInputValue | formatNumber }}
-                        {{ form.currency }}
-                      </b>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-danger btn-sm"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
-              <button
-                type="submit"
-                :disabled="form.all_provider_submitted_bids.length === 0"
-                class="btn btn-success btn-sm"
-              >
-                Submit
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
   </div>
 </template>
     
@@ -294,7 +108,6 @@ import moment from "moment";
 export default {
   props: {
     best_evaluated_bidders: Array,
-    tender_notices: Array,
   },
   data() {
     return {
@@ -565,9 +378,7 @@ export default {
 
     //Open Modal
     openModalToAddBidderEvaluation() {
-      this.editMode = false;
-      this.form.reset();
-      $("#evaluateBiddersWhoSubmittedBids").modal("show");
+      window.location.href = '/submit/best/evaluated/bids';
     },
 
     //Open Modal
