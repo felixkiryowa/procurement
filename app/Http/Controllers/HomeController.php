@@ -57,6 +57,26 @@ class HomeController extends Controller
         ]);
     }
 
+    public function getBidInviteDetails($id) {
+
+        $bid = BidsInvitations::select('tender_notices.*',
+        'procurement_plans.title',
+        'procurement_plans.financial_year_start',
+        'procurement_plans.financial_year_end', 
+        'procurement_categories.name as category_name',
+        'procurement_methods.name as method_name', 'users.organisationName')
+        ->join('procurement_plans','procurement_plans.id','tender_notices.plan_id')
+        ->leftJoin('users', 'procurement_plans.organization_id', '=', 'users.id')
+        ->leftJoin('procurement_categories', 'tender_notices.category_id', '=', 'procurement_categories.id')
+        ->leftJoin('procurement_methods', 'tender_notices.method_id', '=', 'procurement_methods.id')
+        ->where('tender_notices.id', base64_decode($id))
+        ->first();
+        return Inertia::render('Bids/BidInvitationDetails', [
+            'bid_details' => $bid
+        ]);
+
+    }
+
     public function viewAndEditSubmittedBid($id) {
       
         $check_submitted_bid = SubmittedBid::select('id', 'tender_notice_id', 'user_id', 'amount',
@@ -292,6 +312,31 @@ class HomeController extends Controller
             //  ->leftJoin('submitted_bid_docs', 'submitted_bid_docs.submitted_bid_id', '=', 'submitted_bids.id')
             ->where('submitted_bids.user_id', Auth::user()->id)
             ->get()
+        ]);
+    }
+
+    public function providerSubmittedBidDetails($id) {
+        return Inertia::render('Bids/ProviderSubmittedBidDetails', [
+            'bid_details' => DB::table('submitted_bids')
+            ->select('submitted_bids.id', 
+             'submitted_bids.tender_notice_id', 
+             'submitted_bids.amount', 
+             'submitted_bids.brief_description',
+             'submitted_bids.start_date', 
+             'submitted_bids.end_date', 
+             'submitted_bids.currency', 
+             'submitted_bids.status',
+             'submitted_bids.created_at', 
+             'tender_notices.name', 
+              'tender_notices.reference_number', 
+              'users.organisationName', 'procurement_categories.name as category_name', 'procurement_methods.name as method_name'  )
+             ->leftJoin('tender_notices', 'submitted_bids.tender_notice_id', '=', 'tender_notices.id')
+             ->leftJoin('procurement_categories', 'tender_notices.category_id', '=', 'procurement_categories.id')
+             ->leftJoin('procurement_methods', 'tender_notices.method_id', '=', 'procurement_methods.id')
+             ->leftJoin('procurement_plans', 'tender_notices.plan_id', '=', 'procurement_plans.id')
+             ->leftJoin('users', 'procurement_plans.organization_id', '=', 'users.id')
+            ->where('submitted_bids.id', base64_decode($id))
+            ->first()
         ]);
     }
 }

@@ -31,30 +31,34 @@ class UserAuthenticationController extends Controller
             'email', 'last_time_login', 'status')
             ->where('email', $request->email)->first();
 
-            if($user->status === 0) {
-                return redirect()->to('/')->with('auth_error', 'User Account Deactivated');
+            if($user == NULL) {
+                return redirect()->to('/')->with('auth_error', 'Please Sign Up To Login');
             }else {
-                if (Auth::attempt($credentials)) {
-
-                    $role = Role::select('id', 'name')->where('id', $user->account_type_id)->first();
-                    Auth::login($user);
-                    $this->destroyPreviousSession($user);
-
-                    $user->last_time_login = date("Y-m-d h:i:s");
-                    $user->save();
-                
-                    $this->addToLog($request->ip(), 'User Login',  $user->firstName . ' '.$user->lastName. ' has logged in');
-
-                    $user_redirects = collect([
-                        'Provider' => '/company/tender/notices',
-                        'Company' => '/manage/company/users',
-                        'Procurement Officer' => '/manage/procurement/plans',
-                        'Super Systems Administrator' => '/manage/companies'
-                    ]);
-
-                    return redirect($user_redirects->get($role->name, '/registered/companies'));
+                if($user->status === 0) {
+                    return redirect()->to('/')->with('auth_error', 'User Account Deactivated');
                 }else {
-                    return redirect()->to('/')->with('auth_error', 'Invalid Email Or Password');
+                    if (Auth::attempt($credentials)) {
+    
+                        $role = Role::select('id', 'name')->where('id', $user->account_type_id)->first();
+                        Auth::login($user);
+                        $this->destroyPreviousSession($user);
+    
+                        $user->last_time_login = date("Y-m-d h:i:s");
+                        $user->save();
+                    
+                        $this->addToLog($request->ip(), 'User Login',  $user->firstName . ' '.$user->lastName. ' has logged in');
+    
+                        $user_redirects = collect([
+                            'Provider' => '/company/tender/notices',
+                            'Company' => '/manage/company/users',
+                            'Procurement Officer' => '/manage/procurement/plans',
+                            'Super Systems Administrator' => '/manage/companies'
+                        ]);
+    
+                        return redirect($user_redirects->get($role->name, '/registered/companies'));
+                    }else {
+                        return redirect()->to('/')->with('auth_error', 'Invalid Email Or Password');
+                    }
                 }
             }
 

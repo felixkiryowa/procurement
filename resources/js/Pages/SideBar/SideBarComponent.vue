@@ -35,7 +35,7 @@
         v-if="user.name === 'Procurement Officer' ||
         user.name === 'Company'"
       >
-        <a class="nav-link" href="/best/evaluated/bids">
+        <a class="nav-link" href="/best/evaluated/bidders">
           <i class="ti-marker menu-icon"></i>
           <span class="menu-title">Best Evaluated Bidders</span>
         </a>

@@ -981,7 +981,7 @@ export default {
             text: response.data.message,
           });
           this.hideLoader();
-          this.deleteFormDataKeys();
+          // this.deleteFormDataKeys();
           window.location.href = "/";
         })
         .catch((error) => {

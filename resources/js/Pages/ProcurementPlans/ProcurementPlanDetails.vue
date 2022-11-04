@@ -98,206 +98,6 @@
             </div>
           </div>
 
-          <!-- Procurement Plan Details -->
-          <!-- Modal -->
-          <div
-            class="modal fade bd-example-modal-lg"
-            id="procurementPlanDetailsModal"
-            role="dialog"
-            aria-labelledby="myLargeModalLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">
-                    Procurement Plan Details Under Procurement Plan
-                    {{ procurement_plan_details.financial_year_start }} -
-                    {{ procurement_plan_details.financial_year_end }}
-                  </h5>
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <div class="container-fluid">
-                    <div class="container">
-                      <!-- Main content -->
-                      <div class="row">
-                        <div class="col-lg-12">
-                          <!-- Details -->
-                          <div class="card mb-4">
-                            <div class="card-body">
-                              <div class="mb-3 d-flex justify-content-between">
-                                <div>
-                                  <span class="me-3">Created By : </span>
-                                  <span class="badge badge-success"
-                                    >{{ procurement_plan_details.firstName }}
-                                    {{
-                                      procurement_plan_details.lastName
-                                    }}</span
-                                  >
-                                </div>
-                                <br />
-                                <div>
-                                  <span class="me-3">Created On : </span>
-                                  <span class="badge badge-success">{{
-                                    procurement_plan_details.created_at
-                                      | customDate
-                                  }}</span>
-                                </div>
-                              </div>
-                              <div class="mb-3 d-flex justify-content-between">
-                                <div>
-                                  <span class="me-3">Brief Description : </span>
-                                  <span class="badge badge-success">{{
-                                    procurement_plan_details.brief
-                                  }}</span>
-                                </div>
-                              </div>
-                              <table class="table table-striped">
-                                <tbody>
-                                  <tr>
-                                    <td colspan="2">Amount</td>
-                                    <td class="text-end">
-                                      {{
-                                        procurement_plan_details.amount
-                                          | formatNumber
-                                      }}
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="2">Category</td>
-                                    <td class="text-end">
-                                      <span class="badge badge-danger">{{
-                                        procurement_plan_details.category_name
-                                      }}</span>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="2">Method</td>
-                                    <td class="text-danger text-end">
-                                      <span class="badge badge-danger">{{
-                                        procurement_plan_details.method_name
-                                      }}</span>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="2">Plan Detail Approval Status</td>
-                                    <td class="text-danger text-end">
-                                      <span
-                                        class="badge badge-success"
-                                        v-if="
-                                          procurement_plan_details.status ===
-                                          'approved'
-                                        "
-                                        >{{
-                                          procurement_plan_details.status
-                                        }}</span
-                                      >
-                                      <span
-                                        class="badge badge-warning"
-                                        v-if="
-                                          procurement_plan_details.status !==
-                                          'approved'
-                                        "
-                                        >{{
-                                          procurement_plan_details.status
-                                        }}</span
-                                      >
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                              <div
-                                v-if="
-                                  logged_in_user_step ===
-                                    procurement_plan_details.step &&
-                                  isLoggedInUserApprover &&
-                                  procurement_plan_details.status !== 'approved'
-                                "
-                              >
-                                <form
-                                  @submit.prevent="approveProcurementPlanDetail"
-                                >
-                                  <div class="form-group">
-                                    <label for="">Select Option</label>
-                                    <select
-                                      v-model="form2.status"
-                                      class="form-control"
-                                      :class="{
-                                        'is-invalid':
-                                          form2.errors.has('status'),
-                                      }"
-                                    >
-                                      <option value="">Choose Option</option>
-                                      <option value="Approved">Approve</option>
-                                      <option value="Reject">Reject</option>
-                                    </select>
-                                    <span
-                                      class="invalid-feedback"
-                                      v-if="form2.errors.has('status')"
-                                      v-html="form2.errors.get('status')"
-                                    >
-                                    </span>
-                                  </div>
-                                  <div class="form-group">
-                                    <label for=""
-                                      >Enter Reason For Approval Or
-                                      Reject</label
-                                    >
-                                    <textarea
-                                      v-model="form2.reason"
-                                      class="form-control"
-                                      :class="{
-                                        'is-invalid':
-                                          form2.errors.has('reason'),
-                                      }"
-                                      cols="30"
-                                      rows="4"
-                                    ></textarea>
-                                    <span
-                                      class="invalid-feedback"
-                                      v-if="form2.errors.has('reason')"
-                                      v-html="form2.errors.get('reason')"
-                                    >
-                                    </span>
-                                  </div>
-                                  <div class="float-right">
-                                    <button
-                                      type="submit"
-                                      class="btn btn-success btn-sm"
-                                    >
-                                      Submit
-                                    </button>
-                                  </div>
-                                </form>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-danger btn-sm"
-                    data-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <!-- /.create a User modal -->
           <div class="modal fade" id="createAPlan">
             <div class="modal-dialog">
@@ -766,16 +566,6 @@ export default {
       editMode: false,
       errors: [],
       plan_to_edit: "",
-      procurement_plan_details: {},
-      logged_in_user_step: "",
-      isLoggedInUserApprover: false,
-      form2: new Form({
-        id: "",
-        reason: "",
-        step: "",
-        user_id: "",
-        status: "",
-      }),
       form: new Form({
         id: "",
         brief: "",
@@ -843,75 +633,8 @@ export default {
         });
     },
 
-    approveProcurementPlanDetail() {
-      this.showLoader();
-      if (this.form2.status === "Approved") {
-        this.form2
-          .post("/approve/procurement/plan/detail", {
-            headers: {
-              "X-Frame-Options": "sameorigin",
-              "X-Content-Type-Options": "nosniff",
-              "strict-transport-security": "max-age=31536000",
-            },
-          })
-          .then((response) => {
-            Swal.fire({
-              icon: "success",
-              title: "Response",
-              text: response.data.message,
-            });
-            window.location.reload();
-          })
-          .catch((error) => {
-            this.hideLoader();
-          });
-      } else {
-        this.form2
-          .post("/reject/procurement/plan/detail", {
-            headers: {
-              "X-Frame-Options": "sameorigin",
-              "X-Content-Type-Options": "nosniff",
-              "strict-transport-security": "max-age=31536000",
-            },
-          })
-          .then((response) => {
-            Swal.fire({
-              icon: "success",
-              title: "Response",
-              text: response.data.message,
-            });
-            window.location.reload();
-          })
-          .catch((error) => {
-            this.hideLoader();
-          });
-      }
-    },
-
     ViewProcurementPlanDetails(details) {
-      this.showLoader();
-      this.procurement_plan_details = details;
-      this.form2.step = details.step;
-      this.form2.id = details.id;
-      axios
-        .get("/get/who/to/approve/step/" + details.step, {
-          headers: {
-            "X-Frame-Options": "sameorigin",
-            "X-Content-Type-Options": "nosniff",
-            "strict-transport-security": "max-age=31536000",
-          },
-        })
-        .then((response) => {
-          this.isLoggedInUserApprover = response.data.message;
-          this.form2.user_id = response.data.user_id;
-          this.logged_in_user_step = response.data.user_step;
-
-          this.hideLoader();
-          $("#procurementPlanDetailsModal").modal("show");
-        })
-        .catch((error) => {
-          this.hideLoader();
-        });
+      window.location.href = '/view/procurement/plan/details/'+btoa(details.id);
     },
 
     getFormattedDate(date) {
@@ -938,7 +661,7 @@ export default {
             $("#createAPlan").modal("hide");
             this.form.reset();
             window.location.href =
-              "/manage/procurement_plan/details/" + this.plan.id;
+              "/manage/procurement_plan/details/" + btoa(this.plan.id);
             $("#allPlans").DataTable();
           }
         })
@@ -974,7 +697,7 @@ export default {
             $("#createAPlan").modal("hide");
             this.form.reset();
             window.location.href =
-              "/manage/procurement_plan/details/" + this.plan.id;
+              "/manage/procurement_plan/details/" + btoa(this.plan.id);
             $("#allPlans").DataTable();
           }
         })
@@ -990,8 +713,7 @@ export default {
     },
 
     PlanDetails(plan) {
-      console.log(plan);
-      window.location.href = "/manage/procurement_plan/details/" + plan.id;
+      window.location.href = "/manage/procurement_plan/details/" + btoa(plan.id);
     },
 
     //Open Modal
