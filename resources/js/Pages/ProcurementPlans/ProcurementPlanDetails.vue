@@ -780,7 +780,7 @@ export default {
         id: "",
         brief: "",
         amount: "",
-        plan_id: "",
+        plan_id: this.plan.id,
         category_id: "",
         method_id: "",
         C: "",
@@ -991,22 +991,20 @@ export default {
 
     PlanDetails(plan) {
       console.log(plan);
-      window.location.href = "/manage/procurement_plan/details/" + plan.id;
+      window.location.href = "/manage/procurement_plan/details/" + this.plan.id;
     },
 
     //Open Modal
-    openAddPlanModal() {
+    openAddPlanModal(plan) {
       this.editMode = false;
-      this.form.reset();
-      this.form.plan_id = this.plan.id;
-      $("#createAPlan").modal("show");
+      window.location.href = "/procurement/plan/details/add/" + this.plan.id;
+
     },
 
     //Open Modal
     EditPlan(detail) {
       this.editMode = true;
-      this.form.fill(detail);
-      $("#createAPlan").modal("show");
+      window.location.href = "/procurement/plan/details/edit/" + detail.id;
     },
   },
 
@@ -1015,6 +1013,10 @@ export default {
     setTimeout(() => {
       this.hideLoader();
     }, 3000);
+
+    this.form.plan_id = this.plan.id;
+
+    console.log(this.plan.id)
   },
 
   components: {

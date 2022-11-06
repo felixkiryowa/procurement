@@ -28,7 +28,7 @@
                     <button
                       type="button"
                       class="btn btn-info btn-rounded btn-fw"
-                      @click="openAddPlanModal"
+                      @click="AddPlan()"
                     >
                       Add New
                     </button>
@@ -353,11 +353,15 @@ export default {
       window.location.href = "/manage/procurement_plan/details/" + plan.id;
     },
 
+    AddPlan() {
+      window.location.href = "/procurement/plan/add";
+    },
+
     //Open Modal
     EditPlan(plan) {
       this.editMode = true;
-      this.form.fill(plan);
-      $("#createAPlan").modal("show");
+      window.location.href = "/procurement/plan/edit/" + plan.id;
+
     },
 
     //Open Modal

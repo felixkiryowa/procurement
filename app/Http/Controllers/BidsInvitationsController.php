@@ -504,4 +504,42 @@ class BidsInvitationsController extends Controller
 
     }
 
+    public function add() {
+        //Get all Plans
+        $plans = ProcurementPlan::where('organization_id',
+         $this->getProcurementOfficerCompanyIdOrCompanyAdministrator())
+         ->orderBy('financial_year_start', 'desc')->get();
+
+        //Get all Plan Details
+        $plan_details = ProcurementPlanDetails::where('plan_id', 1)->get();
+
+        //Get all Invitations
+
+
+        return Inertia::render('Bids/BidInvitationsAdd', [
+            'plans' => $plans,
+            'plan_details' => $plan_details,
+        ]);
+    }
+
+    public function edit($id) {
+        //Get all Plans
+        $plans = ProcurementPlan::where('organization_id',
+         $this->getProcurementOfficerCompanyIdOrCompanyAdministrator())
+         ->orderBy('financial_year_start', 'desc')->get();
+
+        //Get all Plan Details
+        $plan_details = ProcurementPlanDetails::where('plan_id', 1)->get();
+
+        $bid = BidsInvitations::find($id);
+
+        //Get all Invitations
+
+
+        return Inertia::render('Bids/BidInvitationsAdd', [
+            'plans' => $plans,
+            'bid' => $bid,
+        ]);
+    }
+
 }

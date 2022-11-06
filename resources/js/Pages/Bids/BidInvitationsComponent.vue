@@ -1020,25 +1020,13 @@ export default {
     openAddPlanModal() {
       this.editMode = false;
       this.form.reset();
-      $("#createAPlan").modal("show");
+      window.location.href = "/bids/invitation/add";
     },
 
     //Open Modal
     EditPlan(detail) {
       this.editMode = true;
-      console.log(detail.id);
-      this.form.fill(detail);
-      this.getTenderDocuments(detail.id);
-      this.form.fill(detail);
-      this.file_type_count = 0;
-      this.form.updated_uploaded_files = [
-          {
-            id: 0,
-            file: "",
-            doctype: ""
-          },
-        ];
-      $("#createAPlan").modal("show");
+      window.location.href = "/bids/invitation/edit/"+ detail.id;
     },
   },
 

@@ -40,7 +40,7 @@ class ProcurementPlanController extends Controller
 
         //Get all Plans
 
-        $plans = ProcurementPlan::where('organization_id', 
+        $plans = ProcurementPlan::where('organization_id',
         Auth::user()->company_id)
         ->orWhere('organization_id', Auth::user()->id)
         ->orderBy('financial_year_end', 'desc')->get();
@@ -82,7 +82,7 @@ class ProcurementPlanController extends Controller
         ->where('module', '=', 'ProcurementPlanDetails')->first();
 
         if(!empty($approval_process)){
-		
+
             $approval_process->module = 'ProcurementPlanDetails';
             $approval_process->approval_steps = count($approvers);
             $approval_process->created_by = $this->getCompanyID();
@@ -253,8 +253,8 @@ class ProcurementPlanController extends Controller
         'procurement_plan_details.K',
         'procurement_plan_details.L',
         'procurement_plan_details.M',
-        'procurement_plan_details.N', 
-        'procurement_plan_details.created_by', 
+        'procurement_plan_details.N',
+        'procurement_plan_details.created_by',
         'procurement_plan_details.created_at',
         'procurement_plan_details.brief',
         'procurement_plan_details.submitted',
@@ -276,7 +276,7 @@ class ProcurementPlanController extends Controller
         //Get Methods
         $getMethods = ProcurementMethods::select('id', 'name')->get();
 
-        $plan = ProcurementPlan::select('id', 'financial_year_start', 'financial_year_end' )->first();
+        $plan = ProcurementPlan::select('id', 'financial_year_start', 'financial_year_end' )->where('id', $id)->first();
 
         return Inertia::render('ProcurementPlans/ProcurementPlanDetails', [
             'user' => $user,
@@ -311,7 +311,7 @@ class ProcurementPlanController extends Controller
 
 	    $selfsteps = CompanyApprovalProcess::where('module', 'ProcurementPlanDetails')
         ->where('company_id', $this->getProcurementOfficerCompanyIdOrCompanyAdministrator())->first();
-	
+
         $stepscount = $selfsteps->approval_steps;
 
 
@@ -379,17 +379,17 @@ class ProcurementPlanController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-            
+
         //Get Steps for approval
-        
+
         $selfsteps = CompanyApprovalProcess::where('module', 'ProcurementPlanDetails')
         ->where('company_id', $this->getProcurementOfficerCompanyIdOrCompanyAdministrator())->first();
 
         $stepscount = $selfsteps->approval_steps;
-        
+
         $details =	ProcurementPlanDetails::select('id', 'step', 'status', 'created_by')->where('id', $request->id)->first();
         if($request->step != $stepscount){
-		
+
                 $updatereq = ApprovalRequestStatus::select('id', 'procurement_plan_detail_id', 'approver_id', 'status', 'reason')
                         ->where('procurement_plan_detail_id', $request->id)
                         ->where('approver_id', $request->user_id)
@@ -397,7 +397,7 @@ class ProcurementPlanController extends Controller
                 $updatereq->reason = $request->reason;
                 $updatereq->status = 1;
                 $updatereq->save();
-                                                
+
                 $nextstep = (intval($request->step) + 1);
 
                 $get_next_approver =  CompanyApprovalOrder::select('id', 'user_id', 'module', 'company_id', 'user_step')
@@ -408,14 +408,14 @@ class ProcurementPlanController extends Controller
                 ->notify(new SendApprovalEmail("Request for Procurement Details Approval From '".$this->getLoggedInUserNames()."'",
                 "A staff Member has Sent a request to you to approve a Procurement Plan Detail"));
                 $this->addToLog($request->ip(), 'Approving Procurement Plan Detail', 'Successfully  Approved  A Procurement Plan Detail  By '.$this->getLoggedInUserNames());
-                                                        
-                
+
+
                 $details->step = $nextstep;
                 $details->save();
-            
+
             }else{
-                
-                
+
+
                 $updatereq = ApprovalRequestStatus::select('id', 'procurement_plan_detail_id', 'approver_id', 'status', 'reason')
                 ->where('procurement_plan_detail_id', $request->id)
                 ->where('approver_id', $request->user_id)
@@ -424,8 +424,8 @@ class ProcurementPlanController extends Controller
                 $updatereq->reason = $request->reason;
                 $updatereq->status = 1;
                 $updatereq->save();
-            
-                                                    
+
+
                 $details->step = $request->step;
                 $details->status = "approved";
                 $details->save();
@@ -444,7 +444,7 @@ class ProcurementPlanController extends Controller
 
 
     public function rejectProcurementPlanDetail(Request $request){
-      
+
         $validator = Validator::make($request->all(), [
             'reason' => 'required',
             'status' => 'required'
@@ -473,7 +473,7 @@ class ProcurementPlanController extends Controller
       User::find($details->created_by)
       ->notify(new SendApprovalEmail($subject,
       $emailBody));
-      
+
       $details->step = $request->step;
       $details->status = "rejected";
       $details->reason = $request->reason;
@@ -482,7 +482,62 @@ class ProcurementPlanController extends Controller
       $this->addToLog($request->ip(), 'Successfully Rejected A Procurement Detail By '.$this->getLoggedInUserNames());
 
       return response()->json(['success' => true, 'message' => 'Successfully A Procurement  A Procurement Plan Detail'], 200);
-  
+
+    }
+
+    public function detailsadd($id)
+
+    {
+
+        $user = User::where('id',  Auth::user()->id )->first();
+
+        //Get all Plan Details
+
+
+        //Get Categories
+        $getCategories = ProcurementCategories::select('id', 'name')->get();
+
+        //Get Methods
+        $getMethods = ProcurementMethods::select('id', 'name')->get();
+
+        $plan = ProcurementPlan::select('id', 'financial_year_start', 'financial_year_end' )->where('id', $id)->first();
+
+        return Inertia::render('ProcurementPlans/ProcurementPlanDetailsAdd', [
+            'user' => $user,
+            'getMethods' => $getMethods,
+            'getCategories' => $getCategories,
+            'plan' => $plan,
+        ]);
+
+    }
+
+    public function detailsedit($id)
+
+    {
+
+        $user = User::where('id',  Auth::user()->id )->first();
+
+        //Get all Plan Details
+
+        $plan_detail = ProcurementPlanDetails::find($id);
+
+
+        //Get Categories
+        $getCategories = ProcurementCategories::select('id', 'name')->get();
+
+        //Get Methods
+        $getMethods = ProcurementMethods::select('id', 'name')->get();
+
+        $plan = ProcurementPlan::select('id', 'financial_year_start', 'financial_year_end' )->where('id', $plan_detail->plan_id)->first();
+
+        return Inertia::render('ProcurementPlans/ProcurementPlanDetailsAdd', [
+            'user' => $user,
+            'getMethods' => $getMethods,
+            'getCategories' => $getCategories,
+            'plan' => $plan,
+            'plan_detail' => $plan_detail,
+        ]);
+
     }
 
     public function detailstore(Request $request)
@@ -580,6 +635,46 @@ class ProcurementPlanController extends Controller
           return response()->json(['success' => true,
           'message' => 'Successfully Updated Plan Details'], 200);
 
+    }
+
+    public function add(){
+
+        for($i=@date('Y')+1; $i>(@date('Y') - 5); $i--)
+		{
+			$financialyr[] = $i.'-'.($i+1);
+		}
+
+
+        $userID = Auth::user()->id;
+        $user = User::where('id',  $userID )->first();
+
+        //Get all Plans
+
+        return Inertia::render('ProcurementPlans/ProcurementPlanAdd', [
+            'user' => $user,
+            'financialyr' => $financialyr
+        ]);
+    }
+
+    public function edit($id){
+
+        for($i=@date('Y')+1; $i>(@date('Y') - 5); $i--)
+		{
+			$financialyr[] = $i.'-'.($i+1);
+		}
+
+
+        $userID = Auth::user()->id;
+        $user = User::where('id',  $userID )->first();
+        $plan = ProcurementPlan::find($id);
+
+        //Get all Plans
+
+        return Inertia::render('ProcurementPlans/ProcurementPlanAdd', [
+            'user' => $user,
+            'financialyr' => $financialyr,
+            'plan' => $plan
+        ]);
     }
 
 }
